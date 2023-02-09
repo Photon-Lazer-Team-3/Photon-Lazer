@@ -6,6 +6,9 @@ public class Database {
     private Connection connection;
     private final int id = 1;
     private final int codeName = 4;
+    private static final String URL = "";
+
+    
 
     public Database()
     {
@@ -15,7 +18,7 @@ public class Database {
 
     private static Connection getConnection() throws URISyntaxException, SQLException
     {
-        URI dburi = new URI(System.getenv("DATABASE_URL"));
+        URI dburi = new URI(System.getenv(URL));
 
         String userName = dburi.getUserInfo().split(":")[0];
         String password = dburi.getUserInfo().split(":")[1];
@@ -47,6 +50,20 @@ public class Database {
     public void addCodeName(int id, String codeName)
     {
 
+    }
+
+    public boolean idExist(int id)
+    {
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
+        if(result.get(1) == null)
+        {
+            return false;
+        }
+        if(result.get(1) == id)
+        {
+            return true;
+        }
     }
 
     public void printPlayers()
