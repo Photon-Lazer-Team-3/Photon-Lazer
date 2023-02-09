@@ -12,7 +12,7 @@ public class Entryscreen extends JFrame {
         this.setVisible(true);
         JTextField textField = new JTextField("hiihihihihhi");
         textField.setToolTipText("Please enter some text here");*/
-        JFrame jframe = new JFrame("Entryscreen test");  
+        JFrame jframe = new JFrame("Entryscreen");  
         JTextField t1,t2,t3,t4;  
         t1=new JTextField();  
         t1.setBounds(50,100, 100,30);  
