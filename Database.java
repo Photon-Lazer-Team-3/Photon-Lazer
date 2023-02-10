@@ -9,6 +9,7 @@ public class Database
     private static final String URL = "";
 
 
+    //Is there anything else that we could need now for this all to work that I can think of no
 
     
 
@@ -16,6 +17,11 @@ public class Database
     {
         connection = getConnection();
 
+    }
+
+    public void closeConnection() throws Exception
+    {
+        connection.close();
     }
 
     private static Connection getConnection() throws URISyntaxException, SQLException
