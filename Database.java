@@ -1,18 +1,22 @@
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
-public class Database {
+
+public class Database
+{
 
     private Connection connection;
     private final int id = 1;
     private final int codeName = 4;
     private static final String URL = "";
 
+
+
     
 
-    public Database()
+    public Database() throws Exception
     {
-        Connection connection = getConnection();
+        connection = getConnection();
 
     }
 
@@ -64,6 +68,13 @@ public class Database {
         {
             return true;
         }
+    }
+
+    public void insertPlayer(int id, String codeName)
+    {
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("INSTERT INTO player (" + id ", " + "null, null, " + codeName")");
+        statement.close();
     }
 
     public void printPlayers()
