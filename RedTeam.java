@@ -6,19 +6,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-
 import java.awt.Color;
 
-public class Entryscreen extends JFrame {
+public class RedTeam extends JFrame {
     JFrame jFrame;
-    JPanel panel1;
-    JPanel panel2;
     JTextField t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,
     t21,t22,t23,t24,t25,t26,t27,t28,t29,t30,t31,t32,t33,t34,t35,t36,t37,t38,t39,t40; 
     JCheckBox c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20;
     JLabel labelHeader;
 
-    public Entryscreen() {
+    public RedTeam() {
         // Adds title to the frame
         jFrame = new JFrame("Red Team Player Entry Terminal");
         // Creates team name text
@@ -242,6 +239,6 @@ public class Entryscreen extends JFrame {
     }
 
     public static void main(String[] args) throws Exception{
-        new Entryscreen();
+        new RedTeam();
     }
 }
