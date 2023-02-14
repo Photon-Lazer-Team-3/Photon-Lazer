@@ -21,14 +21,31 @@ public class Entryscreen extends JFrame {
     public Entryscreen() {
         // Adds title to the frame
         jFrame = new JFrame("Red Team Player Entry Terminal");
-        
         // Creates team name text
         labelHeader = new JLabel("Red Team", SwingConstants.CENTER);
         labelHeader.setBounds(120, 10, 220, 37);
         // Create a line border with the specified color and width
         Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
         labelHeader.setBorder(border);
+        // Adds team name label
+        jFrame.add(labelHeader);
+        // Creates textbox
+        createTextbox();
+        // Adds textbox
+        addTextbox();
+        // Creates checkbox
+        createCheckbox();
+        // Adds checkbox
+        addCheckbox();
+        // Sets the window size
+        jFrame.setSize(465,850);  
+        jFrame.setLayout(null);  
+        jFrame.setVisible(true);  
+        // Sets the windows background color to dark red
+        jFrame.getContentPane().setBackground(new Color(141,2,31));
+    }
 
+    public void createTextbox() {
         // Creates text fields
         t1 = new JTextField();  
         t1.setBounds(67,45, 140,40);  
@@ -110,54 +127,9 @@ public class Entryscreen extends JFrame {
         t39.setBounds(70, 710, 140, 40);
         t40 = new JTextField();
         t40.setBounds(206, 710, 240, 40);
+    }
 
-
-
-        // Create checkboxes
-        c1 = new JCheckBox("0");
-        c1.setBounds(30, 45, 40, 40);
-        c2 = new JCheckBox("1");
-        c2.setBounds(30, 80, 40, 40);
-        c3 = new JCheckBox("2");
-        c3.setBounds(30, 115, 40, 40);
-        c4 = new JCheckBox("3");
-        c4.setBounds(30, 150, 40, 40);
-        c5 = new JCheckBox("4");
-        c5.setBounds(30, 185, 40, 40);
-        c6 = new JCheckBox("5");
-        c6.setBounds(30, 220, 40, 40);
-        c7 = new JCheckBox("6");
-        c7.setBounds(30, 255, 40, 40);
-        c8 = new JCheckBox("7");
-        c8.setBounds(30, 290, 40, 40);
-        c9 = new JCheckBox("8");
-        c9.setBounds(30, 325, 40, 40);
-        c10 = new JCheckBox("9");
-        c10.setBounds(30, 360, 40, 40);
-        c11 = new JCheckBox("10");
-        c11.setBounds(25, 395, 50, 40);
-        c12 = new JCheckBox("11");
-        c12.setBounds(25, 430, 50, 40);
-        c13 = new JCheckBox("12");
-        c13.setBounds(25, 465, 50, 40);
-        c14 = new JCheckBox("13");
-        c14.setBounds(25, 500, 50, 40);
-        c15 = new JCheckBox("14");
-        c15.setBounds(25, 535, 50, 40);
-        c16 = new JCheckBox("15");
-        c16.setBounds(25, 570, 50, 40);
-        c17 = new JCheckBox("16");
-        c17.setBounds(25, 605, 50, 40);
-        c18 = new JCheckBox("17");
-        c18.setBounds(25, 640, 50, 40);
-        c19 = new JCheckBox("18");
-        c19.setBounds(25, 675, 50, 40);
-        c20 = new JCheckBox("19");
-        c20.setBounds(25, 710, 50, 40);
-
-        // Adds team name box
-        jFrame.add(labelHeader);
-
+    public void addTextbox() {
         // Adds text fields
         jFrame.add(t1); 
         jFrame.add(t2);  
@@ -199,7 +171,53 @@ public class Entryscreen extends JFrame {
         jFrame.add(t38);
         jFrame.add(t39);
         jFrame.add(t40);
+    }
 
+    public void createCheckbox() {
+        // Create checkboxes
+        c1 = new JCheckBox("0");
+        c1.setBounds(30, 45, 40, 40);
+        c2 = new JCheckBox("1");
+        c2.setBounds(30, 80, 40, 40);
+        c3 = new JCheckBox("2");
+        c3.setBounds(30, 115, 40, 40);
+        c4 = new JCheckBox("3");
+        c4.setBounds(30, 150, 40, 40);
+        c5 = new JCheckBox("4");
+        c5.setBounds(30, 185, 40, 40);
+        c6 = new JCheckBox("5");
+        c6.setBounds(30, 220, 40, 40);
+        c7 = new JCheckBox("6");
+        c7.setBounds(30, 255, 40, 40);
+        c8 = new JCheckBox("7");
+        c8.setBounds(30, 290, 40, 40);
+        c9 = new JCheckBox("8");
+        c9.setBounds(30, 325, 40, 40);
+        c10 = new JCheckBox("9");
+        c10.setBounds(30, 360, 40, 40);
+        c11 = new JCheckBox("10");
+        c11.setBounds(25, 395, 50, 40);
+        c12 = new JCheckBox("11");
+        c12.setBounds(25, 430, 50, 40);
+        c13 = new JCheckBox("12");
+        c13.setBounds(25, 465, 50, 40);
+        c14 = new JCheckBox("13");
+        c14.setBounds(25, 500, 50, 40);
+        c15 = new JCheckBox("14");
+        c15.setBounds(25, 535, 50, 40);
+        c16 = new JCheckBox("15");
+        c16.setBounds(25, 570, 50, 40);
+        c17 = new JCheckBox("16");
+        c17.setBounds(25, 605, 50, 40);
+        c18 = new JCheckBox("17");
+        c18.setBounds(25, 640, 50, 40);
+        c19 = new JCheckBox("18");
+        c19.setBounds(25, 675, 50, 40);
+        c20 = new JCheckBox("19");
+        c20.setBounds(25, 710, 50, 40);
+    }
+
+    public void addCheckbox() {
         // Adds checkboxes
         jFrame.add(c1);
         jFrame.add(c2);
@@ -221,11 +239,6 @@ public class Entryscreen extends JFrame {
         jFrame.add(c18);
         jFrame.add(c19);
         jFrame.add(c20);
-        
-        jFrame.setSize(465,850);  
-        jFrame.setLayout(null);  
-        jFrame.setVisible(true);  
-        jFrame.getContentPane().setBackground(new Color(141,2,31));
     }
 
     public static void main(String[] args) throws Exception{
