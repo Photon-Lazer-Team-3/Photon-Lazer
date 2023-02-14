@@ -1,1 +1,1 @@
-web: java -cp target/repo/*  main
+web: java -cp photon-lazer/* photon-lazer.main
