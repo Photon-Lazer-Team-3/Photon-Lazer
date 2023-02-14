@@ -47,7 +47,7 @@ public class Entryscreen extends JFrame {
         jFrame.setSize(700,700);  
         jFrame.setLayout(null);  
         jFrame.setVisible(true);  
-        jFrame.getContentPane().setBackground(new Color(255,17,0));
+        jFrame.getContentPane().setBackground(new Color(254,17,0));
     }
 
     public static void main(String[] args) throws Exception{
