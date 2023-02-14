@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* photon-lazer.main
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* photon-lazer/main
