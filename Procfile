@@ -1,1 +1,1 @@
-web: java -cp target/repo/*  target.bin.main
+web: java -cp target/repo/*  main
