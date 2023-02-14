@@ -1,0 +1,92 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@AlexJPrill 
+heroku
+/
+devcenter-java-database
+Public
+Fork your own copy of heroku/devcenter-java-database
+Code
+Issues
+Pull requests
+1
+Actions
+Projects
+Wiki
+Security
+Insights
+devcenter-java-database/devcenter-java-database-plain-jdbc/pom.xml
+@jamesward
+jamesward init
+Latest commit c644fec on Nov 23, 2011
+ History
+ 1 contributor
+46 lines (42 sloc)  1.63 KB
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.0-SNAPSHOT</version>
+    <name>devcenter-java-database-plain-jdbc</name>
+    <artifactId>devcenter-java-database-plain-jdbc</artifactId>
+    <groupId>com.heroku.example</groupId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <configuration>
+                    <assembleDirectory>target</assembleDirectory> 
+                    <programs>
+                        <program>
+                            <mainClass>main</mainClass>
+                            <name>main</name>
+                        </program>
+                    </programs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+devcenter-java-database/pom.xml at master · heroku/devcenter-java-database
