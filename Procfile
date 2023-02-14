@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* photon-lazer/main.java
+web: java -cp target/classes/:target/dependency/* photon-lazer/main
