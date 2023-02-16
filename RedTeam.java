@@ -3,7 +3,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -14,7 +13,7 @@ import java.awt.event.ActionListener;
 
 
 public class RedTeam extends JFrame implements ActionListener{
-    JFrame jFrame;
+    JFrame redFrame;
     JTextField t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15,t16,t17,t18,
     t19,t20,t21,t22,t23,t24,t25,t26,t27,t28,t29,t30;
     JCheckBox c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15;
@@ -30,7 +29,7 @@ public class RedTeam extends JFrame implements ActionListener{
 
     public RedTeam() {
         // Adds title to the frame
-        jFrame = new JFrame("Red Team Player Entry Terminal");
+        redFrame = new JFrame("Red Team Player Entry Terminal");
         // Creates team name text
         labelHeader = new JLabel("Red Team", SwingConstants.CENTER);
         labelHeader.setBounds(120, 10, 220, 37);
@@ -38,7 +37,7 @@ public class RedTeam extends JFrame implements ActionListener{
         Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
         labelHeader.setBorder(border);
         // Adds team name label
-        jFrame.add(labelHeader);
+        redFrame.add(labelHeader);
         // Creates textbox
         createTextbox();
         // Adds textbox
@@ -53,11 +52,11 @@ public class RedTeam extends JFrame implements ActionListener{
         startButton();
         
         // Sets the window size
-        jFrame.setSize(465,850);  
-        jFrame.setLayout(null);  
-        jFrame.setVisible(true);  
+        redFrame.setSize(465,850);  
+        redFrame.setLayout(null);  
+        redFrame.setVisible(true);  
         // Sets the windows background color to dark red
-        jFrame.getContentPane().setBackground(new Color(141,2,31));
+        redFrame.getContentPane().setBackground(new Color(141,2,31));
     }
 
     public void createTextbox() {
@@ -156,36 +155,36 @@ public class RedTeam extends JFrame implements ActionListener{
 
     public void addTextbox() {
         // Adds text fields
-        jFrame.add(t1); 
-        jFrame.add(t2);  
-        jFrame.add(t3);
-        jFrame.add(t4);
-        jFrame.add(t5);
-        jFrame.add(t6);
-        jFrame.add(t7);
-        jFrame.add(t8);
-        jFrame.add(t9);
-        jFrame.add(t10);
-        jFrame.add(t11);
-        jFrame.add(t12);
-        jFrame.add(t13);
-        jFrame.add(t14);
-        jFrame.add(t15);
-        jFrame.add(t16);
-        jFrame.add(t17);
-        jFrame.add(t18);
-        jFrame.add(t19);
-        jFrame.add(t20);
-        jFrame.add(t21);
-        jFrame.add(t22);
-        jFrame.add(t23);
-        jFrame.add(t24);
-        jFrame.add(t25);
-        jFrame.add(t26);
-        jFrame.add(t27);
-        jFrame.add(t28);
-        jFrame.add(t29);
-        jFrame.add(t30);
+        redFrame.add(t1); 
+        redFrame.add(t2);  
+        redFrame.add(t3);
+        redFrame.add(t4);
+        redFrame.add(t5);
+        redFrame.add(t6);
+        redFrame.add(t7);
+        redFrame.add(t8);
+        redFrame.add(t9);
+        redFrame.add(t10);
+        redFrame.add(t11);
+        redFrame.add(t12);
+        redFrame.add(t13);
+        redFrame.add(t14);
+        redFrame.add(t15);
+        redFrame.add(t16);
+        redFrame.add(t17);
+        redFrame.add(t18);
+        redFrame.add(t19);
+        redFrame.add(t20);
+        redFrame.add(t21);
+        redFrame.add(t22);
+        redFrame.add(t23);
+        redFrame.add(t24);
+        redFrame.add(t25);
+        redFrame.add(t26);
+        redFrame.add(t27);
+        redFrame.add(t28);
+        redFrame.add(t29);
+        redFrame.add(t30);
     }
 
     public void createCheckbox() {
@@ -224,21 +223,21 @@ public class RedTeam extends JFrame implements ActionListener{
 
     public void addCheckbox() {
         // Adds checkboxes
-        jFrame.add(c1);
-        jFrame.add(c2);
-        jFrame.add(c3);
-        jFrame.add(c4);
-        jFrame.add(c5);
-        jFrame.add(c6);
-        jFrame.add(c7);
-        jFrame.add(c8);
-        jFrame.add(c9);
-        jFrame.add(c10);
-        jFrame.add(c11);
-        jFrame.add(c12);
-        jFrame.add(c13);
-        jFrame.add(c14);
-        jFrame.add(c15);
+        redFrame.add(c1);
+        redFrame.add(c2);
+        redFrame.add(c3);
+        redFrame.add(c4);
+        redFrame.add(c5);
+        redFrame.add(c6);
+        redFrame.add(c7);
+        redFrame.add(c8);
+        redFrame.add(c9);
+        redFrame.add(c10);
+        redFrame.add(c11);
+        redFrame.add(c12);
+        redFrame.add(c13);
+        redFrame.add(c14);
+        redFrame.add(c15);
     }
 
     public void editButton() {
@@ -247,7 +246,7 @@ public class RedTeam extends JFrame implements ActionListener{
         edit.setBounds(25,580,75,75);
         // Add action listener to edit button
         edit.addActionListener(this);
-        jFrame.add(edit);
+        redFrame.add(edit);
     }
 
     public void startButton() {
@@ -256,7 +255,7 @@ public class RedTeam extends JFrame implements ActionListener{
         start.setBounds(125,580,75,75);
         // Add action listener to edit button
         start.addActionListener(this);
-        jFrame.add(start);
+        redFrame.add(start);
     }
 
     // When button is clicked allow input in text fields
