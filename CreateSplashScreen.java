@@ -50,7 +50,8 @@ public class CreateSplashScreen extends JWindow
 		try 
 		{
 			// Make JWindow appear for 5 Seconds before Disappearing
-			Thread.sleep(5000);
+			// EDIT: Make JWindow appear for 3 seconds before Disappearing
+			Thread.sleep(3000);
 			
 			// Destroys and Cleans Up JFrame Window by O.S. (Note: Line 55 may also cause Program to Terminate if no other windows are available)
 			splashScreen.dispose();
