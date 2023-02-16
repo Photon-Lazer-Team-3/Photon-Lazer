@@ -1,9 +1,14 @@
 public class main 
 {
-    public static void main(String [] args) throws Exception
+    public static void main(String [] args)
     {
-       //LXthWx3ZgNGRQyOt
-       Database db = new Database();
+       try 
+        {
+            Database db = new Database();
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
 
     }    
 
