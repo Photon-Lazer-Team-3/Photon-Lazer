@@ -12,7 +12,6 @@ public class Database
     
 
 
-    //Is there anything else that we could need now for this all to work that I can think of no
 
     
 
@@ -29,7 +28,7 @@ public class Database
 
     private static Connection getConnection() throws URISyntaxException, SQLException
     {
-        URI dburi = new URI(URT);
+        URI dburi = new URI(URL);
         System.out.println(dburi.getUserInfo());
         String userName = dburi.getUserInfo().split(":")[0];
         String password = dburi.getUserInfo().split(":")[1];
@@ -47,9 +46,8 @@ public class Database
         ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
         //
         //If the query returns us a value then we
-        if(result.getString("codename") == null)
+        if(result.getString("codename") != null)
         {
-            //Hopefully this here we cna fix sooner than latter this should be fun to finish up
             return result.getString("codename");
         }
         else
@@ -62,7 +60,6 @@ public class Database
     {
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
-        //What is the return value of no i
         if(result.getInt("id") == 0)
         {
             return false;
