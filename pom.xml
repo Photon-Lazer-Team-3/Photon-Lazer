@@ -26,7 +26,7 @@
                     <assembleDirectory>target</assembleDirectory> 
                     <programs>
                         <program>
-                            <mainClass>Main</mainClass>
+                            <mainClass>com.heroku.example.Main</mainClass>
                             <name>main</name>
                         </program>
                     </programs>
