@@ -26,8 +26,8 @@
                     <assembleDirectory>target</assembleDirectory> 
                     <programs>
                         <program>
-                            <mainClass>main</mainClass>
-                            <name>main</name>
+                            <mainClass>photon-lazer.main</mainClass>
+                            <name>dog</name>
                         </program>
                     </programs>
                 </configuration>
