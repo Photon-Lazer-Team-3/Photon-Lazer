@@ -27,7 +27,7 @@
                     <programs>
                         <program>
                             <mainClass>photon-lazer.main</mainClass>
-                            <name>dog</name>
+                            <name>main</name>
                         </program>
                     </programs>
                 </configuration>
