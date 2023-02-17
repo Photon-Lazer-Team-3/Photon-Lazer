@@ -20,23 +20,15 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
     JLabel redLabelHeader, greenLabelHeader;
     JButton edit, start;
     
-    /* Set text fields to false until the f3key/button is pressed/clicked and then allow
-     * typing in the fields
-     * Do something like when a check box is checked get the player name from the textbox
-     * next to it and send it to the database
-     */
-
-
     public PlayerEntryscreen() {
         // Adds title to the frame
-        entryFrame = new JFrame("Red Team Player Entry Terminal");
+        entryFrame = new JFrame("Player Entry Terminal");
         // Creates red team name header
         redLabelHeader = new JLabel("Red Team", SwingConstants.CENTER);
         redLabelHeader.setBounds(120, 10, 220, 37);
         redLabelHeader.setForeground(Color.RED);
         Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
         redLabelHeader.setBorder(border);
-        // Adds team name label
         entryFrame.add(redLabelHeader);
         // Creates red team name header
         greenLabelHeader = new JLabel("Green Team", SwingConstants.CENTER);
@@ -44,9 +36,7 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         greenLabelHeader.setForeground(Color.GREEN);
         Border border2 = BorderFactory.createLineBorder(Color.WHITE, 1);
         greenLabelHeader.setBorder(border2);
-        // Adds team name label
         entryFrame.add(greenLabelHeader);
-
         // Creates and adds red team textboxes
         createRedTextbox();
         // Creates and adds red team labels
@@ -59,7 +49,6 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         editButton();
         // Adds start button
         startButton();
-        
         // Sets the window size
         entryFrame.setSize(900,850);  
         entryFrame.setLayout(null);  
