@@ -1,1 +1,1 @@
-web: sh main
+web: sh src.main
