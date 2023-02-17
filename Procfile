@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS
+web: java $JAVA_OPTS target/bin/main
