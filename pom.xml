@@ -26,7 +26,7 @@
                     <assembleDirectory>target</assembleDirectory> 
                     <programs>
                         <program>
-                            <mainClass>photon-lazer.main</mainClass>
+                            <mainClass>main</mainClass>
                             <name>main</name>
                         </program>
                     </programs>
