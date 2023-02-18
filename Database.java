@@ -5,22 +5,14 @@ import java.util.Properties;
 
 public class Database
 {
-
-    
-
-
-    private static final String URL = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW";
     private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW";
-    private static final String KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVva2p3ZmFuZW16Z3ZkbW5lZWF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4MDIwNDcsImV4cCI6MTk5MTM3ODA0N30.iHRSYdTqwcuTyDcDoX-rGQuNwesxQlSkbc677WsKlIM";
     Connection connection;
 
     public Database() throws Exception
     {
         Class.forName("org.postgresql.Driver");
         connection = DriverManager.getConnection(URI);
-        Statement st = connection.createStatement();
-        String sql = "INSERT INTO player(id, first_name, last_name, codename) VALUES(120, 'dug', 'dug', 'goof')";
-        st.executeUpdate(sql);
+
     }
 
     public void closeConnection() throws Exception
@@ -64,9 +56,11 @@ public class Database
 
     public void insertPlayer(int id, String codeName) throws SQLException
     {
-        String sql = "INSERT INTO player(id, first_name, last_name, codename) VALUES(120, 'dug', 'dug', 'goof')";
-        Statement st = this.connection.createStatement();
-        st.executeUpdate(sql);
+        PreparedStatement st = this.connection.prepareStatement("INSERT INTO player(id, codename) VALUES(?)");
+        st.setInt(1, id);
+        st.setString(4, codeName);
+        st.executeUpdate();
+        st.close();
     }
 
     public void printPlayers() throws SQLException
