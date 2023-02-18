@@ -1,39 +1,34 @@
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.util.Properties;
 
 public class Database
 {
 
-    private Connection connection;
-    private static final String URL = "postgres://gmcchveltwyvwg:09fb6f52367c5c2cbea40418daa98541e349e9e8452b6b6a9d46017a3f93d238@ec2-34-194-73-236.compute-1.amazonaws.com:5432/d3c3pqvgdqdd3m";
     
 
 
-
-    
+    private static final String URL = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW";
+    private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW";
+    private static final String KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVva2p3ZmFuZW16Z3ZkbW5lZWF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzU4MDIwNDcsImV4cCI6MTk5MTM3ODA0N30.iHRSYdTqwcuTyDcDoX-rGQuNwesxQlSkbc677WsKlIM";
+    Connection connection;
 
     public Database() throws Exception
     {
-        connection = getConnection();
-
+        Class.forName("org.postgresql.Driver");
+        connection = DriverManager.getConnection(URI);
+        Statement st = connection.createStatement();
+        String sql = "INSERT INTO player(id, first_name, last_name, codename) VALUES(120, 'dug', 'dug', 'goof')";
+        st.executeUpdate(sql);
     }
 
     public void closeConnection() throws Exception
     {
-        connection.close();
+        this.connection.close();
     }
 
-    private static Connection getConnection() throws URISyntaxException, SQLException
-    {
-        URI dburi = new URI(URL);
-        String userName = dburi.getUserInfo().split(":")[0];
-        String password = dburi.getUserInfo().split(":")[1];
-        String dburl = "jdbc:postgresql://" + dburi.getHost() + dburi.getPath();
-        System.out.println("DOG" + dburl);
-
-        return DriverManager.getConnection(dburl, userName, password);
-    }
+ 
 
     //Gets the userName from the table of players from a given id
     public String getCodeName(int id) throws SQLException
@@ -55,7 +50,7 @@ public class Database
 
     public boolean idExist(int id) throws SQLException
     {
-        Statement statement = connection.createStatement();
+        Statement statement = this.connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
         if(result.getInt("id") == 0)
         {
@@ -69,16 +64,14 @@ public class Database
 
     public void insertPlayer(int id, String codeName) throws SQLException
     {
-        Statement statement = connection.createStatement();
-
-        statement.executeUpdate("INSTERT INTO player (" + id + ", " + "null, null, " + codeName + ")");
-     
-        statement.close();
+        String sql = "INSERT INTO player(id, first_name, last_name, codename) VALUES(120, 'dug', 'dug', 'goof')";
+        Statement st = this.connection.createStatement();
+        st.executeUpdate(sql);
     }
 
     public void printPlayers() throws SQLException
     {
-        Statement stmt = connection.createStatement();
+        Statement stmt = this.connection.createStatement();
         ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER");
         while(result.next())
         {
