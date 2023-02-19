@@ -15,10 +15,10 @@ public class Main
             {
                 if(db.idExist(Integer.parseInt(screen.greenText[i].getText())))
                 {
-                    System.out.println("ID is in database");
                     screen.greenText[i+1].setText(db.getCodeName(Integer.parseInt(screen.greenText[i].getText())));
                 }
             }
+            if(!screen.greenText[i])
             i += 2;
         }
        }
