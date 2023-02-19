@@ -179,7 +179,6 @@ public class PlayerEntryscreen extends JFrame implements ActionListener
     }
 
     // When button is clicked allow input in text fields
-    @Override
     public void actionPerformed(ActionEvent e) {
         
         for (int i = 0; i < 30; i++) {
@@ -201,9 +200,5 @@ public class PlayerEntryscreen extends JFrame implements ActionListener
                 greenText[i].getText();
             }
         }
-    }
-
-    public static void main(String[] args) throws Exception{
-        new PlayerEntryscreen();
     }
 }

@@ -28,7 +28,7 @@ public class Database
         Statement stmt = connection.createStatement();
         ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER WHERE ID =" + id);
         //If the query returns us a value then we
-        if(result.getString("codename") != null)
+        if(result.next() != false)
         {
             return result.getString("codename");
         }
@@ -41,15 +41,13 @@ public class Database
     public boolean idExist(int id) throws SQLException
     {
         Statement statement = this.connection.createStatement();
-        ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
-        if(result.getInt("id") == 0)
+        ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID=" + id);
+        if(result.next() == false)
         {
             return false;
         }
-        if(result.getInt("id") == id)
-            return true;
         else
-            return false;
+            return true;
     }
 
     public void insertPlayer(int id, String codeName) throws SQLException
