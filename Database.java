@@ -26,9 +26,7 @@ public class Database
     public String getCodeName(int id) throws SQLException
     {
         Statement stmt = connection.createStatement();
-        //Why does it not like this thing here it should like it and I don't know why it does not
-        ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
-        //
+        ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER WHERE ID =" + id);
         //If the query returns us a value then we
         if(result.getString("codename") != null)
         {
@@ -56,10 +54,9 @@ public class Database
 
     public void insertPlayer(int id, String codeName) throws SQLException
     {
-        PreparedStatement st = this.connection.prepareStatement("INSERT INTO player(id, codename) VALUES(?)");
-        st.setInt(1, id);
-        st.setString(4, codeName);
-        st.executeUpdate();
+        String sql = "INSERT INTO player(id, codename) VALUES(" + id + ", '" + codeName + "')";
+        Statement st = this.connection.createStatement();
+        st.executeUpdate(sql);
         st.close();
     }
 
