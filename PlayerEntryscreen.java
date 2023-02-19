@@ -4,25 +4,36 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-
-
-public class PlayerEntryscreen extends JFrame implements ActionListener{
+public class PlayerEntryscreen extends JFrame implements ActionListener
+{
     JFrame entryFrame;
+	
     JTextField [] redText = new JTextField[30];
     JTextField [] greenText = new JTextField[30];
+	
     JLabel [] redLabels = new JLabel[15];
     JLabel [] greenLabels = new JLabel[15];
     JLabel redLabelHeader, greenLabelHeader;
+	
     JButton edit, start;
+	
+	// Added by Joseph Telford --> 2/18/2023 at 2:56PM
+	Dimension screenSize;
     
     public PlayerEntryscreen() {
         // Adds title to the frame
         entryFrame = new JFrame("Player Entry Terminal");
+		
+		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
         // Creates red team name header
         redLabelHeader = new JLabel("Red Team", SwingConstants.CENTER);
         redLabelHeader.setBounds(120, 10, 220, 37);
@@ -30,34 +41,50 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
         redLabelHeader.setBorder(border);
         entryFrame.add(redLabelHeader);
-        // Creates red team name header
+		
+        // Creates green team name header
         greenLabelHeader = new JLabel("Green Team", SwingConstants.CENTER);
         greenLabelHeader.setBounds(500, 10, 220, 37);
         greenLabelHeader.setForeground(Color.GREEN);
         Border border2 = BorderFactory.createLineBorder(Color.WHITE, 1);
         greenLabelHeader.setBorder(border2);
         entryFrame.add(greenLabelHeader);
+		
         // Creates and adds red team textboxes
         createRedTextbox();
+		
         // Creates and adds red team labels
         createRedLabels();
+		
         // Creates and adds green team textboxes
         createGreenTextbox();
+		
         // Creates and adds green team labels
         createGreenLabels();
+		
         // Adds edit button
         editButton();
+		
         // Adds start button
         startButton();
+		
         // Sets the window size
-        entryFrame.setSize(900,850);  
-        entryFrame.setLayout(null);  
-        entryFrame.setVisible(true);  
-        // Sets the windows background color to dark red
+		// Next four lines added by Joseph Telford --> 2/18/2023 at 2:56PM
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int resizeWidth = (int)screenSize.getWidth();
+		int resizeHeight = (int)screenSize.getHeight();
+		entryFrame.setSize(resizeWidth, resizeHeight);
+		
+        //entryFrame.setSize(900,850);
+        entryFrame.setLayout(null);
+        entryFrame.setVisible(true);
+		
+        // Sets the windows background color to black
         entryFrame.getContentPane().setBackground(Color.BLACK);
     }
 
-    public void createRedTextbox() {
+    public void createRedTextbox()
+	{
         int x = 67; // Initial x position
         int y = 45; // Initial y position
 
@@ -76,7 +103,8 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         }
     }
 
-    public void createGreenTextbox() {
+    public void createGreenTextbox()
+	{
         int x = 497; // Initial x position
         int y = 45; // Initial y position
 
@@ -95,9 +123,10 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         }
     }
 
-    public void createRedLabels() {
-        int x = 30;
-        int y = 45;
+    public void createRedLabels()
+	{
+        int x = 30; // Initial x position
+        int y = 45; // Initial y position
 
         for (int i = 0; i < 15; i++) {
             int number = i + 1;
@@ -111,9 +140,10 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         }
     }
 
-    public void createGreenLabels() {
-        int x = 800;
-        int y = 45;
+    public void createGreenLabels()
+	{
+        int x = 800; // Initial x position
+        int y = 45; // Initial y position
 
         for (int i = 0; i < 15; i++) {
             int number = i + 1;
@@ -127,10 +157,11 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         }
     }
 
-    public void editButton() {
+    public void editButton()
+	{
         // Creates edit button
-        edit = new JButton("Edit\nTeam");
-        edit.setBounds(25,580,75,75);
+        edit = new JButton("Edit Game");
+        edit.setBounds(25,580,100,100);		// 90, 90 // 75, 75
         // Add action listener to edit button
         edit.addActionListener(this);
         entryFrame.add(edit);
@@ -138,8 +169,8 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
 
     public void startButton() {
         // Creates edit button
-        start = new JButton("Start\nGame");
-        start.setBounds(125,580,85,75);
+        start = new JButton("Start Game");
+        start.setBounds(150,580,100,100);		// 90, 90 // 85, 75
         // Add action listener to edit button
         start.addActionListener(this);
         entryFrame.add(start);
@@ -211,7 +242,6 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         String gPlayerInfo29;
         String gPlayerInfo30;
 
-        // Set red textboxes to editable
         redText[0].setEnabled(true);
         redText[1].setEnabled(true);
         redText[2].setEnabled(true);
@@ -242,7 +272,7 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         redText[27].setEnabled(true);
         redText[28].setEnabled(true);
         redText[29].setEnabled(true);
-        // Set green textboxes to editable
+
         greenText[0].setEnabled(true);
         greenText[1].setEnabled(true);
         greenText[2].setEnabled(true);
@@ -275,7 +305,8 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
         greenText[29].setEnabled(true);
 
         
-        if (e.getSource() == start) {
+        if (e.getSource() == start)
+		{
             rPlayerInfo1 = redText[0].getText();
             rPlayerInfo2 = redText[1].getText();
             rPlayerInfo3 = redText[2].getText();
@@ -338,6 +369,7 @@ public class PlayerEntryscreen extends JFrame implements ActionListener{
             gPlayerInfo29 = greenText[28].getText();
             gPlayerInfo30 = greenText[29].getText();
 
+			// Debug Statements --> Comment Added by Joseph Telford, 2/18/23 at 11:08AM
             System.out.println("Red Player 1: " + rPlayerInfo1 + " " + rPlayerInfo2 + "\n");
             System.out.println("Red Player 2: " + rPlayerInfo3 + " " + rPlayerInfo4 + "\n");
             System.out.println("Red Player 3: " + rPlayerInfo5 + " " + rPlayerInfo6 + "\n");
