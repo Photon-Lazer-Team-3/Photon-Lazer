@@ -1,52 +1,35 @@
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.util.Properties;
 
 public class Database
 {
-
-    private Connection connection;
-    private static final String URL = "postgres://gmcchveltwyvwg:09fb6f52367c5c2cbea40418daa98541e349e9e8452b6b6a9d46017a3f93d238@ec2-34-194-73-236.compute-1.amazonaws.com:5432/d3c3pqvgdqdd3m";
-
-
-    //Is there anything else that we could need now for this all to work that I can think of no
-
-    
+    private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW";
+    Connection connection;
 
     public Database() throws Exception
     {
-        connection = getConnection();
+        //Class.forName("org.postgresql.Driver");
+        connection = DriverManager.getConnection(URI);
 
     }
 
     public void closeConnection() throws Exception
     {
-        connection.close();
+        this.connection.close();
     }
 
-    private static Connection getConnection() throws URISyntaxException, SQLException
-    {
-        URI dburi = new URI(URL);
-        System.out.println(dburi.getUserInfo());
-        String userName = dburi.getUserInfo().split(":")[0];
-        String password = dburi.getUserInfo().split(":")[1];
-        String dburl = "jdbc:postgresql://" + dburi.getHost() + dburi.getPath();
-        System.out.println(dburl);
-
-        return DriverManager.getConnection(dburl, userName, password);
-    }
+ 
 
     //Gets the userName from the table of players from a given id
     public String getCodeName(int id) throws SQLException
     {
         Statement stmt = connection.createStatement();
-        //Why does it not like this thing here it should like it and I don't know why it does not
-        ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
-        //
+        ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER WHERE ID =" + id);
         //If the query returns us a value then we
-        if(result.getString("codename") == null)
+        if(result.next() != false)
         {
-            //Hopefully this here we cna fix sooner than latter this should be fun to finish up
             return result.getString("codename");
         }
         else
@@ -57,31 +40,27 @@ public class Database
 
     public boolean idExist(int id) throws SQLException
     {
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID " + id);
-        //What is the return value of no i
-        if(result.getInt("id") == 0)
+        Statement statement = this.connection.createStatement();
+        ResultSet result = statement.executeQuery("SELECT * FROM PLAYER WHERE ID=" + id);
+        if(result.next() == false)
         {
             return false;
         }
-        if(result.getInt("id") == id)
-            return true;
         else
-            return false;
+            return true;
     }
 
     public void insertPlayer(int id, String codeName) throws SQLException
     {
-        Statement statement = connection.createStatement();
-
-        statement.executeUpdate("INSTERT INTO player (" + id + ", " + "null, null, " + codeName + ")");
-     
-        statement.close();
+        String sql = "INSERT INTO player(id, codename) VALUES(" + id + ", '" + codeName + "')";
+        Statement st = this.connection.createStatement();
+        st.executeUpdate(sql);
+        st.close();
     }
 
     public void printPlayers() throws SQLException
     {
-        Statement stmt = connection.createStatement();
+        Statement stmt = this.connection.createStatement();
         ResultSet result = stmt.executeQuery("SELECT * FROM PLAYER");
         while(result.next())
         {
