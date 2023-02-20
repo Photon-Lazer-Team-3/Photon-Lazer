@@ -10,7 +10,7 @@ public class Database
 
     public Database() throws Exception
     {
-        Class.forName("org.postgresql.Driver");
+        //Class.forName("org.postgresql.Driver");
         connection = DriverManager.getConnection(URI);
 
     }
