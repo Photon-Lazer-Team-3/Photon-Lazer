@@ -5,7 +5,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class CreateSplashScreen extends JWindow
+public class CreateSplashScreen extends JFrame //JWindow // EDIT on 2/19/23 at 10:35PM : Made into a JFrame instead of JWindow
 {
 	Image splashScreen;
 	ImageIcon imageIcon;
@@ -29,14 +29,14 @@ public class CreateSplashScreen extends JWindow
 		// Creates the ImageIcon from the Image for the Splash Screen
 		imageIcon = new ImageIcon(splashScreen);
 		
-		// Sets the Size for the JWindow from the Image Size
+		// Sets the Size for the JFrame from the Image Size
 		setSize(imageIcon.getIconWidth(),imageIcon.getIconHeight());
 		
-		// Makes the JWindow Visible
+		// Makes the JFrame Visible
 		setVisible(true);
 	}
 	
-	// Paints the Image onto the JWindow
+	// Paints the Image onto the JFrame
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -50,7 +50,7 @@ public class CreateSplashScreen extends JWindow
 		try 
 		{
 			// Make JWindow appear for 5 Seconds before Disappearing
-			// EDIT: Make JWindow appear for 3 seconds before Disappearing
+			// EDIT: Make JFrame appear for 3 seconds before Disappearing
 			Thread.sleep(3000);
 			
 			// Destroys and Cleans Up JFrame Window by O.S. (Note: Line 55 may also cause Program to Terminate if no other windows are available)
