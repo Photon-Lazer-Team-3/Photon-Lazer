@@ -1,3 +1,4 @@
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -6,26 +7,33 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument.DefaultDocumentEvent;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.sql.SQLException;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class PlayerEntryscreen extends JFrame implements ActionListener
 {
     JFrame entryFrame;
-	
     JTextField [] redText = new JTextField[30];
     JTextField [] greenText = new JTextField[30];
+    boolean [] greenTextUpdate = new boolean[30];
+    boolean [] redTextUpdate = new boolean[30];
 	
     JLabel [] redLabels = new JLabel[15];
     JLabel [] greenLabels = new JLabel[15];
-    JLabel redLabelHeader, greenLabelHeader;
+    JLabel redLabelHeader, greenLabelHeader, timer;
 	
     JButton edit, start;
 
-    Database database;
 	
 	// Added by Joseph Telford --> 2/18/2023 at 2:56PM
 	Dimension screenSize;
@@ -33,7 +41,11 @@ public class PlayerEntryscreen extends JFrame implements ActionListener
     public PlayerEntryscreen() {
         // Adds title to the frame
         entryFrame = new JFrame("Player Entry Terminal");
-		
+		for(int i = 0; i < 30; i++)
+        {
+            redTextUpdate[i] = false;
+            greenTextUpdate[i] = false;
+        }
 		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
         // Creates red team name header
@@ -51,6 +63,15 @@ public class PlayerEntryscreen extends JFrame implements ActionListener
         Border border2 = BorderFactory.createLineBorder(Color.WHITE, 1);
         greenLabelHeader.setBorder(border2);
         entryFrame.add(greenLabelHeader);
+
+
+
+        timer = new JLabel("30", SwingConstants.CENTER);
+        timer.setBounds(800, 10, 220, 37);
+        timer.setForeground(Color.WHITE);
+        Border border3 = BorderFactory.createLineBorder(Color.WHITE, 1);
+        greenLabelHeader.setBorder(border3);
+        entryFrame.add(timer);
 		
         // Creates and adds red team textboxes
         createRedTextbox();
@@ -83,7 +104,27 @@ public class PlayerEntryscreen extends JFrame implements ActionListener
 		
         // Sets the windows background color to black
         entryFrame.getContentPane().setBackground(Color.BLACK);
+        int i = 1;
+   
     }
+
+    public void timerUpdate()
+    {
+            long startTime = System.currentTimeMillis();
+            while(true)
+            {
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                long elapsedSeconds = elapsedTime / 1000;
+                long secondsDisplay = elapsedSeconds % 60;
+                long elapsedMinutes = elapsedSeconds / 60;
+                timer.setText(String.valueOf(30 - elapsedSeconds));
+                timer.paintImmediately(timer.getVisibleRect());
+                if(elapsedSeconds == 30)
+                    System.exit(0);
+            }
+    }
+
+    
 
     public void createRedTextbox()
 	{
@@ -177,28 +218,25 @@ public class PlayerEntryscreen extends JFrame implements ActionListener
         start.addActionListener(this);
         entryFrame.add(start);
     }
-
+    
     // When button is clicked allow input in text fields
     public void actionPerformed(ActionEvent e) {
         
-        for (int i = 0; i < 30; i++) {
-            redText[i].setEnabled(true);
-        }
-
-        for (int i = 0; i < 30; i++) {
-            greenText[i].setEnabled(true);
+        if(e.getSource() == edit)
+        {
+            for (int i = 0; i < 30; i++) {
+                redText[i].setEnabled(true);
+                
+            }
+    
+            for (int i = 0; i < 30; i++) {
+                greenText[i].setEnabled(true);
+            }
         }
        
         if (e.getSource() == start)
 		{
-
-            for (int i = 0; i < 30; i++) {
-                redText[i].getText();
-            }
-
-            for (int i = 0; i < 30; i++) {
-                greenText[i].getText();
-            }
+            timerUpdate();
         }
     }
 }
