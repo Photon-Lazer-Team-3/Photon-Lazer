@@ -25,29 +25,30 @@ import java.awt.Font;
 
 public class PlayActionScreen extends JFrame
 {
-	JFrame entryFrame;
+	JFrame actionFrame;
 	
 	Dimension screenSize;
 	
-	public PlayActionScreen() {
+	public PlayActionScreen()
+	{
 		// Adds title to the frame
-		entryFrame = new JFrame("Player Entry Terminal");
+		actionFrame = new JFrame("Play Action Terminal");
 		
-		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		actionFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		entryFrame.setSize(screenWidth, screenHeight);
+		actionFrame.setSize(screenWidth, screenHeight);
 		
-		entryFrame.setLayout(null);
-		entryFrame.setVisible(true);
+		actionFrame.setLayout(null);
+		actionFrame.setVisible(true);
 		
 		// Sets the windows background color to black
-		entryFrame.getContentPane().setBackground(Color.BLACK);
+		actionFrame.getContentPane().setBackground(Color.BLACK);
 	}
 	
-	// Testing the Player Entry Screen
+	// Testing the Play Action Screen
 	public static void main(String[] args)
 	{
 		new PlayActionScreen();
