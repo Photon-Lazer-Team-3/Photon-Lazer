@@ -57,13 +57,13 @@ public class PlayActionScreen extends JFrame
 		{
 			if(!screen.redText[i].equals(""))
 			{
-				addRedPlayer(new Player(screen.redText[i]));
+				addRedPlayer(new Player(screen.redText[i].getText()));
 			}
 			if(!screen.greenText[i].equals(""))
 			{
-				addGreenPlayer(new Player(screen.greenText[i]));
+				addGreenPlayer(new Player(screen.greenText[i].getText()));
 			}
-		}
+		}`
 		
 
 	}
@@ -91,6 +91,6 @@ public class PlayActionScreen extends JFrame
 	// Testing the Play Action Screen
 	public static void main(String[] args)
 	{
-		new PlayActionScreen();
+		new PlayActionScreen(new PlayerEntryScreen());
 	}
 }

@@ -11,6 +11,12 @@ public class Player
         this.score = score;
     }
 
+    public Player(String codeName)
+    {
+        this.codeName = codeName;
+        this.score = 0;
+    }
+
     //Default constructor
     public Player()
     {
