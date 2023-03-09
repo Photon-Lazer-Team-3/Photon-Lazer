@@ -63,7 +63,7 @@ public class PlayActionScreen extends JFrame
 			{
 				addGreenPlayer(new Player(screen.greenText[i].getText()));
 			}
-		}`
+		}
 		
 
 	}
