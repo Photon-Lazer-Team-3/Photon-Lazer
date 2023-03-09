@@ -32,7 +32,7 @@ public class PlayActionScreen extends JFrame
 	private Player redTeam[];
 	private Player greenTeam[];
 	
-	public PlayActionScreen(PlayerEntreeScreen screen)
+	public PlayActionScreen(PlayerEntryScreen screen)
 	{
 		// Adds title to the frame
 		actionFrame = new JFrame("Play Action Terminal");
