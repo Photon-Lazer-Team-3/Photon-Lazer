@@ -29,10 +29,9 @@ import java.awt.event.*;
 public class PlayActionScreen extends JFrame
 {
 	JFrame actionFrame;
-	//Dimension screenSize;
 	
-	private static int seconds = 0;
-	private static int minutes = 6;
+	private static int seconds = 10;
+	private static int minutes = 0;
 	private static JLabel timeLabel;
 	private Timer timer;
 	
@@ -43,7 +42,9 @@ public class PlayActionScreen extends JFrame
 	JLabel [] greenLabels = new JLabel[15];
 	JLabel redLabelHeader, greenLabelHeader;
 	
-	public PlayActionScreen(PlayerEntryScreen screen)	//()
+	playAudio audioFile = new playAudio();
+	
+	public PlayActionScreen(PlayerEntryScreen screen)
 	{
 		// Adds title to the frame
 		actionFrame = new JFrame("Play Action Terminal");
@@ -61,7 +62,7 @@ public class PlayActionScreen extends JFrame
 		int redLabelXPos = (screenWidth / 8);
 		int redLabelYPos = (screenHeight / 16) - 40;
 		
-		redLabelHeader.setBounds(redLabelXPos, redLabelYPos, 280, 40);		// 220, 37
+		redLabelHeader.setBounds(redLabelXPos, redLabelYPos, 280, 40);
 		redLabelHeader.setForeground(Color.RED);
 		Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
 		redLabelHeader.setBorder(border);
@@ -73,7 +74,7 @@ public class PlayActionScreen extends JFrame
 		int greenLabelXPos = ((11 * screenWidth) / 16);
 		int greenLabelYPos = (screenHeight / 16) - 40;
 		
-		greenLabelHeader.setBounds(greenLabelXPos, greenLabelYPos, 280, 40);		// 220, 37
+		greenLabelHeader.setBounds(greenLabelXPos, greenLabelYPos, 280, 40);
 		greenLabelHeader.setForeground(Color.GREEN);
 		Border border2 = BorderFactory.createLineBorder(Color.WHITE, 1);
 		greenLabelHeader.setBorder(border2);
@@ -86,7 +87,7 @@ public class PlayActionScreen extends JFrame
 		int timeLabelXPos = (screenWidth / 2) - 25;
 		int timeLabelYPos = (screenHeight / 16) - 40;
 		
-		timeLabel.setBounds(timeLabelXPos, timeLabelYPos, 300, 40); //220, 37
+		timeLabel.setBounds(timeLabelXPos, timeLabelYPos, 300, 40);
 		timeLabel.setForeground(Color.WHITE);
 		actionFrame.add(timeLabel);
 		
@@ -99,11 +100,11 @@ public class PlayActionScreen extends JFrame
 		
 		for(int i = 1; i < 30; i+=2)
 		{
-			if(!screen.redText[i].equals(""))
+			if(!screen.redText[i].getText().equals(""))
 			{
 				addRedPlayer(new Player(screen.redText[i].getText()));
 			}
-			if(!screen.greenText[i].equals(""))
+			if(!screen.greenText[i].getText().equals(""))
 			{
 				addGreenPlayer(new Player(screen.greenText[i].getText()));
 			}
@@ -114,6 +115,9 @@ public class PlayActionScreen extends JFrame
 		
 		// Sets the windows background color to black
 		actionFrame.getContentPane().setBackground(Color.BLACK);
+		
+		// Plays one of the audio tracks
+		playAudioTrack();
 	}
 	
 	public void gameTimer()
@@ -137,6 +141,10 @@ public class PlayActionScreen extends JFrame
 				{
 					// Stops the timer if minutes and seconds are zero
 					timer.stop();
+					//timerRunning = false;
+					
+					// Stops the audio file once the timer reaches zero
+					audioFile.playCompleted = true; 
 				}
 				
 				// Sets the text for the game timer
@@ -169,10 +177,21 @@ public class PlayActionScreen extends JFrame
 		}
 	}
 	
+	private void playAudioTrack()
+	{
+		//playAudio player = new playAudio();
+		int audioFileInteger = audioFile.generateRandomInteger();
+		
+		String audioFilePath = "Track0" + audioFileInteger + ".wav";
+		//playAudio player = new playAudio();
+		audioFile.play(audioFilePath);
+	}
+	
 	// Testing the Play Action Screen
 	public static void main(String[] args)
 	{
-		//PlayerEntryScreen screen = new PlayerEntryScreen();
-		new PlayActionScreen(new PlayerEntryScreen());		//();
+		new PlayActionScreen(new PlayerEntryScreen());
+		
+		//new PlayActionScreen();
 	}
 }
