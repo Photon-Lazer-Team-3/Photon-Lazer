@@ -30,8 +30,8 @@ public class PlayActionScreen extends JFrame
 {
 	JFrame actionFrame;
 	
-	private static int seconds = 10;
-	private static int minutes = 0;
+	private static int seconds = 0;
+	private static int minutes = 6;
 	private static JLabel timeLabel;
 	private Timer timer;
 	
