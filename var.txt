@@ -1,0 +1,1 @@
+jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW

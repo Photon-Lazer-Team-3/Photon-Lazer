@@ -42,6 +42,8 @@ public class PlayActionScreen extends JFrame
 	JLabel [] redLabels = new JLabel[15];
 	JLabel [] greenLabels = new JLabel[15];
 	JLabel redLabelHeader, greenLabelHeader;
+
+	JLabel greenTeamScore;
 	
 	public PlayActionScreen(PlayerEntryScreen screen)	//()
 	{
@@ -56,7 +58,7 @@ public class PlayActionScreen extends JFrame
 		actionFrame.setSize(screenWidth, screenHeight);
 		
 		// Creates red team name header
-		redLabelHeader = new JLabel("Red Team", SwingConstants.CENTER);
+		redLabelHeader = new JLabel("Red Team", C;
 		
 		int redLabelXPos = (screenWidth / 8);
 		int redLabelYPos = (screenHeight / 16) - 40;
@@ -92,6 +94,11 @@ public class PlayActionScreen extends JFrame
 		
 		actionFrame.add(timeLabel);
 		gameTimer();
+
+		//Green teams starting score
+		greenTeamScore = new JLabel("greenTeamScore", SwingConstants.CENTER);
+		greenTeamScore.setBounds(greenLabelXPos, greenLabelYPos +20, 200, 40);
+		actionFrame.add(greenTeamScore);
 		
 		//Adds players from the entry screen to the Teams
 		redTeam = new Player[15];
@@ -108,6 +115,8 @@ public class PlayActionScreen extends JFrame
 				addGreenPlayer(new Player(screen.greenText[i].getText()));
 			}
 		}
+
+		//Add player lables to the PlayActionScreen
 		
 		actionFrame.setLayout(null);
 		actionFrame.setVisible(true);
@@ -168,11 +177,22 @@ public class PlayActionScreen extends JFrame
 			}
 		}
 	}
+
+	private void timerUpdate()
+	{
+
+	}
+	public void updaet()
+	{
+
+	}	
 	
 	// Testing the Play Action Screen
+	/* 
 	public static void main(String[] args)
 	{
 		//PlayerEntryScreen screen = new PlayerEntryScreen();
 		new PlayActionScreen(new PlayerEntryScreen());		//();
 	}
+	*/
 }

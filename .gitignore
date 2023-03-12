@@ -1,4 +1,4 @@
 target
 .vscode
 Photon-Lazer.jar
-*.class
+.class
