@@ -58,7 +58,7 @@ public class PlayActionScreen extends JFrame
 		actionFrame.setSize(screenWidth, screenHeight);
 		
 		// Creates red team name header
-		redLabelHeader = new JLabel("Red Team", C;
+		redLabelHeader = new JLabel("Red Team", SwingConstants.CENTER);
 		
 		int redLabelXPos = (screenWidth / 8);
 		int redLabelYPos = (screenHeight / 16) - 40;

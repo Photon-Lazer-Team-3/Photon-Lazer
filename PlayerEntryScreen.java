@@ -298,7 +298,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		if (e.getSource() == start)
 		{
 			timerUpdate();
-			PlayerActionScreen actionScreen = new PlayerActionScreen(this);
+			PlayActionScreen actionScreen = new PlayActionScreen(this);
 			this.dispose();
 		}
 	}
