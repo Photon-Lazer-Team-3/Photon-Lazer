@@ -37,6 +37,7 @@ public class PlayActionScreen extends JFrame
 	private static JLabel timeLabel;
 	private Timer timer;
 	
+
 	private ArrayList<Player> redTeam = new ArrayList<Player>();
 	private ArrayList<Player> greenTeam = new ArrayList<Player>();
 	private ArrayList<JLabel> redTeamLabels = new ArrayList<JLabel>();
@@ -55,6 +56,7 @@ public class PlayActionScreen extends JFrame
 
 	JLabel greenTeamScore;
 	JLabel redTeamScore;
+
 	
 	public PlayActionScreen(PlayerEntryScreen screen)	//()
 	{
@@ -80,6 +82,7 @@ public class PlayActionScreen extends JFrame
 		redLabelHeader.setBorder(border);
 		actionFrame.add(redLabelHeader);
 
+
 		//Red team score and players
 		redTeamScore = new JLabel("Score", SwingConstants.CENTER);
 		redTeamScore.setBounds(redLabelXPos, redLabelYPos+25, 280, 40);
@@ -88,6 +91,7 @@ public class PlayActionScreen extends JFrame
 		
 		// Creates green team name header
 		greenLabelHeader = new JLabel("Green Team", SwingConstants.CENTER);
+
 		
 		int greenLabelXPos = ((11 * screenWidth) / 16);
 		int greenLabelYPos = (screenHeight / 16) - 40;
@@ -98,11 +102,13 @@ public class PlayActionScreen extends JFrame
 		greenLabelHeader.setBorder(border2);
 		actionFrame.add(greenLabelHeader);
 
+
 		//Creeate green team score and players
 		greenTeamScore = new JLabel("score", SwingConstants.CENTER);
 		greenTeamScore.setBounds(greenLabelXPos, greenLabelYPos+25, 280, 40);
 		greenTeamScore.setForeground(Color.GREEN);
 		actionFrame.add(greenTeamScore);
+
 		
 		// Creates the game timer
 		timeLabel = new JLabel(String.format("%02d:%02d", minutes, seconds));
@@ -116,6 +122,7 @@ public class PlayActionScreen extends JFrame
 		actionFrame.add(timeLabel);
 		
 		actionFrame.add(timeLabel);
+
 		//gameTimer();
 
 		//Green teams starting score
@@ -194,12 +201,25 @@ public class PlayActionScreen extends JFrame
 
 		//Add player lables to the PlayActionScreen
 		
+
 		actionFrame.setLayout(null);
 		actionFrame.setVisible(true);
 		
 		// Sets the windows background color to black
 		actionFrame.getContentPane().setBackground(Color.BLACK);
 	}
+
+
+	private int cumulativeTeamScore(Player [] team) {
+		int cumScore = 0;
+		if(team != null) {
+			for(int i = 0; i < team.length; i++) {
+				cumScore += team[i].getScore();
+			}
+		}
+		return cumScore;
+	}
+
 	
 	public void gameTimer()
 	{
@@ -214,7 +234,9 @@ public class PlayActionScreen extends JFrame
 				if (seconds < 0)
 				{
 					seconds = 59;
+
 					updatePlayers();
+
 					minutes--;
 				}
 				
@@ -233,6 +255,7 @@ public class PlayActionScreen extends JFrame
 		timer.start();
 	}
 	
+
 	public void updatePlayers()
 	{
 		greenTeamScore.setText(Integer.toString(cumulativeTeamScore(greenTeam)));
@@ -282,5 +305,5 @@ public class PlayActionScreen extends JFrame
 
 	}
 	*/
-	
+
 }
