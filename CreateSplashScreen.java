@@ -14,7 +14,7 @@ public class CreateSplashScreen extends JFrame //JWindow // EDIT on 2/19/23 at 1
 	public CreateSplashScreen()
 	{
 		// Gets the Image for the Splash Screen
-		splashScreen = Toolkit.getDefaultToolkit().getImage("PhotonLogoSplashScreenOriginal.jpg");
+		splashScreen = Toolkit.getDefaultToolkit().getImage("images/PhotonLogoSplashScreenOriginal.jpg");
 		
 		// Gets the Current Screen Size
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
