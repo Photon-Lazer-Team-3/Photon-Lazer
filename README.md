@@ -8,5 +8,4 @@
 # Open up a command prompt/terminal that points to the directory where the Photon-Lazer.jar File is being stored.
 # Type in the following line to run our code: java -jar Photon-Lazer.jar 
 #
-# Note: Supabase does not have a shareable access link to view our Database (like Heroku); therefore, the system's user will
-#        need to be invited to view our Database. We would like to apologize for the inconvenience.
+# Note: Supabase does not have a shareable access link to view our Database (like Heroku); therefore, the system's user will need to be invited to view our Database. We would like to apologize for the inconvenience.
