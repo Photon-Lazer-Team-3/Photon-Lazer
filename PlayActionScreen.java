@@ -36,7 +36,9 @@ public class PlayActionScreen extends JFrame
 	private static int minutes = 6;
 	private static JLabel timeLabel;
 	private Timer timer;
+	playAudio audioFile = new playAudio();
 	
+
 
 	private ArrayList<Player> redTeam = new ArrayList<Player>();
 	private ArrayList<Player> greenTeam = new ArrayList<Player>();
@@ -207,6 +209,7 @@ public class PlayActionScreen extends JFrame
 		
 		// Sets the windows background color to black
 		actionFrame.getContentPane().setBackground(Color.BLACK);
+		playAudioTrack();
 	}
 
 
@@ -265,6 +268,16 @@ public class PlayActionScreen extends JFrame
 		timer.start();
 	}
 	
+
+	private void playAudioTrack()
+	{
+		//playAudio player = new playAudio();
+		int audioFileInteger = audioFile.generateRandomInteger();
+		
+		String audioFilePath = "Track0" + audioFileInteger + ".wav";
+		//playAudio player = new playAudio();
+		audioFile.play(audioFilePath);
+	}
 
 	public void updatePlayers()
 	{
