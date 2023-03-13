@@ -22,8 +22,8 @@ public class Main
 
 
 
-
-       PlayerEntryscreen screen = new PlayerEntryscreen(); 
+        
+       PlayerEntryScreen screen = new PlayerEntryScreen(); 
        while(true)
        {
         int i = 0;

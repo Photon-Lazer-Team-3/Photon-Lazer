@@ -134,10 +134,13 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			long elapsedSeconds = elapsedTime / 1000;
 			long secondsDisplay = elapsedSeconds % 60;
 			long elapsedMinutes = elapsedSeconds / 60;
-			timer.setText(String.valueOf(30 - elapsedSeconds));
+			timer.setText(String.valueOf(2 - elapsedSeconds));
 			timer.paintImmediately(timer.getVisibleRect());
-			if(elapsedSeconds == 30)
-				System.exit(0);
+			if(elapsedSeconds == 2)
+			{
+				entryFrame.setVisible(false);
+				return;
+			}
 		}
 	}
 
@@ -294,14 +297,20 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 				greenText[i].setEnabled(true);
 			}
 		}
-	   
 		if (e.getSource() == start)
 		{
 			timerUpdate();
-			PlayerActionScreen actionScreen = new PlayerActionScreen(this);
-			this.dispose();
+			PlayActionScreen actionScreen = new PlayActionScreen(this);
+			actionScreen.setVisible(true);
+			entryFrame.dispose();
 		}
 	}
+		public String getGreenText(int i)
+	{
+		return greenText[i].getText();
+	}
+
+	
 	
 	// // Testing the Player Entry Screen
 	// public static void main(String[] args)
