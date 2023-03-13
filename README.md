@@ -4,7 +4,7 @@
 #
 # Note: We highly recommend using a Windows computer to run our code to avoid any issues with the GUI.
 #
-# To run our code, please download the Photon-Lazer.jar File to your Windows computer.
+# To run our code, please download the Photon-Lazer.jar File from our "main" branch to your Windows computer.
 # Open up a command prompt/terminal that points to the directory where the Photon-Lazer.jar File is being stored.
 # Type in the following line to run our code: java -jar Photon-Lazer.jar 
 #
