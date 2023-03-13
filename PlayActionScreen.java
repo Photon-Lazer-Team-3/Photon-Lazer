@@ -210,11 +210,11 @@ public class PlayActionScreen extends JFrame
 	}
 
 
-	private int cumulativeTeamScore(Player [] team) {
+	private int cumulativeTeamScore(ArrayList<Player> team) {
 		int cumScore = 0;
 		if(team != null) {
-			for(int i = 0; i < team.length; i++) {
-				cumScore += team[i].getScore();
+			for(int i = 0; i < team.size(); i++) {
+				cumScore += team.get(i).getScore();
 			}
 		}
 		return cumScore;
