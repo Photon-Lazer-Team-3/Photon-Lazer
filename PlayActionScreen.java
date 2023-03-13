@@ -231,6 +231,16 @@ public class PlayActionScreen extends JFrame
 			{
 				// Decrement the seconds and minutes
 				seconds--;
+				if(cumulativeTeamScore(redTeam) > cumulativeTeamScore(greenTeam))
+				{
+					redTeamScore.setVisible(false);
+					redTeamScore.setVisible(true);
+				}
+				else
+				{
+					greenTeamScore.setVisible(false);
+					greenTeamScore.setVisible(false);
+				}
 				if (seconds < 0)
 				{
 					seconds = 59;
