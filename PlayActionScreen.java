@@ -59,7 +59,6 @@ public class PlayActionScreen extends JFrame
 	JLabel redTeamScore;
 
 	
-	playAudio audioFile = new playAudio();
 	
 	public PlayActionScreen(PlayerEntryScreen screen)
 	{
