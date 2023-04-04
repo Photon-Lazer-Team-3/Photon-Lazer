@@ -349,18 +349,18 @@ public class PlayActionScreen extends JFrame
 		// return;
 	// }
 
-
+	
 	public void updatePlayer(String codeName)
 	{
 		for(Player player : redTeam)
 		{
 			if(player.getcodeName() == codeName)
-				player.setScore(1);
+				player.incrementScore(1);
 		}
 		for(Player player : greenTeam)
 		{
 			if(player.getcodeName() == codeName)
-				player.setScore(1);
+				player.incrementScore(1);
 		}
 	}
 	
