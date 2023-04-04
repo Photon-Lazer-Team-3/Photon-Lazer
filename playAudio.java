@@ -22,11 +22,14 @@ public class playAudio implements LineListener
 	//Indicates whether the playback completes or not.
 	boolean playCompleted;
 	
+	// Added by Joseph Telford - 3/9/2023 6:13PM
+	private Clip audioClip;
+	
 	/**
 	* Play a given audio file.
 	* @param audioFilePath Path of the audio file.
 	*/
-	void play(String audioFilePath)
+	public void play(String audioFilePath)
 	{
 		File audioFile = new File(audioFilePath);
 		
@@ -74,25 +77,10 @@ public class playAudio implements LineListener
 		}
 	}
 	
-	
 	// Listens to the START and STOP events of the audio line.
 	@Override
 	public void update(LineEvent event)
 	{
-		// LineEvent.Type type = event.getType();
-		 
-		// if (type == LineEvent.Type.START)
-		// {
-			// //playCompleted = false;
-			// // Debug Statement (Leave Here)
-			// System.out.println("Playback started.");
-		// }
-		// else if (type == LineEvent.Type.STOP)
-		// {
-			// playCompleted = true;
-			// // Debug Statement (Leave Here)
-			// System.out.println("Playback completed.");
-		// }
 	}
 	
 	

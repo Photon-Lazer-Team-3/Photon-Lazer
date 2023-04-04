@@ -36,9 +36,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	JLabel redLabelHeader, greenLabelHeader, timer;
 	
 	JButton edit, start;
-
 	
-	// Added by Joseph Telford --> 2/18/2023 at 2:56PM
 	Dimension screenSize;
 	
 	public PlayerEntryScreen()
@@ -54,7 +52,6 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		// Sets the window size
-		// Next four lines added by Joseph Telford --> 2/18/2023 at 2:56PM
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
@@ -63,11 +60,12 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		// Creates red team name header
 		redLabelHeader = new JLabel("Red Team", SwingConstants.CENTER);
 		
-		int redLabelXPos = (screenWidth / 8);
+		int redLabelXPos = (screenWidth / 32) + 35;		//(screenWidth / 8);
 		int redLabelYPos = (screenHeight / 16) - 40;
 		
-		redLabelHeader.setBounds(redLabelXPos, redLabelYPos, 280, 40);
+		redLabelHeader.setBounds(redLabelXPos, redLabelYPos, 460, 40);		// 280, 40);
 		redLabelHeader.setForeground(Color.RED);
+		redLabelHeader.setFont(new Font("Verdana", Font.BOLD, 20));
 		Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
 		redLabelHeader.setBorder(border);
 		entryFrame.add(redLabelHeader);
@@ -75,11 +73,12 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		// Creates green team name header
 		greenLabelHeader = new JLabel("Green Team", SwingConstants.CENTER);
 		
-		int greenLabelXPos = ((11 * screenWidth) / 16);
+		int greenLabelXPos = ((82 * screenWidth) / 128);							//((11 * screenWidth) / 16);
 		int greenLabelYPos = (screenHeight / 16) - 40;
 		
-		greenLabelHeader.setBounds(greenLabelXPos, greenLabelYPos, 280, 40);
+		greenLabelHeader.setBounds(greenLabelXPos, greenLabelYPos, 460, 40);		// 220, 37
 		greenLabelHeader.setForeground(Color.GREEN);
+		greenLabelHeader.setFont(new Font("Verdana", Font.BOLD, 20));
 		Border border2 = BorderFactory.createLineBorder(Color.WHITE, 1);
 		greenLabelHeader.setBorder(border2);
 		entryFrame.add(greenLabelHeader);
@@ -92,7 +91,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		timer.setFont(new Font("Verdana", Font.PLAIN, 25));
 		
-		timer.setBounds(timerXPos, timerYPos, 40, 40);
+		timer.setBounds(timerXPos, timerYPos, 40, 40); //220, 37
 		timer.setForeground(Color.WHITE);
 		Border border3 = BorderFactory.createLineBorder(Color.WHITE, 1);
 		greenLabelHeader.setBorder(border3);
@@ -122,9 +121,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		// Sets the windows background color to black
 		entryFrame.getContentPane().setBackground(Color.BLACK);
-		int i = 1;
 	}
-
+	
 	public void timerUpdate()
 	{
 		long startTime = System.currentTimeMillis();
@@ -134,154 +132,151 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			long elapsedSeconds = elapsedTime / 1000;
 			long secondsDisplay = elapsedSeconds % 60;
 			long elapsedMinutes = elapsedSeconds / 60;
-			timer.setText(String.valueOf(2 - elapsedSeconds));
+			timer.setText(String.valueOf(30 - elapsedSeconds));
 			timer.paintImmediately(timer.getVisibleRect());
-			if(elapsedSeconds == 2)
-			{
-				entryFrame.setVisible(false);
-				return;
-			}
+			if(elapsedSeconds == 30)
+				System.exit(0);
 		}
 	}
-
+	
 	public void createRedTextbox()
 	{
-		// Added by Joseph Telford
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		// Updated by Joseph Telford
-		int x = screenWidth / 8; // Initial x position
-		int y = screenHeight / 16; // Initial y position
+		
+		int x = (screenWidth / 32) + 35;		//screenWidth / 8; //((3 * screenWidth) / 4); // Initial x position
+		int y = screenHeight / 16;				//(screenHeight / 4); // Initial y position
 		
 		for (int i = 0; i < 30; i++)
 		{
 			redText[i] = new JTextField();
-			redText[i].setBounds(x, y, 140, 40);
+			redText[i].setBounds(x, y, 230, 40);	// 140, 40);
 			redText[i].setEnabled(false);
-
+			
 			if (i % 2 == 0)
 			{
-				x = (screenWidth / 8) + 140;
-			}
-			else
+				x = ((screenWidth / 32) + 35) + 230;	// + 140;
+			} else
 			{
-				x = screenWidth / 8;
+				x = ((screenWidth / 32) + 35);
 				y += 40;
 			}
 			entryFrame.add(redText[i]);
 		}
 	}
-
+	
 	public void createGreenTextbox()
 	{
-		// Added by Joseph Telford
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		// Updated by Joseph Telford
-		int x = (11 * screenWidth) / 16; // Initial x position
-		int y = screenHeight / 16; // Initial y position
+		
+		int x = ((82 * screenWidth) / 128); 			// Initial x position
+		int y = screenHeight / 16;						// Initial y position
 		
 		for (int i = 0; i < 30; i++)
 		{
 			greenText[i] = new JTextField();
-			greenText[i].setBounds(x, y, 140, 40);
+			greenText[i].setBounds(x, y, 230, 40);			//140, 40);
 			greenText[i].setEnabled(false);
-
+			
 			if (i % 2 == 0)
 			{
-				x = ((11 * screenWidth) / 16) + 140;
-			}
-			else
+				x = ((82 * screenWidth) / 128) + 230;		//((11 * screenWidth) / 16) + 140;
+			} else
 			{
-				x = (11 * screenWidth) / 16;
-				y += 40;						// y += 35 was causing overlap issue on Windows
+				x = ((82 * screenWidth) / 128);		//(11 * screenWidth) / 16;
+				y += 40;									//35;	// 35 WAS CAUSING THE WEIRD OVERLAP!!!
 			}
 			entryFrame.add(greenText[i]);
 		}
 	}
-
+	
+	// Creates Numbers 1 - 15 for Red Team
 	public void createRedLabels()
 	{
-		// Added by Joseph Telford
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		// Updated by Joseph Telford
-		int x = (screenWidth / 8) - 35; // Initial x position
+		
+		int x = (screenWidth / 32); //(screenWidth / 8) - 35; // Initial x position
 		int y = screenHeight / 16; // Initial y position
 		
 		for (int i = 0; i < 15; i++)
 		{
 			int number = i + 1;
 			String playerNum = Integer.toString(number);
-			redLabels[i] = new JLabel(playerNum);
-			redLabels[i].setBounds(x, y, 15, 40);
+			redLabels[i] = new JLabel(playerNum, SwingConstants.CENTER);
+			redLabels[i].setBounds(x, y, 20, 40);
 			redLabels[i].setForeground(Color.RED);
+			redLabels[i].setFont(new Font("Verdana", Font.BOLD, 12));
 			y += 40;
 			entryFrame.add(redLabels[i]);
 		}
 	}
-
+	
+	// Creates Numbers 1 - 15 for Green Team
 	public void createGreenLabels()
 	{
-		// Added by Joseph Telford
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		// Updated by Joseph Telford
-		int x = ((11 * screenWidth) / 16) + 315; // Initial x position
-		int y = screenHeight / 16; // Initial y position
+		
+		int x = ((122 * screenWidth) / 128);			//((31 * screenWidth) / 32) - 20;	// Initial x position
+		int y = (screenHeight / 16);			// Initial y position
 		
 		for (int i = 0; i < 15; i++)
 		{
 			int number = i + 1;
 			String playerNum = Integer.toString(number);
-			greenLabels[i] = new JLabel(playerNum);
-			greenLabels[i].setBounds(x, y, 15, 40);
+			greenLabels[i] = new JLabel(playerNum, SwingConstants.CENTER);
+			greenLabels[i].setBounds(x, y, 20, 40);
 			greenLabels[i].setForeground(Color.GREEN);
+			greenLabels[i].setFont(new Font("Verdana", Font.BOLD, 12));
 			y += 40;
 			entryFrame.add(greenLabels[i]);
 		}
 	}
-
+	
 	public void editButton()
 	{
-		// Added by Joseph Telford
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		// Updated by Joseph Telford
+		
 		int editButtonXPos = (screenWidth / 2) - 50 - 75;
 		int editButtonYPos = ((25 * screenHeight) / 32);
 		
 		// Creates edit button
 		edit = new JButton("Edit Game");
-		edit.setBounds(editButtonXPos,editButtonYPos,100,100);
+		edit.setBounds(editButtonXPos,editButtonYPos,100,100);		// 90, 90 // 75, 75
 		// Add action listener to edit button
 		edit.addActionListener(this);
 		entryFrame.add(edit);
 	}
-
+	
 	public void startButton()
 	{
-		// Added by Joseph Telford
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
-		// Updated by Joseph Telford
+		
 		int startButtonXPos = (screenWidth / 2) - 50 + 75;
 		int startButtonYPos = ((25 * screenHeight) / 32);
 		
+		//int timerXPos = (screenWidth / 2) - 25;
+		//int timerYPos = (screenHeight / 16) - 40;
+		
 		// Creates edit button
 		start = new JButton("Start Game");
-		start.setBounds(startButtonXPos,startButtonYPos,100,100);
+		start.setBounds(startButtonXPos,startButtonYPos,100,100);		// 90, 90 // 85, 75
 		// Add action listener to edit button
 		start.addActionListener(this);
 		entryFrame.add(start);
 	}
-
+	
 	// When button is clicked allow input in text fields
 	public void actionPerformed(ActionEvent e)
 	{
@@ -297,24 +292,18 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 				greenText[i].setEnabled(true);
 			}
 		}
+		
 		if (e.getSource() == start)
 		{
 			timerUpdate();
-			PlayActionScreen actionScreen = new PlayActionScreen(this);
-			actionScreen.setVisible(true);
-			entryFrame.dispose();
 		}
 	}
-		public String getGreenText(int i)
+	
+	/*
+	//Testing the Player Entry Screen
+	public static void main(String[] args)
 	{
-		return greenText[i].getText();
+		new PlayerEntryScreen();
 	}
-
-	
-	
-	// // Testing the Player Entry Screen
-	// public static void main(String[] args)
-	// {
-		// new PlayerEntryScreen();
-	// }
+	*/
 }
