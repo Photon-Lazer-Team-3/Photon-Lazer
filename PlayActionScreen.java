@@ -69,17 +69,22 @@ public class PlayActionScreen extends JFrame
 		int screenWidth = (int)screenSize.getWidth();
 		int screenHeight = (int)screenSize.getHeight();
 		actionFrame.setSize(screenWidth, screenHeight);
+
+		//Declare screen positions of jlabels
+		int redLabelXPos = (screenWidth / 55);
+		int greenLabelXPos = ((21 * screenWidth) / 32);
+		int labelYPos = (screenHeight / 16) - 60;
+
+		int timeLabelXPos = (screenWidth / 2) - 25;
+		int timeLabelYPos = (screenHeight / 16) - 40;
 		
 		//Create team headers
-		setupHeader(actionFrame, screenWidth, screenHeight, 'r', redTeam);
-		setupHeader(actionFrame, screenWidth, screenHeight, 'g', greenTeam);
+		setupHeader(redTeam, actionFrame, redLabelXPos, labelYPos);
+		setupHeader(greenTeam, actionFrame, greenLabelXPos, labelYPos);
 		
 		// Creates the game timer
 		timeLabel = new JLabel(String.format("%02d:%02d", minutes, seconds));
 		timeLabel.setFont(new Font("Verdana", Font.PLAIN, 25));
-		
-		int timeLabelXPos = (screenWidth / 2) - 25;
-		int timeLabelYPos = (screenHeight / 16) - 40;
 		
 		timeLabel.setBounds(timeLabelXPos, timeLabelYPos, 300, 40);
 		timeLabel.setForeground(Color.WHITE);
@@ -101,15 +106,9 @@ public class PlayActionScreen extends JFrame
 			}
 		}
 		
-		int redLabelXPos = (screenWidth / 55);		//(screenWidth / 32); //(screenWidth / 8);
-		int redLabelYPos = (screenHeight / 16) - 60;
-		
-		int greenLabelXPos = ((21 * screenWidth) / 32);		//((11 * screenWidth) / 16);
-		int greenLabelYPos = (screenHeight / 16) - 60;
-		
 		//Adds Player Labels to the Play Action Screen
-		addPlayerLabels(redTeam, redLabelXPos, redLabelYPos, redTeamLabels, redTeamScores);
-		addPlayerLabels(greenTeam, greenLabelXPos, greenLabelYPos, greenTeamLabels, greenTeamScores);
+		addPlayerLabels(redTeam, redLabelXPos, labelYPos, redTeamLabels, redTeamScores);
+		addPlayerLabels(greenTeam, greenLabelXPos, labelYPos, greenTeamLabels, greenTeamScores);
 
 		actionFrame.setLayout(null);
 		actionFrame.setVisible(true);
@@ -121,24 +120,21 @@ public class PlayActionScreen extends JFrame
 	}
 	
 	//Create team headers
-	private void setupHeader(JFrame actionFrame, int screenWidth, int screenHeight, char color, ArrayList<Player> team) // Player [] team)
+	private void setupHeader(ArrayList<Player> team, JFrame actionFrame, int labelXPos, int labelYPos)
 	{
 		String teamName = "";
 		Color headerColor = null;
-		int labelXPos = 0;
-		int labelYPos = (screenHeight / 16) - 40;
 		int width = 500; //450; //420; //280;
 		int height = 40;
-		
-		if(color == 'r') {
+
+		if(team == redTeam) {
 			teamName = "Red Team";
 			headerColor = Color.RED;
-			labelXPos = (screenWidth / 55);		//(screenWidth / 64); //(screenWidth / 32); //(screenWidth / 8);
 		}
-		if(color == 'g') {
+
+		if(team == greenTeam) {
 			teamName = "Green Team";
 			headerColor = Color.GREEN;
-			labelXPos = ((21 * screenWidth) / 32);		//((11 * screenWidth) / 16); - Not Enough Space
 		}
 
 		//Display team names
@@ -316,8 +312,8 @@ public class PlayActionScreen extends JFrame
 
 		// Retrieves Code Names and Scores
 		for(int i = 0; i < team.size(); i++) {
-			teamLabels.get(i).setText(greenTeam.get(i).getcodeName());
-			teamScores.get(i).setText(Integer.toString(greenTeam.get(i).getScore()));
+			teamLabels.get(i).setText(team.get(i).getcodeName());
+			teamScores.get(i).setText(Integer.toString(team.get(i).getScore()));
 		}
 
 		// Ensures no duplicate labels for players' code names are created
@@ -518,7 +514,8 @@ public class PlayActionScreen extends JFrame
 		actionFrame.repaint();
 }
 
-	public void printPlayers()
+	//Not really used at all
+	/*public void printPlayers()
 	{
 		for(Player player : redTeam)
 		{
@@ -528,7 +525,7 @@ public class PlayActionScreen extends JFrame
 		{
 			System.out.println(player);
 		}
-	}
+	}*/
 	
 	//Testing the Play Action Screen
 	public static void main(String[] args)
@@ -545,11 +542,11 @@ public class PlayActionScreen extends JFrame
 		screen.redText[3].setText("AndrewMurphster420");
 		screen.redText[5].setText("SirJoseph167");
 		screen.redText[7].setText("testlimitsinalllowercaseletter");		// Fits 30 lowercase letter
-		screen.redText[9].setText("Player5");
-		screen.redText[11].setText("Player6");
-		screen.redText[13].setText("Player7");
-		screen.redText[15].setText("Player8");
-		screen.redText[17].setText("Player9");
+		screen.redText[9].setText("beerAndPizza42");
+		screen.redText[11].setText("p1nballw1zard");
+		screen.redText[13].setText("MinneSolar");
+		screen.redText[15].setText("geeks5geeks.org");
+		screen.redText[17].setText("A* Platinum");
 		screen.redText[19].setText("Player10");
 		screen.redText[21].setText("Player11");
 		screen.redText[23].setText("Player12");
@@ -561,11 +558,11 @@ public class PlayActionScreen extends JFrame
 		screen.greenText[3].setText("ParkerGentHerDone69");
 		screen.greenText[5].setText("JimStrother404");
 		screen.greenText[7].setText("TESTTHELIMITSWITHALLCAPITALLET");		//Fits 30 Capital Letters
-		screen.greenText[9].setText("Player20");
-		screen.greenText[11].setText("Player21");
-		screen.greenText[13].setText("Player22");
-		screen.greenText[15].setText("Player23");
-		screen.greenText[17].setText("Player24");
+		screen.greenText[9].setText("DarkestWingDuck");
+		screen.greenText[11].setText("Steven Lynch");
+		screen.greenText[13].setText("PingPeng1010");
+		screen.greenText[15].setText("MapWhoPlaysGuyGames");
+		screen.greenText[17].setText("SaulCaller505");
 		screen.greenText[19].setText("Player25");
 		screen.greenText[21].setText("Player26");
 		screen.greenText[23].setText("Player27");
