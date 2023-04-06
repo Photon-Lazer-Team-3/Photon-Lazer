@@ -26,6 +26,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+//import java.awt.Dimension;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+
 import java.util.ArrayList;
 
 public class PlayActionScreen extends JFrame
@@ -91,18 +98,28 @@ public class PlayActionScreen extends JFrame
 		
 		
 		// Data from Traffic Generator?
-		gameTrafficLabel = new JLabel();
-		gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
+		System.out.println("Before Try");
+		try
+		{
+			UDPServer();
+		}
+		catch (IOException e)
+		{
+			System.out.println("Breaks Here");
+		}
+		System.out.println("After Catch");
+		// gameTrafficLabel = new JLabel();
+		// gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
 		
-		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
-		int gameTrafficLabelYPos = (screenHeight / 16);
+		// int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
+		// int gameTrafficLabelYPos = (screenHeight / 16);
 		
-		gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
-		gameTrafficLabel.setForeground(Color.WHITE);
-		gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		actionFrame.add(gameTrafficLabel);
+		// gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
+		// gameTrafficLabel.setForeground(Color.WHITE);
+		// gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		// actionFrame.add(gameTrafficLabel);
 		
-		actionFrame.add(timeLabel);
+		// actionFrame.add(timeLabel);
 		gameTimer();
 		
 		// Adds Players to the Team ArrayLists
@@ -184,6 +201,74 @@ public class PlayActionScreen extends JFrame
 		actionFrame.getContentPane().setBackground(Color.BLACK);
 		
 		playAudioTrack();
+	}
+
+	public void UDPServer() throws IOException
+	{
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int screenWidth = (int)screenSize.getWidth();
+		int screenHeight = (int)screenSize.getHeight();
+		
+		System.out.println("Here");
+		
+		JLabel label = new JLabel();
+		//gameTrafficLabel = new JLabel();
+		label.setFont(new Font("Verdana", Font.PLAIN, 14));
+		
+		int labelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
+		int labelYPos = (screenHeight / 16);
+		
+		label.setBounds(labelXPos, labelYPos, 425, 640);
+		label.setForeground(Color.WHITE);
+		label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		
+		actionFrame.getContentPane().add(label);
+		
+		System.out.println("Created Label");
+		
+		// Step 1 : Create a socket to listen at port 7501
+        DatagramSocket UDPServerSocket = new DatagramSocket(7501);
+        System.out.println("UDP Server up and listening");
+		
+        // Create a JFrame and a JLabel to display the received message
+        //JFrame frame = new JFrame();
+        // JLabel label = new JLabel();
+		// //gameTrafficLabel = new JLabel();
+		// label.setFont(new Font("Verdana", Font.PLAIN, 14));
+		
+		// int labelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
+		// int labelYPos = (screenHeight / 16);
+		
+		// label.setBounds(labelXPos, labelYPos, 425, 640);
+		// label.setForeground(Color.WHITE);
+		// label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		
+		// actionFrame.getContentPane().add(label);
+		
+		
+        //frame.getContentPane().add(label).setSize(800,800);
+        //label.setPreferredSize(new Dimension(800, 800));
+        //frame.pack();
+        //frame.setVisible(true);
+		
+		System.out.println("Before While Loop");
+		
+        byte[] receive = new byte[1024];
+        DatagramPacket DataPacketReceive = null;
+        
+        while (DataPacketReceive != null)
+		{
+            // DatagramPacket to receive the data.
+            DataPacketReceive = new DatagramPacket(receive, receive.length);
+			
+            // Receive the data in byte buffer.
+            UDPServerSocket.receive(DataPacketReceive);
+            String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
+			
+            // Set the label text to the received message
+            label.setText(sentence);
+		}
+		//System.out.println("After While Loop");
 	}
 
 	//Create team headers
