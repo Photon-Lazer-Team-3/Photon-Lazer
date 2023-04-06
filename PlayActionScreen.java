@@ -38,6 +38,8 @@ public class PlayActionScreen extends JFrame
 	private static JLabel timeLabel;
 	private Timer timer;
 	
+	private static JLabel gameTrafficLabel;
+	
 	//private Player redTeam[];
 	//private Player greenTeam[];
 	
@@ -60,6 +62,8 @@ public class PlayActionScreen extends JFrame
 	
 	public PlayActionScreen(PlayerEntryScreen screen)
 	{
+		//UDPServer server = new UDPServer();
+		
 		// Adds title to the frame
 		actionFrame = new JFrame("Play Action Terminal");
 		
@@ -84,6 +88,19 @@ public class PlayActionScreen extends JFrame
 		timeLabel.setBounds(timeLabelXPos, timeLabelYPos, 300, 40);
 		timeLabel.setForeground(Color.WHITE);
 		actionFrame.add(timeLabel);
+		
+		
+		// Data from Traffic Generator?
+		gameTrafficLabel = new JLabel();
+		gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
+		
+		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
+		int gameTrafficLabelYPos = (screenHeight / 16);
+		
+		gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
+		gameTrafficLabel.setForeground(Color.WHITE);
+		gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		actionFrame.add(gameTrafficLabel);
 		
 		actionFrame.add(timeLabel);
 		gameTimer();
@@ -168,7 +185,7 @@ public class PlayActionScreen extends JFrame
 		
 		playAudioTrack();
 	}
-	
+
 	//Create team headers
 	private void setupHeader(JFrame actionFrame, int screenWidth, int screenHeight, char color, ArrayList<Player> team) // Player [] team)
 	{
@@ -348,21 +365,6 @@ public class PlayActionScreen extends JFrame
 		// }
 		// return;
 	// }
-
-	
-	public void updatePlayer(String codeName)
-	{
-		for(Player player : redTeam)
-		{
-			if(player.getcodeName() == codeName)
-				player.incrementScore(1);
-		}
-		for(Player player : greenTeam)
-		{
-			if(player.getcodeName() == codeName)
-				player.incrementScore(1);
-		}
-	}
 	
 	public void updatePlayers()
 	{
