@@ -211,7 +211,13 @@ public class PlayActionScreen extends JFrame
 		
 		System.out.println("Here");
 		
-		JLabel label = new JLabel();
+		// Step 1 : Create a socket to listen at port 7501
+        DatagramSocket UDPServerSocket = new DatagramSocket(7501);
+        System.out.println("UDP Server up and listening");
+		
+        // Create a JFrame and a JLabel to display the received message
+        //JFrame frame = new JFrame();
+        JLabel label = new JLabel();
 		//gameTrafficLabel = new JLabel();
 		label.setFont(new Font("Verdana", Font.PLAIN, 14));
 		
@@ -221,29 +227,8 @@ public class PlayActionScreen extends JFrame
 		label.setBounds(labelXPos, labelYPos, 425, 640);
 		label.setForeground(Color.WHITE);
 		label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		
-		actionFrame.getContentPane().add(label);
-		
-		System.out.println("Created Label");
-		
-		// Step 1 : Create a socket to listen at port 7501
-        DatagramSocket UDPServerSocket = new DatagramSocket(7501);
-        System.out.println("UDP Server up and listening");
-		
-        // Create a JFrame and a JLabel to display the received message
-        //JFrame frame = new JFrame();
-        // JLabel label = new JLabel();
-		// //gameTrafficLabel = new JLabel();
-		// label.setFont(new Font("Verdana", Font.PLAIN, 14));
-		
-		// int labelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
-		// int labelYPos = (screenHeight / 16);
-		
-		// label.setBounds(labelXPos, labelYPos, 425, 640);
-		// label.setForeground(Color.WHITE);
-		// label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		
-		// actionFrame.getContentPane().add(label);
+		//actionFrame.pack();
+		actionFrame.add(label);
 		
 		
         //frame.getContentPane().add(label).setSize(800,800);
@@ -256,7 +241,22 @@ public class PlayActionScreen extends JFrame
         byte[] receive = new byte[1024];
         DatagramPacket DataPacketReceive = null;
         
-        while (DataPacketReceive != null)
+		// while (true)
+		// {
+			// // DatagramPacket to receive the data.
+			// DataPacketReceive = new DatagramPacket(receive, receive.length);
+			
+			// // Receive the data in byte buffer.
+			// UDPServerSocket.receive(DataPacketReceive);
+			// String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
+			
+			// // Set the label text to the received message
+			// label.setText(sentence);
+			// label.paintImmediately(label.getVisibleRect());
+			// System.out.println("Sentence Printed!");
+		// }
+		
+        while (true)
 		{
             // DatagramPacket to receive the data.
             DataPacketReceive = new DatagramPacket(receive, receive.length);
@@ -266,9 +266,18 @@ public class PlayActionScreen extends JFrame
             String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
 			
             // Set the label text to the received message
+			//label.setForeground(Color.WHITE);
             label.setText(sentence);
+			label.paintImmediately(label.getVisibleRect());
+			System.out.println("Sentence Printed!");
+			
+			if (DataPacketReceive == null)
+			{
+				break;
+			}
+			
 		}
-		//System.out.println("After While Loop");
+		System.out.println("After While Loop");
 	}
 
 	//Create team headers
