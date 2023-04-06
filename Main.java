@@ -18,12 +18,13 @@ public class Main
 		{
 			e.printStackTrace();
 		}
-        Database db = new Database();
+        //Database db = new Database();
 
 
 
         
        PlayerEntryScreen screen = new PlayerEntryScreen(); 
+       /* 
        while(true)
        {
         int i = 0;
@@ -56,5 +57,6 @@ public class Main
             i += 2;
         }
        }
+       */
     }
 }

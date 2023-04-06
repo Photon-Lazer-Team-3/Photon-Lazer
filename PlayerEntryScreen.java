@@ -25,21 +25,21 @@ import java.awt.Font;
 
 public class PlayerEntryScreen extends JFrame implements ActionListener
 {
-	JFrame entryFrame;
-	JTextField [] redText = new JTextField[30];
-	JTextField [] greenText = new JTextField[30];
-	boolean [] greenTextUpdate = new boolean[30];
-	boolean [] redTextUpdate = new boolean[30];
+	private JFrame entryFrame;
+	private JTextField [] redText = new JTextField[30];
+	private JTextField [] greenText = new JTextField[30];
+	private boolean [] greenTextUpdate = new boolean[30];
+	private boolean [] redTextUpdate = new boolean[30];
 	
-	JLabel [] redLabels = new JLabel[15];
-	JLabel [] greenLabels = new JLabel[15];
-	JLabel redLabelHeader, greenLabelHeader, timer;
+	private JLabel [] redLabels = new JLabel[15];
+	private JLabel [] greenLabels = new JLabel[15];
+	private JLabel redLabelHeader, greenLabelHeader, timer;
 	
-	JButton edit, start;
+	private JButton edit, start;
 
 	
 	// Added by Joseph Telford --> 2/18/2023 at 2:56PM
-	Dimension screenSize;
+	private Dimension screenSize;
 	
 	public PlayerEntryScreen()
 	{
@@ -122,7 +122,34 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		// Sets the windows background color to black
 		entryFrame.getContentPane().setBackground(Color.BLACK);
-		int i = 1;
+		
+		for(int i = 0; i < 30; i++)
+		{
+			greenText[i].getDocument().addDocumentListener(new DocumentListener() {
+				public void changedUpdate(DocumentEvent e)
+				{
+					System.out.println("DOG");
+				}
+
+				public void removeUpdate(DocumentEvent e){
+					System.out.println("CAT");
+				}
+				public void insertUpdate(DocumentEvent e){
+					try{
+					
+					//System.out.println("length:" + e.getLength() + " offset: " + e.getOffset());
+					//System.out.println(e.getDocument().getText(e.getLength(), e.getOffset()));
+					//System.out.println(greenText.indexOf(e.getDocument().getText(e.getLength(), e.getOffset())));
+					greenText.
+					}catch(Exception b)
+					{
+						b.printStackTrace();
+					}
+					
+				}
+				
+			});
+		}
 	}
 
 	public void timerUpdate()
@@ -300,8 +327,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		if (e.getSource() == start)
 		{
 			timerUpdate();
-			PlayActionScreen actionScreen = new PlayActionScreen(this);
-			actionScreen.setVisible(true);
+			//PlayActionScreen actionScreen = new PlayActionScreen(this);
+			//actionScreen.setVisible(true);
 			entryFrame.dispose();
 		}
 	}
