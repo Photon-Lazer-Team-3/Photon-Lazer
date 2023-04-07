@@ -27,7 +27,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 {
 	private JFrame entryFrame;
 	private JTextField [] redText = new JTextField[30];
-	private JTextField [] greenText = new JTextField[30];
+	private ModifiedTextField [] greenText = new ModifiedTextField[30];
 	private boolean [] greenTextUpdate = new boolean[30];
 	private boolean [] redTextUpdate = new boolean[30];
 	
@@ -133,6 +133,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 
 				public void removeUpdate(DocumentEvent e){
 					System.out.println("CAT");
+					
 				}
 				public void insertUpdate(DocumentEvent e){
 					try{
@@ -140,7 +141,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 					//System.out.println("length:" + e.getLength() + " offset: " + e.getOffset());
 					//System.out.println(e.getDocument().getText(e.getLength(), e.getOffset()));
 					//System.out.println(greenText.indexOf(e.getDocument().getText(e.getLength(), e.getOffset())));
-					greenText.
+					ModifiedTextField text = (ModifiedTextField) e.getDocument().; //This needs to be a way to get the JTextField that triggered it of whcih I don't know how to
+					//System.out.println(text.getIndex());
 					}catch(Exception b)
 					{
 						b.printStackTrace();
@@ -212,7 +214,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		for (int i = 0; i < 30; i++)
 		{
-			greenText[i] = new JTextField();
+
+			greenText[i] = new ModifiedTextField(i);
 			greenText[i].setBounds(x, y, 140, 40);
 			greenText[i].setEnabled(false);
 
