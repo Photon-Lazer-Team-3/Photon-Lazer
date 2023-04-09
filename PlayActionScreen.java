@@ -35,7 +35,7 @@ public class PlayActionScreen extends JFrame
 	private static int minutes = 6;
 	private static JLabel timeLabel;
 	private Timer timer;
-	playAudio audioFile = new playAudio();
+	//playAudio audioFile = new playAudio();
 	
 
 
@@ -133,16 +133,16 @@ public class PlayActionScreen extends JFrame
 		greenTeamScore.setBounds(greenLabelXPos, greenLabelYPos +20, 200, 40);
 		actionFrame.add(greenTeamScore);
 		
-		
+		//First I need to fix this small problem which is not that big of a problem in all reality
 		for(int i =1; i < 30; i+=2)
 		{
-			if(!screen.redText[i].getText().equals(""))
+			if(!screen.getRedText(i).equals(""))
 			{
-				redTeam.add(new Player(screen.redText[i].getText()));
+				redTeam.add(new Player(screen.getRedText(i)));
 			}
-			if(!screen.greenText[i].getText().equals(""))
+			if(!screen.getGreenText(i).equals(""))
 			{
-				greenTeam.add(new Player(screen.greenText[i].getText()));
+				greenTeam.add(new Player(screen.getGreenText(i)));
 			}
 		}
 		

@@ -7,7 +7,9 @@ import javax.swing.event.DocumentListener;
 public class ModifiedTextField extends JTextField{
     private int index;
     private String value;
-    private long lastUpdate = NULL;
+    //Why does this now through an error at me right now this makes no sense to me right now
+    //Should we have another boolean variable to tell us when the database has checked it maybe
+    private long lastUpdate = -1;
     private boolean updated;
     public ModifiedTextField(int index)
     {
@@ -16,7 +18,7 @@ public class ModifiedTextField extends JTextField{
         this.value = value;
         this.updated = false;
 
-
+        //! Hopefully these method calls should work. The problem is that I don't know if these calls will call the object that made them or do something else that I don't know what it will do
         this.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e)
             {}
@@ -24,10 +26,9 @@ public class ModifiedTextField extends JTextField{
             {}
             public void insertUpdate(DocumentEvent e)
             {
-                if(this.isUpdated() != true)
-                {
-                    this.checkUpdate();
-                }
+                //If the textField is not updated then check to see if the user is done updating
+                if(updated != true)
+                    update();
             }
         });
     }
@@ -43,20 +44,20 @@ public class ModifiedTextField extends JTextField{
     }
 
     //Checks when the last key stroke was added
-    private void checkUpdate()
+    public void update()
     {
-        long currentUpdate = System.currentTimeMillis();
-        if(lastUpdate == NULL)
+        long updateTime = System.currentTimeMillis();
+        if(lastUpdate == -1)
         {
-            lastUpdate = System.currentTimeMillis();
+            lastUpdate = updateTime;
+            return;
         }
         else
         {
-            if((lastUpdate - currentUpdate) > 500)
-            {
+            long difference = updateTime - this.lastUpdate;
+            //Checks to see if the last update was less than half a second a go and if so changes updated value to true
+            if(difference >= 5000)
                 updated = true;
-                this.setEditable(false);
-            }
         }
     }
 
