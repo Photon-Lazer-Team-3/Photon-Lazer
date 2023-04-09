@@ -141,7 +141,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 					//System.out.println("length:" + e.getLength() + " offset: " + e.getOffset());
 					//System.out.println(e.getDocument().getText(e.getLength(), e.getOffset()));
 					//System.out.println(greenText.indexOf(e.getDocument().getText(e.getLength(), e.getOffset())));
-					ModifiedTextField text = (ModifiedTextField) e.getDocument().; //This needs to be a way to get the JTextField that triggered it of whcih I don't know how to
+					ModifiedTextField text = (ModifiedTextField) e.getDocument(); //This needs to be a way to get the JTextField that triggered it of whcih I don't know how to
 					//System.out.println(text.getIndex());
 					}catch(Exception b)
 					{
@@ -152,6 +152,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 				
 			});
 		}
+
+		Database db = new Database();
 	}
 
 	public void timerUpdate()
@@ -310,6 +312,23 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		// Add action listener to edit button
 		start.addActionListener(this);
 		entryFrame.add(start);
+	}
+
+
+	//This will go over everything and check for updates and do other things
+	public void update()
+	{
+		//This will check to see if the cell has been updated and then will update the correct cell
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(greenText[i].isUpdated())
+			{
+				if(!greenText[i+1].isUpdated())
+				{
+					greenText[i+1].setText(db.)
+				}
+			}
+		}
 	}
 
 	// When button is clicked allow input in text fields
