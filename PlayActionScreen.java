@@ -98,26 +98,26 @@ public class PlayActionScreen extends JFrame
 		
 		
 		// Data from Traffic Generator?
-		System.out.println("Before Try");
-		try
-		{
-			UDPServer();
-		}
-		catch (IOException e)
-		{
-			System.out.println("Breaks Here");
-		}
-		System.out.println("After Catch");
-		// gameTrafficLabel = new JLabel();
-		// gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
+		// System.out.println("Before Try");
+		// try
+		// {
+			// UDPServer();
+		// }
+		// catch (IOException e)
+		// {
+			// System.out.println("Breaks Here");
+		// }
+		// System.out.println("After Catch");
+		gameTrafficLabel = new JLabel();
+		gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
 		
-		// int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
-		// int gameTrafficLabelYPos = (screenHeight / 16);
+		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
+		int gameTrafficLabelYPos = (screenHeight / 16);
 		
-		// gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
-		// gameTrafficLabel.setForeground(Color.WHITE);
-		// gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		// actionFrame.add(gameTrafficLabel);
+		gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
+		gameTrafficLabel.setForeground(Color.WHITE);
+		gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		actionFrame.add(gameTrafficLabel);
 		
 		// actionFrame.add(timeLabel);
 		gameTimer();
@@ -125,13 +125,13 @@ public class PlayActionScreen extends JFrame
 		// Adds Players to the Team ArrayLists
 		for(int i =1; i < 30; i+=2)
 		{
-			if(!screen.redText[i].getText().equals(""))
+			if(!screen.getRedText(i).equals(""))
 			{
-				redTeam.add(new Player(screen.redText[i].getText()));
+				redTeam.add(new Player(screen.getRedText(i)));
 			}
-			if(!screen.greenText[i].getText().equals(""))
+			if(!screen.getGreenText(i).equals(""))
 			{
-				greenTeam.add(new Player(screen.greenText[i].getText()));
+				greenTeam.add(new Player(screen.getGreenText(i)));
 			}
 		}
 		
@@ -612,7 +612,10 @@ public class PlayActionScreen extends JFrame
 		}
 	}
 	
-	//Testing the Play Action Screen
+	
+	
+	
+	// //Testing the Play Action Screen
 	public static void main(String[] args)
 	{
 		//PlayerEntryScreen screen = new PlayerEntryScreen();
@@ -623,37 +626,37 @@ public class PlayActionScreen extends JFrame
 		// Hard-Coded Test Cases for Play Action Screen and Player Entry Screen
 		PlayerEntryScreen screen = new PlayerEntryScreen();
 		
-		screen.redText[1].setText("AlexPrill999");
-		screen.redText[3].setText("AndrewMurphster420");
-		screen.redText[5].setText("SirJoseph167");
-		screen.redText[7].setText("testlimitsinalllowercaseletter");		// Fits 30 lowercase letter
-		screen.redText[9].setText("Player5");
-		screen.redText[11].setText("Player6");
-		screen.redText[13].setText("Player7");
-		screen.redText[15].setText("Player8");
-		screen.redText[17].setText("Player9");
-		screen.redText[19].setText("Player10");
-		screen.redText[21].setText("Player11");
-		screen.redText[23].setText("Player12");
-		screen.redText[25].setText("Player13");
-		screen.redText[27].setText("Player14");
-		screen.redText[29].setText("Player15");
+		screen.setRedText(1, "AlexPrill999");
+		screen.setRedText(3, "AndrewMurphster420");
+		screen.setRedText(5, "SirJoseph167");
+		screen.setRedText(7, "testlimitsinalllowercaseletter");		// Fits 30 lowercase letter
+		// screen.redText[9].setText("Player5");
+		// screen.redText[11].setText("Player6");
+		// screen.redText[13].setText("Player7");
+		// screen.redText[15].setText("Player8");
+		// screen.redText[17].setText("Player9");
+		// screen.redText[19].setText("Player10");
+		// screen.redText[21].setText("Player11");
+		// screen.redText[23].setText("Player12");
+		// screen.redText[25].setText("Player13");
+		// screen.redText[27].setText("Player14");
+		// screen.redText[29].setText("Player15");
 		
-		screen.greenText[1].setText("BenFletcherHonda");
-		screen.greenText[3].setText("ParkerGentHerDone69");
-		screen.greenText[5].setText("JimStrother404");
-		screen.greenText[7].setText("TESTTHELIMITSWITHALLCAPITALLET");		//Fits 30 Capital Letters
-		screen.greenText[9].setText("Player20");
-		screen.greenText[11].setText("Player21");
-		screen.greenText[13].setText("Player22");
-		screen.greenText[15].setText("Player23");
-		screen.greenText[17].setText("Player24");
-		screen.greenText[19].setText("Player25");
-		screen.greenText[21].setText("Player26");
-		screen.greenText[23].setText("Player27");
-		screen.greenText[25].setText("Player28");
-		screen.greenText[27].setText("Player29");
-		screen.greenText[29].setText("Player30");
+		screen.setGreenText(1, "BenFletcherHonda");
+		screen.setGreenText(3, "ParkerGentHerDone69");
+		screen.setGreenText(5, "JimStrother404");
+		screen.setGreenText(7, "TESTTHELIMITSWITHALLCAPITALLET");		//Fits 30 Capital Letters
+		// screen.greenText[9].setText("Player20");
+		// screen.greenText[11].setText("Player21");
+		// screen.greenText[13].setText("Player22");
+		// screen.greenText[15].setText("Player23");
+		// screen.greenText[17].setText("Player24");
+		// screen.greenText[19].setText("Player25");
+		// screen.greenText[21].setText("Player26");
+		// screen.greenText[23].setText("Player27");
+		// screen.greenText[25].setText("Player28");
+		// screen.greenText[27].setText("Player29");
+		// screen.greenText[29].setText("Player30");
 		
 		PlayActionScreen dew = new PlayActionScreen(screen);
 	}
