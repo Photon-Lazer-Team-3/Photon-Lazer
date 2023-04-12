@@ -40,8 +40,9 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	
 	// Added by Joseph Telford --> 2/18/2023 at 2:56PM
 	private Dimension screenSize;
+	Database db;
 	
-	public PlayerEntryScreen()
+	public PlayerEntryScreen() throws Exception
 	{
 		// Adds title to the frame
 		entryFrame = new JFrame("Player Entry Terminal");
@@ -153,7 +154,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			});
 		}
 
-		Database db = new Database();
+		db = new Database();
 	}
 
 	public void timerUpdate()
@@ -316,19 +317,26 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 
 
 	//This will go over everything and check for updates and do other things
-	public void update()
+	public void update() throws NumberFormatException, SQLException
 	{
-		//This will check to see if the cell has been updated and then will update the correct cell
 		for(int i = 0; i < 30; i+=2)
 		{
 			if(greenText[i].isUpdated())
 			{
-				if(!greenText[i+1].isUpdated())
+				if(db.idExist(Integer.parseInt((greenText[i].getText()))))
 				{
-					greenText[i+1].setText(db.)
+					greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
+				}
+				else
+				{
+					if(greenText[i].isUpdated() && greenText[i+1].isUpdated())
+					{
+						db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i+1].getText());
+					}
 				}
 			}
 		}
+		
 	}
 
 	// When button is clicked allow input in text fields
@@ -357,6 +365,10 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	public String getGreenText(int i)
 	{
 		return greenText[i].getText();
+	}
+	public String getRedText(int i)
+	{
+		return redText[i].getText();
 	}
 
 	public void setRedText(int i, String text)
