@@ -354,9 +354,19 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			entryFrame.dispose();
 		}
 	}
-		public String getGreenText(int i)
+	public String getGreenText(int i)
 	{
 		return greenText[i].getText();
+	}
+
+	public void setRedText(int i, String text)
+	{
+		this.redText[i].setText(text);
+	}
+
+	public void setGreenText(int i, String text)
+	{
+		this.greenText[i].setText(text);
 	}
 
 	
