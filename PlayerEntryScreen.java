@@ -25,23 +25,24 @@ import java.awt.Font;
 
 public class PlayerEntryScreen extends JFrame implements ActionListener
 {
-	JFrame entryFrame;
-	JTextField [] redText = new JTextField[30];
-	JTextField [] greenText = new JTextField[30];
-	boolean [] greenTextUpdate = new boolean[30];
-	boolean [] redTextUpdate = new boolean[30];
+	private JFrame entryFrame;
+	private JTextField [] redText = new JTextField[30];
+	private ModifiedTextField [] greenText = new ModifiedTextField[30];
+	private boolean [] greenTextUpdate = new boolean[30];
+	private boolean [] redTextUpdate = new boolean[30];
 	
-	JLabel [] redLabels = new JLabel[15];
-	JLabel [] greenLabels = new JLabel[15];
-	JLabel redLabelHeader, greenLabelHeader, timer;
+	private JLabel [] redLabels = new JLabel[15];
+	private JLabel [] greenLabels = new JLabel[15];
+	private JLabel redLabelHeader, greenLabelHeader, timer;
 	
-	JButton edit, start;
+	private JButton edit, start;
 
 	
 	// Added by Joseph Telford --> 2/18/2023 at 2:56PM
-	Dimension screenSize;
+	private Dimension screenSize;
+	Database db;
 	
-	public PlayerEntryScreen()
+	public PlayerEntryScreen() throws Exception
 	{
 		// Adds title to the frame
 		entryFrame = new JFrame("Player Entry Terminal");
@@ -122,7 +123,35 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		// Sets the windows background color to black
 		entryFrame.getContentPane().setBackground(Color.BLACK);
-		//int i = 1;
+		
+		for(int i = 0; i < 30; i++)
+		{
+			greenText[i].getDocument().addDocumentListener(new DocumentListener() {
+				public void changedUpdate(DocumentEvent e)
+				{
+					System.out.println("DOG");
+				}
+
+				public void removeUpdate(DocumentEvent e){
+					System.out.println("CAT");
+					
+				}
+				public void insertUpdate(DocumentEvent e){
+					try{
+
+					ModifiedTextField text = (ModifiedTextField) e.getDocument(); //This needs to be a way to get the JTextField that triggered it of whcih I don't know how to
+					
+					}catch(Exception b)
+					{
+						b.printStackTrace();
+					}
+					
+				}
+				
+			});
+		}
+
+		db = new Database();
 	}
 
 	public void timerUpdate()
@@ -134,10 +163,13 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			long elapsedSeconds = elapsedTime / 1000;
 			long secondsDisplay = elapsedSeconds % 60;
 			long elapsedMinutes = elapsedSeconds / 60;
-			timer.setText(String.valueOf(30 - elapsedSeconds));
+			timer.setText(String.valueOf(2 - elapsedSeconds));
 			timer.paintImmediately(timer.getVisibleRect());
-			if(elapsedSeconds == 30)
-				System.exit(0);
+			if(elapsedSeconds == 2)
+			{
+				entryFrame.setVisible(false);
+				return;
+			}
 		}
 	}
 
@@ -182,7 +214,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		for (int i = 0; i < 30; i++)
 		{
-			greenText[i] = new JTextField();
+
+			greenText[i] = new ModifiedTextField(i);
 			greenText[i].setBounds(x, y, 140, 40);
 			greenText[i].setEnabled(false);
 
@@ -279,6 +312,30 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		entryFrame.add(start);
 	}
 
+
+	//This will go over everything and check for updates and do other things
+	public void update() throws NumberFormatException, SQLException
+	{
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(greenText[i].isUpdated())
+			{
+				if(db.idExist(Integer.parseInt((greenText[i].getText()))))
+				{
+					greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
+				}
+				else
+				{
+					if(greenText[i].isUpdated() && greenText[i+1].isUpdated())
+					{
+						db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i+1].getText());
+					}
+				}
+			}
+		}
+		
+	}
+
 	// When button is clicked allow input in text fields
 	public void actionPerformed(ActionEvent e)
 	{
@@ -294,14 +351,30 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 				greenText[i].setEnabled(true);
 			}
 		}
-	   
 		if (e.getSource() == start)
 		{
 			timerUpdate();
-			PlayActionScreen actionScreen = new PlayActionScreen(this);
-			this.dispose();
+			//PlayActionScreen actionScreen = new PlayActionScreen(this);
+			//actionScreen.setVisible(true);
+			entryFrame.dispose();
 		}
 	}
-	
-	// // Testing the Player Entry Screen
+		public String getGreenText(int i)
+	{
+		return greenText[i].getText();
+	}
+	public String getRedText(int i)
+	{
+		return redText[i].getText();
+	}
+
+	public void setRedText(int i, String text)
+	{
+		this.redText[i].setText(text);
+	}
+
+	public void setGreenText(int i, String text)
+	{
+		this.greenText[i].setText(text);
+	}
 }
