@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class PlayActionScreen extends JFrame
 {
-	JFrame actionFrame;
+	private JFrame actionFrame;
 	//Dimension screenSize;
 	
 	private static int seconds = 0;
@@ -45,20 +45,20 @@ public class PlayActionScreen extends JFrame
 	private static JLabel timeLabel;
 	private Timer timer;
 	
-	private static JLabel gameTrafficLabel;
+	private JLabel gameTrafficLabel;
 	
 	//private Player redTeam[];
 	//private Player greenTeam[];
 	
 	//JLabel [] redLabels = new JLabel[15];
 	//JLabel [] greenLabels = new JLabel[15];
-	JLabel labelHeader;
+	private JLabel labelHeader;
 	
-	JLabel redLabelHeader, greenLabelHeader;
-	JLabel greenTeamScore;
-	JLabel redTeamScore;
+	private JLabel redLabelHeader, greenLabelHeader;
+	private JLabel greenTeamScore;
+	private JLabel redTeamScore;
 	
-	playAudio audioFile = new playAudio();
+	private playAudio audioFile = new playAudio();
 	
 	private ArrayList<Player> redTeam = new ArrayList<Player>();
 	private ArrayList<Player> greenTeam = new ArrayList<Player>();
@@ -96,42 +96,18 @@ public class PlayActionScreen extends JFrame
 		timeLabel.setForeground(Color.WHITE);
 		actionFrame.add(timeLabel);
 		
+		
 		gameTrafficLabel = new JLabel();
 		gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
-
-		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60;         //((13 * screenWidth) / 32) - 60; -> Off Center
+		
+		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
 		int gameTrafficLabelYPos = (screenHeight / 16);
-
+		
 		gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
 		gameTrafficLabel.setForeground(Color.WHITE);
 		gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 		actionFrame.add(gameTrafficLabel);
-		actionFrame.setVisible(true);
-		//actionFrame.setVisible(true);``
 		
-		// Data from Traffic Generator?
-		System.out.println("Before Try");
-		try
-		{
-			UDPServer();
-		}
-		catch (IOException e)
-		{
-			System.out.println("Breaks Here");
-		}
-		System.out.println("After Catch");
-		// gameTrafficLabel = new JLabel();
-		// gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
-		
-		// int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
-		// int gameTrafficLabelYPos = (screenHeight / 16);
-		
-		// gameTrafficLabel.setBounds(gameTrafficLabelXPos, gameTrafficLabelYPos, 425, 640);
-		// gameTrafficLabel.setForeground(Color.WHITE);
-		// gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		// actionFrame.add(gameTrafficLabel);
-		
-		// actionFrame.add(timeLabel);
 		gameTimer();
 		
 		// Adds Players to the Team ArrayLists
@@ -212,54 +188,81 @@ public class PlayActionScreen extends JFrame
 		// Sets the windows background color to black
 		actionFrame.getContentPane().setBackground(Color.BLACK);
 		
+		//gameTimer();
+		
+		// Data from Traffic Generator?
+		System.out.println("Before Try");
+		try
+		{
+			UDPServer();
+		}
+		catch (IOException e)
+		{
+			System.out.println("Breaks Here");
+		}
+		
 		playAudioTrack();
 	}
 
-	public void UDPServer() throws IOException
+	public void updateGameTraffic(String newText)
 {
-    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int screenWidth = (int)screenSize.getWidth();
-    int screenHeight = (int)screenSize.getHeight();
-    
-    System.out.println("Here");
-    
-    // Step 1 : Create a socket to listen at port 7501
-    DatagramSocket UDPServerSocket = new DatagramSocket(7501);
-    System.out.println("UDP Server up and listening");
-    
-	
-    
+String currentText = gameTrafficLabel.getText();
+gameTrafficLabel.setText(currentText + "\n" + newText);
 
-	
-    
-    System.out.println("Before While Loop");
-    
-    byte[] receive = new byte[1024];
-    DatagramPacket DataPacketReceive = null;
-        
-    while (true)
-    {
-        // DatagramPacket to receive the data.``
-        DataPacketReceive = new DatagramPacket(receive, receive.length);
-            
-        // Receive the data in byte buffer.
-        UDPServerSocket.receive(DataPacketReceive);
-        String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
-            
-        // Set the text field text to the received message``
-        gameTrafficLabel.setText(sentence);
-        gameTrafficLabel.paintImmediately(gameTrafficLabel.getVisibleRect());
-        System.out.println("Sentence Printed!");
-		System.out.println(sentence);
-            
-        /*if (DataPacketReceive == null)
-        {
-            break;
-        }*/
-            
-    }
-    //System.out.println("After While Loop");
-}
+}	
+
+	public void UDPServer() throws IOException
+	{
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int screenWidth = (int)screenSize.getWidth();
+		int screenHeight = (int)screenSize.getHeight();
+		
+		System.out.println("Here");
+		
+		// Step 1 : Create a socket to listen at port 7501
+		DatagramSocket UDPServerSocket = new DatagramSocket(7501);
+		System.out.println("UDP Server up and listening");
+		
+		//frame.getContentPane().add(label).setSize(800,800);```
+		//label.setPreferredSize(new Dimension(800, 800));
+		//frame.pack();
+		//frame.setVisible(true);
+		
+		
+		byte[] receive = new byte[1024];
+		DatagramPacket DataPacketReceive = null;
+		
+		int numEvents = 0;
+		
+		
+		while (true)
+		{
+			// DatagramPacket to receive the data.
+			DataPacketReceive = new DatagramPacket(receive, receive.length);
+			
+			// Receive the data in byte buffer.
+			UDPServerSocket.receive(DataPacketReceive);
+			String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
+			
+			// Set the label text to the received message`
+			//label.setForeground(Color.WHITE);
+			//gameTrafficLabel.setText(sentence);
+			updateGameTraffic(sentence + "\n");
+			//updateGameTraffic("<br/>");
+			gameTrafficLabel.paintImmediately(gameTrafficLabel.getVisibleRect());
+			
+			System.out.println("Sentence Printed!");
+			
+			numEvents += 1;
+			
+			if (numEvents == receive.length)
+			{
+				break;
+			}
+			
+		}
+		System.out.println("After While Loop");
+	}
 
 	//Create team headers
 	private void setupHeader(JFrame actionFrame, int screenWidth, int screenHeight, char color, ArrayList<Player> team) // Player [] team)
@@ -439,7 +442,7 @@ public class PlayActionScreen extends JFrame
 			// label.paintImmediately(label.getVisibleRect());
 		// }
 		// return;
-	// }
+	// }`
 	
 	public void updatePlayers()
 	{
@@ -593,7 +596,10 @@ public class PlayActionScreen extends JFrame
 		}
 	}
 	
-	//Testing the Play Action Screen
+	
+	
+	
+	// //Testing the Play Action Screen
 	public static void main(String[] args)
 	{
 		//PlayerEntryScreen screen = new PlayerEntryScreen();
@@ -605,39 +611,37 @@ public class PlayActionScreen extends JFrame
 		PlayerEntryScreen screen = new PlayerEntryScreen();
 		
 		screen.setRedText(1, "AlexPrill999");
-        screen.setRedText(3, "AndrewMurphster420");
-        screen.setRedText(5, "SirJoseph167");
-        screen.setRedText(7, "testlimitsinalllowercaseletter");        // Fits 30 lowercase letter
-        // screen.redText[9].setText("Player5");
-        // screen.redText[11].setText("Player6");
-        // screen.redText[13].setText("Player7");
-        // screen.redText[15].setText("Player8");
-        // screen.redText[17].setText("Player9");
-        // screen.redText[19].setText("Player10");
-        // screen.redText[21].setText("Player11");
-        // screen.redText[23].setText("Player12");
-        // screen.redText[25].setText("Player13");
-        // screen.redText[27].setText("Player14");
-        // screen.redText[29].setText("Player15");
-
-        screen.setGreenText(1, "BenFletcherHonda");
-        screen.setGreenText(3, "ParkerGentHerDone69");
-        screen.setGreenText(5, "JimStrother404");
-        screen.setGreenText(7, "TESTTHELIMITSWITHALLCAPITALLET");        //Fits 30 Capital Letters
-        // screen.greenText[9].setText("Player20");
-        // screen.greenText[11].setText("Player21");
-        // screen.greenText[13].setText("Player22");
-        // screen.greenText[15].setText("Player23");
-        // screen.greenText[17].setText("Player24");
-        // screen.greenText[19].setText("Player25");
-        // screen.greenText[21].setText("Player26");
-        // screen.greenText[23].setText("Player27");
-        // screen.greenText[25].setText("Player28");
-        // screen.greenText[27].setText("Player29");
-        // screen.greenText[29].setText("Player30");
-
-
+		screen.setRedText(3, "AndrewMurphster420");
+		screen.setRedText(5, "SirJoseph167");
+		screen.setRedText(7, "testlimitsinalllowercaseletter");		// Fits 30 lowercase letter
+		// screen.redText[9].setText("Player5");
+		// screen.redText[11].setText("Player6");
+		// screen.redText[13].setText("Player7");
+		// screen.redText[15].setText("Player8");
+		// screen.redText[17].setText("Player9");
+		// screen.redText[19].setText("Player10");
+		// screen.redText[21].setText("Player11");
+		// screen.redText[23].setText("Player12");
+		// screen.redText[25].setText("Player13");
+		// screen.redText[27].setText("Player14");
+		// screen.redText[29].setText("Player15");
 		
-		PlayActionScreen dew = new PlayActionScreen(screen);
+		screen.setGreenText(1, "BenFletcherHonda");
+		screen.setGreenText(3, "ParkerGentHerDone69");
+		screen.setGreenText(5, "JimStrother404");
+		screen.setGreenText(7, "TESTTHELIMITSWITHALLCAPITALLET");		//Fits 30 Capital Letters
+		// screen.greenText[9].setText("Player20");
+		// screen.greenText[11].setText("Player21");
+		// screen.greenText[13].setText("Player22");
+		// screen.greenText[15].setText("Player23");
+		// screen.greenText[17].setText("Player24");
+		// screen.greenText[19].setText("Player25");
+		// screen.greenText[21].setText("Player26");
+		// screen.greenText[23].setText("Player27");
+		// screen.greenText[25].setText("Player28");
+		// screen.greenText[27].setText("Player29");
+		// screen.greenText[29].setText("Player30");
+		
+		PlayActionScreen actionScreen = new PlayActionScreen(screen);
 	}
 }
