@@ -97,7 +97,7 @@ public class PlayActionScreen extends JFrame
 		actionFrame.add(timeLabel);
 		
 		
-		gameTrafficLabel = new JLabel();
+		gameTrafficLabel = new JLabel(""); //"" , SwingConstants.CENTER);
 		gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
 		
 		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
@@ -208,6 +208,12 @@ public class PlayActionScreen extends JFrame
 	{
 		gameTrafficLabel.setText(newText);
 	}
+	
+	// public void updateGameTraffic(String newText)
+	// {
+		// String currentText = gameTrafficLabel.getText();
+		// gameTrafficLabel.setText("<html>" + currentText + "<br>" + newText + "</html>");
+	// }
 
 	public void UDPServer() throws IOException
 	{
@@ -240,12 +246,14 @@ public class PlayActionScreen extends JFrame
 			// Receive the data in byte buffer.
 			UDPServerSocket.receive(DataPacketReceive);
 			String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
+			sentence = sentence + "\n";
 			
 			// Set the label text to the received message
 			//label.setForeground(Color.WHITE);
 			//gameTrafficLabel.setText(sentence);
-			updateGameTraffic(sentence + "/n");
-			//updateGameTraffic("<br/>");
+			
+			updateGameTraffic(sentence);
+			//gameTrafficLabel.setText(gameTrafficLabel.getText() + sentence);
 			gameTrafficLabel.paintImmediately(gameTrafficLabel.getVisibleRect());
 			
 			System.out.println("Sentence Printed!");
