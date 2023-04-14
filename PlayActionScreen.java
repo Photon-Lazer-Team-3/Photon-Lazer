@@ -58,8 +58,8 @@ public class PlayActionScreen extends JFrame
 	private JLabel labelHeader;
 	
 	private JLabel redLabelHeader, greenLabelHeader;
-	private JLabel greenTeamScore;
-	private JLabel redTeamScore;
+	private JLabel greenTeamScore = new JLabel("");
+	private JLabel redTeamScore = new JLabel("");
 	
 	private playAudio audioFile = new playAudio();
 	
@@ -98,8 +98,7 @@ public class PlayActionScreen extends JFrame
 		actionFrame.add(timeLabel);
 		
 		// Creates JLabel for Game Events
-		gameTrafficLabel = new JLabel(); //""); //"" , SwingConstants.CENTER);
-		//gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
+		gameTrafficLabel = new JLabel();
 		
 		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
 		int gameTrafficLabelYPos = (screenHeight / 16);
@@ -114,23 +113,20 @@ public class PlayActionScreen extends JFrame
 		eventTextArea.setEditable(false);
 		eventTextArea.setLineWrap(true);
 		eventTextArea.setWrapStyleWord(true);
+		
+		eventTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+		eventTextArea.setAlignmentY(Component.CENTER_ALIGNMENT);
 		eventTextArea.setForeground(Color.WHITE);
 		eventTextArea.setBackground(Color.BLACK);
 		eventTextArea.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 		eventTextArea.setBounds(gameTrafficLabel.getBounds());
-		//eventTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//eventTextArea.setAlignmentY(Component.CENTER_ALIGNMENT);
 		eventTextArea.setFont(new Font("Verdana", Font.PLAIN, 14));
 		actionFrame.add(eventTextArea);
 		
 		scrollPane = new JScrollPane(eventTextArea);
 		scrollPane.setBounds(gameTrafficLabel.getBounds());
-		scrollPane.setViewportView(eventTextArea);
-		scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
-		scrollPane.setAlignmentY(Component.CENTER_ALIGNMENT);
+		scrollPane.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 		actionFrame.add(scrollPane);
-		
-		//gameTimer();
 		
 		// Adds Players to the Team ArrayLists
 		for(int i =1; i < 30; i+=2)
@@ -210,15 +206,22 @@ public class PlayActionScreen extends JFrame
 		// Sets the windows background color to black
 		actionFrame.getContentPane().setBackground(Color.BLACK);
 		
-		//UDPServer();		// Does not work here!
-		
-		//gameTimer();
-		
 		gameTimer();
 		
 		playAudioTrack();
 		
 		UDPServer();
+		
+		// int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
+		// int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
+		
+		// redTeamScore.setText(Integer.toString(redScore));
+		// redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
+		
+		//greenTeamScore.setText(String.valueOf(greenScore));
+		
+		//greenTeamScore = new JLabel(Integer.toString(greenScore), SwingConstants.CENTER);
+		
 	}
 
 	public void UDPServer() //throws IOException
@@ -246,21 +249,10 @@ public class PlayActionScreen extends JFrame
 				
 				System.out.println(sentence);
 				
-				// Set the label text to the received message
-				//label.setForeground(Color.WHITE);
-				//gameTrafficLabel.setText(sentence);
-				
-				//updateGameTraffic(sentence);
-				//gameTrafficLabel.setText(gameTrafficLabel.getText() + sentence);
-				//gameTrafficLabel.paintImmediately(gameTrafficLabel.getVisibleRect());
-				
-				//eventTextArea.setText(sentence); // + "\n");		// Overwrites same line
-				
-				//String newText = sentence + "\n";
-				//eventTextArea.setText(eventTextArea.getText() + "\n" + newText);
-				
 				appendText(sentence);
 				eventTextArea.paintImmediately(eventTextArea.getVisibleRect());
+				
+				updatePlayerScore(sentence);
 				
 				System.out.println("Sentence Printed!");
 				
@@ -284,11 +276,69 @@ public class PlayActionScreen extends JFrame
 		}
 	}
 
+	private void updatePlayerScore(String sentence)
+	{
+		String[] words = sentence.split("\\s+");
+		String playerName = words[0];
+		
+		for (Player player : redTeam)
+		{
+			if (player.getcodeName().equals(playerName))
+			{
+				player.incrementScore(50);
+				//int index = redTeam.indexOf(player);
+				//JLabel label = redTeamScores.get(index);
+				return;
+			}
+			
+			int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
+			
+			redTeamScore.setText(Integer.toString(redScore));
+			redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
+		}
+		// int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
+		
+		// redTeamScore.setText(Integer.toString(redScore));
+		// redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
+		
+		for (Player player : greenTeam)
+		{
+			if (player.getcodeName().equals(playerName))
+			{
+				player.incrementScore(50);
+				//int index = greenTeam.indexOf(player);
+				//JLabel label = greenTeamScores.get(index);
+				return;
+			}
+			
+			int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
+			
+			greenTeamScore.setText(Integer.toString(greenScore));
+			greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
+		}
+		// int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
+		
+		// greenTeamScore.setText(Integer.toString(greenScore));
+		// greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
+	}
+
+	private int cumulativeTeamScore(ArrayList<Player> team)
+	{
+		int cumScore = 0;
+		if(team != null)
+		{
+			for(int i = 0; i < team.size(); i++) //.length; i++)
+			{
+				cumScore += team.get(i).getScore(); //[i].getScore();
+			}
+		}
+		System.out.println("Cumulative Score for : " + cumScore);
+		return cumScore;
+	}
+
 	private void appendText(String text)
 	{
 		eventTextArea.append(text + "\n");
-		eventTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-		eventTextArea.setAlignmentY(Component.CENTER_ALIGNMENT);
 	}
 
 	//Create team headers
@@ -333,19 +383,6 @@ public class PlayActionScreen extends JFrame
 		
 		scoreDisplay.setBorder(border);
 		actionFrame.add(scoreDisplay);
-	}
-
-	private int cumulativeTeamScore(ArrayList<Player> team)
-	{
-		int cumScore = 0;
-		if(team != null)
-		{
-			for(int i = 0; i < team.size(); i++) //.length; i++)
-			{
-				cumScore += team.get(i).getScore(); //[i].getScore();
-			}
-		}
-		return cumScore;
 	}
 
 	public void gameTimer()
@@ -625,6 +662,7 @@ public class PlayActionScreen extends JFrame
 		actionFrame.revalidate();
 		actionFrame.repaint();
 }
+
 
 	public void printPlayers()
 	{
