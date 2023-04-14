@@ -47,6 +47,9 @@ public class PlayActionScreen extends JFrame
 	
 	private JLabel gameTrafficLabel;
 	
+	private JTextArea eventTextArea;
+	private JScrollPane scrollPane;
+	
 	//private Player redTeam[];
 	//private Player greenTeam[];
 	
@@ -69,8 +72,6 @@ public class PlayActionScreen extends JFrame
 	
 	public PlayActionScreen(PlayerEntryScreen screen)
 	{
-		//UDPServer server = new UDPServer();
-		
 		// Adds title to the frame
 		actionFrame = new JFrame("Play Action Terminal");
 		
@@ -96,9 +97,9 @@ public class PlayActionScreen extends JFrame
 		timeLabel.setForeground(Color.WHITE);
 		actionFrame.add(timeLabel);
 		
-		
-		gameTrafficLabel = new JLabel(""); //"" , SwingConstants.CENTER);
-		gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
+		// Creates JLabel for Game Events
+		gameTrafficLabel = new JLabel(); //""); //"" , SwingConstants.CENTER);
+		//gameTrafficLabel.setFont(new Font("Verdana", Font.PLAIN, 14));
 		
 		int gameTrafficLabelXPos = ((51 * screenWidth) / 128) - 60; 		//((13 * screenWidth) / 32) - 60; -> Off Center
 		int gameTrafficLabelYPos = (screenHeight / 16);
@@ -108,7 +109,28 @@ public class PlayActionScreen extends JFrame
 		gameTrafficLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
 		actionFrame.add(gameTrafficLabel);
 		
-		gameTimer();
+		// Creates JTextArea to display Game Events and connects a JScrollPane to view all Game Events
+		eventTextArea = new JTextArea("");
+		eventTextArea.setEditable(false);
+		eventTextArea.setLineWrap(true);
+		eventTextArea.setWrapStyleWord(true);
+		eventTextArea.setForeground(Color.WHITE);
+		eventTextArea.setBackground(Color.BLACK);
+		eventTextArea.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		eventTextArea.setBounds(gameTrafficLabel.getBounds());
+		//eventTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//eventTextArea.setAlignmentY(Component.CENTER_ALIGNMENT);
+		eventTextArea.setFont(new Font("Verdana", Font.PLAIN, 14));
+		actionFrame.add(eventTextArea);
+		
+		scrollPane = new JScrollPane(eventTextArea);
+		scrollPane.setBounds(gameTrafficLabel.getBounds());
+		scrollPane.setViewportView(eventTextArea);
+		scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+		scrollPane.setAlignmentY(Component.CENTER_ALIGNMENT);
+		actionFrame.add(scrollPane);
+		
+		//gameTimer();
 		
 		// Adds Players to the Team ArrayLists
 		for(int i =1; i < 30; i+=2)
@@ -188,85 +210,85 @@ public class PlayActionScreen extends JFrame
 		// Sets the windows background color to black
 		actionFrame.getContentPane().setBackground(Color.BLACK);
 		
+		//UDPServer();		// Does not work here!
+		
 		//gameTimer();
 		
-		// Data from Traffic Generator?
-		System.out.println("Before Try");
+		gameTimer();
+		
+		playAudioTrack();
+		
+		UDPServer();
+	}
+
+	public void UDPServer() //throws IOException
+	{
+		// Step 1 : Create a socket to listen at port 7501
 		try
 		{
-			UDPServer();
+			DatagramSocket UDPServerSocket = new DatagramSocket(7501);
+			System.out.println("UDP Server up and listening");
+			
+			byte[] receive = new byte[1024];
+			DatagramPacket DataPacketReceive = null;
+			
+			int numEvents = 0;
+			
+			while (true)
+			{
+				// DatagramPacket to receive the data.
+				DataPacketReceive = new DatagramPacket(receive, receive.length);
+				
+				// Receive the data in byte buffer.
+				UDPServerSocket.receive(DataPacketReceive);
+				String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
+				sentence = sentence + "\n";
+				
+				System.out.println(sentence);
+				
+				// Set the label text to the received message
+				//label.setForeground(Color.WHITE);
+				//gameTrafficLabel.setText(sentence);
+				
+				//updateGameTraffic(sentence);
+				//gameTrafficLabel.setText(gameTrafficLabel.getText() + sentence);
+				//gameTrafficLabel.paintImmediately(gameTrafficLabel.getVisibleRect());
+				
+				//eventTextArea.setText(sentence); // + "\n");		// Overwrites same line
+				
+				//String newText = sentence + "\n";
+				//eventTextArea.setText(eventTextArea.getText() + "\n" + newText);
+				
+				appendText(sentence);
+				eventTextArea.paintImmediately(eventTextArea.getVisibleRect());
+				
+				System.out.println("Sentence Printed!");
+				
+				numEvents += 1;
+				
+				if (numEvents == receive.length)
+				{
+					break;
+				}
+				
+			}
+			//System.out.println("After While Loop");
+		}
+		catch (SocketException e)
+		{
+			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
-			System.out.println("Breaks Here");
+			e.printStackTrace();
 		}
-		
-		playAudioTrack();
 	}
 
-	public void updateGameTraffic(String newText)
+	private void appendText(String text)
 	{
-		gameTrafficLabel.setText(newText);
-	}
-	
-	// public void updateGameTraffic(String newText)
-	// {
-		// String currentText = gameTrafficLabel.getText();
-		// gameTrafficLabel.setText("<html>" + currentText + "<br>" + newText + "</html>");
-	// }
-
-	public void UDPServer() throws IOException
-	{
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int screenWidth = (int)screenSize.getWidth();
-		int screenHeight = (int)screenSize.getHeight();
-		
-		System.out.println("Here");
-		
-		// Step 1 : Create a socket to listen at port 7501
-		DatagramSocket UDPServerSocket = new DatagramSocket(7501);
-		System.out.println("UDP Server up and listening");
-		
-		//frame.getContentPane().add(label).setSize(800,800);
-		//label.setPreferredSize(new Dimension(800, 800));
-		//frame.pack();
-		//frame.setVisible(true);
-		
-		
-		byte[] receive = new byte[1024];
-		DatagramPacket DataPacketReceive = null;
-		
-		int numEvents = 0;
-		
-		while (true)
-		{
-			// DatagramPacket to receive the data.
-			DataPacketReceive = new DatagramPacket(receive, receive.length);
-			
-			// Receive the data in byte buffer.
-			UDPServerSocket.receive(DataPacketReceive);
-			String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
-			sentence = sentence + "\n";
-			
-			// Set the label text to the received message
-			//label.setForeground(Color.WHITE);
-			//gameTrafficLabel.setText(sentence);
-			
-			updateGameTraffic(sentence);
-			//gameTrafficLabel.setText(gameTrafficLabel.getText() + sentence);
-			gameTrafficLabel.paintImmediately(gameTrafficLabel.getVisibleRect());
-			
-			System.out.println("Sentence Printed!");
-			
-			numEvents += 1;
-			
-			if (numEvents == receive.length)
-			{
-				break;
-			}
-			
-		}
-		System.out.println("After While Loop");
+		eventTextArea.append(text + "\n");
+		eventTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+		eventTextArea.setAlignmentY(Component.CENTER_ALIGNMENT);
 	}
 
 	//Create team headers
@@ -328,33 +350,35 @@ public class PlayActionScreen extends JFrame
 
 	public void gameTimer()
 	{
+		long startTime = System.currentTimeMillis(); // get the start time
+		
 		// Creates the timer to update the display
 		timer = new Timer(1000, new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// Decrement the seconds and minutes
-				seconds--;
+				// Calculate the elapsed time in seconds
+				long elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
+				long remainingTime = 360 - elapsedTime;
 				
-				if (seconds < 0)
-				{
-					seconds = 59;
-					
-					minutes--;
-					
-					updatePlayers();
-				}
+				// Decrement the seconds and minutes
+				seconds = (int) remainingTime % 60;
+				minutes = (int) remainingTime / 60;
+				
+				updatePlayers();
 				
 				// New If-Else Below:
 				if(cumulativeTeamScore(redTeam) > cumulativeTeamScore(greenTeam))
 				{
 					redTeamScore.setVisible(true);
+					//Thread.sleep(10);
 					redTeamScore.setVisible(false);
 				}
 				else if(cumulativeTeamScore(redTeam) < cumulativeTeamScore(greenTeam))
 				{
 					greenTeamScore.setVisible(true);
+					//Thread.sleep(10);
 					greenTeamScore.setVisible(false);
 				}
 				else
@@ -364,7 +388,7 @@ public class PlayActionScreen extends JFrame
 				}
 				
 				// Checks if minutes and seconds are zero
-				if (minutes == 0 && seconds == 0)
+				if (remainingTime <= 0)
 				{
 					// Stops the timer if minutes and seconds are zero
 					timer.stop();
@@ -377,9 +401,67 @@ public class PlayActionScreen extends JFrame
 				timeLabel.setText(String.format("%02d:%02d", minutes, seconds));
 			}
 		});
+		
 		// Starts the game timer
 		timer.start();
 	}
+
+	// public void gameTimer()
+	// {
+		// // Creates the timer to update the display
+		// timer = new Timer(1000, new ActionListener()
+		// {
+			// @Override
+			// public void actionPerformed(ActionEvent e)
+			// {
+				// // Decrement the seconds and minutes
+				// seconds--;
+				
+				// if (seconds < 0)
+				// {
+					// seconds = 59;
+					
+					// minutes--;
+					
+					// updatePlayers();
+				// }
+				
+				// // New If-Else Below:
+				// if(cumulativeTeamScore(redTeam) > cumulativeTeamScore(greenTeam))
+				// {
+					// redTeamScore.setVisible(true);
+					// Thread.sleep(10);
+					// redTeamScore.setVisible(false);
+				// }
+				// else if(cumulativeTeamScore(redTeam) < cumulativeTeamScore(greenTeam))
+				// {
+					// greenTeamScore.setVisible(true);
+					// Thread.sleep(10);
+					// greenTeamScore.setVisible(false);
+				// }
+				// else
+				// {
+					// // redTeamScore.setVisible(true);
+					// // greenTeamScore.setVisible(true);
+				// }
+				
+				// // Checks if minutes and seconds are zero
+				// if (minutes == 0 && seconds == 0)
+				// {
+					// // Stops the timer if minutes and seconds are zero
+					// timer.stop();
+					
+					// // Stops the audio file once the timer reaches zero
+					// audioFile.playCompleted = true;
+				// }
+				
+				// // Sets the text for the game timer
+				// timeLabel.setText(String.format("%02d:%02d", minutes, seconds));
+			// }
+		// });
+		// // Starts the game timer
+		// timer.start();
+	// }
 
 	private void addPlayer(Player player, Player [] team)
 	{
@@ -391,30 +473,8 @@ public class PlayActionScreen extends JFrame
 			}
 		}
 	}
-	
-	// From Joseph: I DO NOT THINK WE ARE USING THESE METHODS ANYMORE? CAN WE REMOVE THESE METHODS??
-	// private void addGreenPlayer(Player player)
-	// {
-		// for(int i = 0; i < 15; i++)
-		// {
-			// if(greenTeam[i] == null)
-			// {
-				// greenTeam[i] = player;
-			// }
-		// }
-	// }
 
-	// private void addRedPlayer(Player player)
-	// {
-		// for(int i = 0; i < 15; i++)
-		// {
-			// if(redTeam[i] == null)
-			// {
-				// redTeam[i] = player;
-			// }
-		// }
-	// }
-	
+
 	private void playAudioTrack()
 	{
 		//playAudio player = new playAudio();
@@ -425,30 +485,7 @@ public class PlayActionScreen extends JFrame
 		audioFile.play(audioFilePath);
 	}
 
-	// From Joseph: THIS UPDATE METHOD WAS NOT WORKING FOR ME.
-	// public void updatePlayers()
-	// {
-		// greenTeamScore.setText(Integer.toString(cumulativeTeamScore(greenTeam)));
-		// redTeamScore.setText(Integer.toString(cumulativeTeamScore(redTeam)));
-		// for(JLabel label : redTeamLabels)
-		// {
-			// label.paintImmediately(label.getVisibleRect());
-		// }
-		// for(JLabel label : redTeamScores)
-		// {
-			// label.paintImmediately(label.getVisibleRect());
-		// }
-		// for(JLabel label : greenTeamLabels)
-		// {
-			// label.paintImmediately(label.getVisibleRect());
-		// }
-		// for(JLabel label : greenTeamScores)
-		// {
-			// label.paintImmediately(label.getVisibleRect());
-		// }
-		// return;
-	// }
-	
+
 	public void updatePlayers()
 	{
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -600,10 +637,8 @@ public class PlayActionScreen extends JFrame
 			System.out.println(player);
 		}
 	}
-	
-	
-	
-	
+
+
 	// //Testing the Play Action Screen
 	public static void main(String[] args)
 	{
