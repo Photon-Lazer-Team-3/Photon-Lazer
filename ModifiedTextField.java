@@ -11,12 +11,14 @@ public class ModifiedTextField extends JTextField{
     //Should we have another boolean variable to tell us when the database has checked it maybe
     private long lastUpdate = -1;
     private boolean updated;
+    private boolean checked;
     public ModifiedTextField(int index)
     {
         super();
         this.index = index;
         this.value = value;
         this.updated = false;
+        this.checked = false;
 
         //! Hopefully these method calls should work. The problem is that I don't know if these calls will call the object that made them or do something else that I don't know what it will do
         this.getDocument().addDocumentListener(new DocumentListener() {
@@ -27,8 +29,7 @@ public class ModifiedTextField extends JTextField{
             public void insertUpdate(DocumentEvent e)
             {
                 //If the textField is not updated then check to see if the user is done updating
-                if(updated != true)
-                    update();
+                update();
             }
         });
     }
@@ -43,22 +44,47 @@ public class ModifiedTextField extends JTextField{
         return this.updated;
     }
 
-    //Checks when the last key stroke was added
+    //What exactly do we want this method to do now
+    //It should update when the last update was 
     public void update()
     {
-        long updateTime = System.currentTimeMillis();
-        if(lastUpdate == -1)
-        {
-            lastUpdate = updateTime;
+        this.lastUpdate = System.currentTimeMillis();
+    }
+
+    public void checkUpdate()
+    {
+        if(isUpdated())
             return;
-        }
         else
         {
-            long difference = updateTime - this.lastUpdate;
-            //Checks to see if the last update was less than half a second a go and if so changes updated value to true
-            if(difference >= 5000)
-                updated = true;
+            long currentTime = System.currentTimeMillis();
+            if((currentTime - this.lastUpdate) >= 5000)
+            {
+                this.updated = true;
+            }
+            else
+            {
+                if(isUpdated())
+                    return;
+            }
         }
+    }
+
+    public boolean isChecked()
+    {
+        return this.checked;
+    }
+
+    //Sets that the JTextField has been checked
+    public void setChecked()
+    {
+        this.checked = true;
+    }
+
+    public void prnt()
+    {
+        System.out.println(checked);
+        System.out.println(updated);
     }
 
     

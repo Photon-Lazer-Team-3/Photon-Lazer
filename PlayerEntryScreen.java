@@ -124,35 +124,6 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		// Sets the windows background color to black
 		entryFrame.getContentPane().setBackground(Color.BLACK);
 		
-		for(int i = 0; i < 30; i++)
-		{
-			greenText[i].getDocument().addDocumentListener(new DocumentListener() {
-				public void changedUpdate(DocumentEvent e)
-				{
-					System.out.println("DOG");
-				}
-
-				public void removeUpdate(DocumentEvent e){
-					System.out.println("CAT");
-					
-				}
-				public void insertUpdate(DocumentEvent e){
-					try{
-					
-					//System.out.println("length:" + e.getLength() + " offset: " + e.getOffset());
-					//System.out.println(e.getDocument().getText(e.getLength(), e.getOffset()));
-					//System.out.println(greenText.indexOf(e.getDocument().getText(e.getLength(), e.getOffset())));
-					ModifiedTextField text = (ModifiedTextField) e.getDocument(); //This needs to be a way to get the JTextField that triggered it of whcih I don't know how to
-					//System.out.println(text.getIndex());
-					}catch(Exception b)
-					{
-						b.printStackTrace();
-					}
-					
-				}
-				
-			});
-		}
 
 		db = new Database();
 	}
@@ -320,21 +291,35 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	public void update() throws NumberFormatException, SQLException
 	{
 		for(int i = 0; i < 30; i+=2)
-		{
-			if(greenText[i].isUpdated())
+		{	
+			//Not sure if I need the update thing here or if I am going to need to replace it with something else right now
+			greenText[i].checkUpdate();
+			greenText[i].prnt();
+			if(!greenText[i].isChecked())
 			{
-				if(db.idExist(Integer.parseInt((greenText[i].getText()))))
+				if(greenText[i].isUpdated())
 				{
-					greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
-				}
-				else
-				{
-					if(greenText[i].isUpdated() && greenText[i+1].isUpdated())
+					if(db.idExist(Integer.parseInt(greenText[i].getText())))
 					{
-						db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i+1].getText());
+						greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
+						greenText[i].setChecked();
+						greenText[i+1].setChecked();
+					}
+					else
+					{
+						//Same thing as the comment above
+						greenText[i+1].checkUpdate();
+						if(greenText[i+1].isUpdated())
+						{
+							db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i].getText());
+							//ewrew
+							greenText[i].setChecked();
+							greenText[i+1].setChecked();
+						}
 					}
 				}
 			}
+			
 		}
 		
 	}
@@ -383,9 +368,14 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 
 	
 	
-	// // Testing the Player Entry Screen
-	// public static void main(String[] args)
-	// {
-		// new PlayerEntryScreen();
-	// }
+	// Testing the Player Entry Screen
+	public static void main(String[] args) throws Exception
+	{
+		PlayerEntryScreen screen = new PlayerEntryScreen();
+
+		while(true)
+		{
+			screen.update();
+		}
+	}
 }

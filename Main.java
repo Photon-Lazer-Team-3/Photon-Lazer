@@ -24,8 +24,14 @@ public class Main
 
 
         
-       PlayerEntryScreen screen = new PlayerEntryScreen(); 
+       PlayerEntryScreen screen = new PlayerEntryScreen();
+       while(true)
+       {
+        screen.update();
+       } 
+       //sdfasfsdf
        /* 
+       //sdlkfjsdlkfjsdlk
        while(true)
        {
         int i = 0;
