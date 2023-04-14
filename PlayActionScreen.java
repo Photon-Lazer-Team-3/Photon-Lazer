@@ -58,8 +58,10 @@ public class PlayActionScreen extends JFrame
 	private JLabel labelHeader;
 	
 	private JLabel redLabelHeader, greenLabelHeader;
-	private JLabel greenTeamScore = new JLabel("");
-	private JLabel redTeamScore = new JLabel("");
+	private JLabel greenTeamScore;		// = new JLabel("");
+	private JLabel redTeamScore;	// = new JLabel("");
+	
+	private JLabel scoreDisplay;	// = new JLabel("");
 	
 	private playAudio audioFile = new playAudio();
 	
@@ -211,17 +213,6 @@ public class PlayActionScreen extends JFrame
 		playAudioTrack();
 		
 		UDPServer();
-		
-		// int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
-		// int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
-		
-		// redTeamScore.setText(Integer.toString(redScore));
-		// redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
-		
-		//greenTeamScore.setText(String.valueOf(greenScore));
-		
-		//greenTeamScore = new JLabel(Integer.toString(greenScore), SwingConstants.CENTER);
-		
 	}
 
 	public void UDPServer() //throws IOException
@@ -286,40 +277,40 @@ public class PlayActionScreen extends JFrame
 			if (player.getcodeName().equals(playerName))
 			{
 				player.incrementScore(50);
-				//int index = redTeam.indexOf(player);
-				//JLabel label = redTeamScores.get(index);
+				
+				int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
+				
+				redTeamScore.setText(Integer.toString(redScore));
+				//redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
+				
 				return;
 			}
 			
-			int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
+			// int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
 			
-			redTeamScore.setText(Integer.toString(redScore));
-			redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
+			// redTeamScore.setText(Integer.toString(redScore));
+			// redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
 		}
-		// int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
-		
-		// redTeamScore.setText(Integer.toString(redScore));
-		// redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
 		
 		for (Player player : greenTeam)
 		{
 			if (player.getcodeName().equals(playerName))
 			{
 				player.incrementScore(50);
-				//int index = greenTeam.indexOf(player);
-				//JLabel label = greenTeamScores.get(index);
+				
+				int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
+				
+				greenTeamScore.setText(Integer.toString(greenScore));
+				//greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
+				
 				return;
 			}
 			
-			int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
+			// int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
 			
-			greenTeamScore.setText(Integer.toString(greenScore));
-			greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
+			// greenTeamScore.setText(Integer.toString(greenScore));
+			// greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
 		}
-		// int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
-		
-		// greenTeamScore.setText(Integer.toString(greenScore));
-		// greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
 	}
 
 	private int cumulativeTeamScore(ArrayList<Player> team)
@@ -348,18 +339,44 @@ public class PlayActionScreen extends JFrame
 		Color headerColor = null;
 		int labelXPos = 0;
 		int labelYPos = (screenHeight / 16) - 40;
-		int width = 500; //450; //420; //280;
+		int width = 500;
 		int height = 40;
 		
-		if(color == 'r') {
+		if(color == 'r')
+		{
 			teamName = "Red Team";
 			headerColor = Color.RED;
-			labelXPos = (screenWidth / 55);		//(screenWidth / 64); //(screenWidth / 32); //(screenWidth / 8);
+			labelXPos = (screenWidth / 55);
+			
+			int score = cumulativeTeamScore(team);
+			redTeamScore = new JLabel(Integer.toString(score), SwingConstants.CENTER);
+			redTeamScore.setBounds(labelXPos, labelYPos + 40, width, height);
+			redTeamScore.setForeground(headerColor);
+			
+			redTeamScore.setFont(new Font("Verdana", Font.BOLD, 30));
+			Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
+			
+			redTeamScore.setBorder(border);
+			actionFrame.add(redTeamScore);
+			
 		}
-		if(color == 'g') {
+		if(color == 'g')
+		{
 			teamName = "Green Team";
 			headerColor = Color.GREEN;
-			labelXPos = ((21 * screenWidth) / 32);		//((11 * screenWidth) / 16); - Not Enough Space
+			labelXPos = ((21 * screenWidth) / 32);
+			
+			int score = cumulativeTeamScore(team);
+			greenTeamScore = new JLabel(Integer.toString(score), SwingConstants.CENTER);
+			greenTeamScore.setBounds(labelXPos, labelYPos + 40, width, height);
+			greenTeamScore.setForeground(headerColor);
+			
+			greenTeamScore.setFont(new Font("Verdana", Font.BOLD, 30));
+			Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
+			
+			greenTeamScore.setBorder(border);
+			actionFrame.add(greenTeamScore);
+			
 		}
 
 		//Display team names
@@ -372,17 +389,17 @@ public class PlayActionScreen extends JFrame
 		Border border = BorderFactory.createLineBorder(Color.WHITE, 1);
 		labelHeader.setBorder(border);
 		actionFrame.add(labelHeader);
-
-		//Display team scores
-		int score = cumulativeTeamScore(team);
-		JLabel scoreDisplay = new JLabel(Integer.toString(score), SwingConstants.CENTER);
-		scoreDisplay.setBounds(labelXPos, labelYPos + 40, width, height);
-		scoreDisplay.setForeground(headerColor);
 		
-		scoreDisplay.setFont(new Font("Verdana", Font.BOLD, 30));
+		//Display team scores			// 
+		// int score = cumulativeTeamScore(team);
+		// scoreDisplay = new JLabel(Integer.toString(score), SwingConstants.CENTER);
+		// scoreDisplay.setBounds(labelXPos, labelYPos + 40, width, height);
+		// scoreDisplay.setForeground(headerColor);
 		
-		scoreDisplay.setBorder(border);
-		actionFrame.add(scoreDisplay);
+		// scoreDisplay.setFont(new Font("Verdana", Font.BOLD, 30));
+		
+		// scoreDisplay.setBorder(border);
+		// actionFrame.add(scoreDisplay);
 	}
 
 	public void gameTimer()
@@ -395,47 +412,63 @@ public class PlayActionScreen extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// Calculate the elapsed time in seconds
-				long elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
-				long remainingTime = 360 - elapsedTime;
-				
-				// Decrement the seconds and minutes
-				seconds = (int) remainingTime % 60;
-				minutes = (int) remainingTime / 60;
-				
-				updatePlayers();
-				
-				// New If-Else Below:
-				if(cumulativeTeamScore(redTeam) > cumulativeTeamScore(greenTeam))
+				try
 				{
-					redTeamScore.setVisible(true);
-					//Thread.sleep(10);
-					redTeamScore.setVisible(false);
-				}
-				else if(cumulativeTeamScore(redTeam) < cumulativeTeamScore(greenTeam))
-				{
-					greenTeamScore.setVisible(true);
-					//Thread.sleep(10);
-					greenTeamScore.setVisible(false);
-				}
-				else
-				{
-					// redTeamScore.setVisible(true);
-					// greenTeamScore.setVisible(true);
-				}
-				
-				// Checks if minutes and seconds are zero
-				if (remainingTime <= 0)
-				{
-					// Stops the timer if minutes and seconds are zero
-					timer.stop();
+					// Calculate the elapsed time in seconds
+					long elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
+					long remainingTime = 360 - elapsedTime;
 					
-					// Stops the audio file once the timer reaches zero
-					audioFile.playCompleted = true;
+					// Decrement the seconds and minutes
+					seconds = (int) remainingTime % 60;
+					minutes = (int) remainingTime / 60;
+					
+					updatePlayers();
+					
+					// New If-Else Below:
+					if(cumulativeTeamScore(redTeam) > cumulativeTeamScore(greenTeam))
+					{
+						// redTeamScore.setVisible(false);
+						// //Thread.sleep(10);
+						// redTeamScore.setVisible(true);
+						
+						redTeamScore.setForeground(Color.WHITE);
+						Thread.sleep(10);
+						redTeamScore.setForeground(Color.RED);
+						
+					}
+					else if(cumulativeTeamScore(redTeam) < cumulativeTeamScore(greenTeam))
+					{
+						// greenTeamScore.setVisible(false);
+						// //Thread.sleep(10);
+						// greenTeamScore.setVisible(true);
+						
+						greenTeamScore.setForeground(Color.WHITE);
+						Thread.sleep(10);
+						greenTeamScore.setForeground(Color.GREEN);
+					}
+					else
+					{
+						// redTeamScore.setVisible(true);
+						// greenTeamScore.setVisible(true);
+					}
+					
+					// Checks if minutes and seconds are zero
+					if (remainingTime <= 0)
+					{
+						// Stops the timer if minutes and seconds are zero
+						timer.stop();
+						
+						// Stops the audio file once the timer reaches zero
+						audioFile.playCompleted = true;
+					}
+					
+					// Sets the text for the game timer
+					timeLabel.setText(String.format("%02d:%02d", minutes, seconds));
+					}
+				catch (InterruptedException exception)
+				{
+					exception.printStackTrace();
 				}
-				
-				// Sets the text for the game timer
-				timeLabel.setText(String.format("%02d:%02d", minutes, seconds));
 			}
 		});
 		
