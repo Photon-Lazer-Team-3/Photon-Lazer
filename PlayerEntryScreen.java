@@ -26,7 +26,7 @@ import java.awt.Font;
 public class PlayerEntryScreen extends JFrame implements ActionListener
 {
 	private JFrame entryFrame;
-	private JTextField [] redText = new JTextField[30];
+	private JTextField [] redText = new ModifiedTextField[30];
 	private ModifiedTextField [] greenText = new ModifiedTextField[30];
 	private boolean [] greenTextUpdate = new boolean[30];
 	private boolean [] redTextUpdate = new boolean[30];
@@ -326,6 +326,23 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			
 		}
 		*/
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(redText[i].isUpdated())
+			{
+				if(db.idExist(Integer.parseInt(redText[i].getText())))
+					{
+						redText[i+1].setText(db.getCodeName(Integer.parseInt(redText[i].getText())));
+					}
+					else
+					{
+						if(redText[i+1].isUpdated())
+						{
+							db.insertPlayer(Integer.parseInt(redText[i].getText()), redText[i+1].getText());
+						}
+					}
+			}
+		}
 		for(int i = 0; i < 30; i+=2)
 		{
 			if(greenText[i].isUpdated())
