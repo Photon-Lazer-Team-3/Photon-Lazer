@@ -20,7 +20,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class playAudio implements LineListener
 {
 	//Indicates whether the playback completes or not.
-	boolean playCompleted;
+	boolean playCompleted = false;
 	
 	// Added by Joseph Telford - 3/9/2023 6:13PM
 	private Clip audioClip;
@@ -86,7 +86,11 @@ public class playAudio implements LineListener
 	public void play(String audioFilePath)
 	{
 		File audioFile = new File(audioFilePath);
-	
+		
+		//int startedAudioFile = 0;
+		
+	// while ((!playCompleted) && (startedAudioFile == 1))
+	// {
 		try
 		{
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -97,8 +101,14 @@ public class playAudio implements LineListener
 	
 			audioClip.addLineListener(this);
 			audioClip.open(audioStream);
-	
-			audioClip.start();
+			
+			//if ((startedAudioFile == 0) && (!playCompleted))
+			//{
+				audioClip.start();
+				//startedAudioFile += 1;
+			//}
+			
+			
 		}
 		catch (UnsupportedAudioFileException ex)
 		{
@@ -115,6 +125,15 @@ public class playAudio implements LineListener
 			System.out.println("Error: Issue playing the audio file.");
 			ex.printStackTrace();
 		}
+	// }
+	
+	//audioClip.close();
+	
+	}
+	
+	public void stop()
+	{
+		audioClip.close();
 	}
 
 	@Override
@@ -125,7 +144,7 @@ public class playAudio implements LineListener
 		{
 			// Audio clip has started playing
 		} 
-		else if (eventType == LineEvent.Type.STOP)
+		else if (eventType == LineEvent.Type.STOP) // || (playCompleted == true))
 		{
 			// Audio clip has stopped playing
 			playCompleted = true;
@@ -150,8 +169,7 @@ public class playAudio implements LineListener
 		
 		return randomInteger;
 	}
-	
-	
+
 	// public static void main(String[] args)
 	// {
 		// int audioFileInteger = generateRandomInteger();
