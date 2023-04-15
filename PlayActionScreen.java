@@ -59,9 +59,9 @@ public class PlayActionScreen extends JFrame
 	
 	private JLabel redLabelHeader, greenLabelHeader;
 	private JLabel greenTeamScore;		// = new JLabel("");
-	private JLabel redTeamScore;	// = new JLabel("");
+	private JLabel redTeamScore;		// = new JLabel("");
 	
-	private JLabel scoreDisplay;	// = new JLabel("");
+	//private JLabel scoreDisplay;	// = new JLabel("");
 	
 	private playAudio audioFile = new playAudio();
 	
@@ -85,8 +85,8 @@ public class PlayActionScreen extends JFrame
 		actionFrame.setSize(screenWidth, screenHeight);
 		
 		//Create team headers
-		setupHeader(actionFrame, screenWidth, screenHeight, 'r', redTeam);
-		setupHeader(actionFrame, screenWidth, screenHeight, 'g', greenTeam);
+		setupHeader(actionFrame, screenWidth, screenHeight, 'r', redTeam);			//redTeamScore);
+		setupHeader(actionFrame, screenWidth, screenHeight, 'g', greenTeam);			// greenTeamScore);
 		
 		// Creates the game timer
 		timeLabel = new JLabel(String.format("%02d:%02d", minutes, seconds));
@@ -253,6 +253,11 @@ public class PlayActionScreen extends JFrame
 				{
 					break;
 				}
+				if (audioFile.playCompleted == true)
+				{
+					UDPServerSocket.close();
+					break;
+				}
 				
 			}
 			//System.out.println("After While Loop");
@@ -281,6 +286,7 @@ public class PlayActionScreen extends JFrame
 				int redScore = cumulativeTeamScore(redTeam); //redTeamLabels);
 				
 				redTeamScore.setText(Integer.toString(redScore));
+				// flashScore(redTeamScore);
 				//redTeamScore.paintImmediately(redTeamScore.getVisibleRect());
 				
 				return;
@@ -301,6 +307,7 @@ public class PlayActionScreen extends JFrame
 				int greenScore = cumulativeTeamScore(greenTeam); //greenTeamLabels);
 				
 				greenTeamScore.setText(Integer.toString(greenScore));
+				// flashScore(greenTeamScore);
 				//greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
 				
 				return;
@@ -311,6 +318,32 @@ public class PlayActionScreen extends JFrame
 			// greenTeamScore.setText(Integer.toString(greenScore));
 			// greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
 		}
+	}
+
+	private void flashScore(JLabel label)
+	{
+		Color originalColor = label.getForeground();
+		Color flashColor = Color.WHITE;
+		int flashDuration = 500; // in milliseconds
+		
+		Timer timer = new Timer(flashDuration, new ActionListener()
+		{
+			private boolean flash = false;
+			
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				flash = !flash;
+				label.setForeground(flash ? flashColor : originalColor);
+				
+				if (!flash)
+				{
+					((Timer) e.getSource()).stop();
+				}
+			}
+		});
+		
+		timer.start();
 	}
 
 	private int cumulativeTeamScore(ArrayList<Player> team)
@@ -333,7 +366,7 @@ public class PlayActionScreen extends JFrame
 	}
 
 	//Create team headers
-	private void setupHeader(JFrame actionFrame, int screenWidth, int screenHeight, char color, ArrayList<Player> team) // Player [] team)
+	private void setupHeader(JFrame actionFrame, int screenWidth, int screenHeight, char color, ArrayList<Player> team) // JLabel scoreDisplay) // Player [] team)
 	{
 		String teamName = "";
 		Color headerColor = null;
@@ -390,7 +423,7 @@ public class PlayActionScreen extends JFrame
 		labelHeader.setBorder(border);
 		actionFrame.add(labelHeader);
 		
-		//Display team scores			// 
+		// //Display team scores
 		// int score = cumulativeTeamScore(team);
 		// scoreDisplay = new JLabel(Integer.toString(score), SwingConstants.CENTER);
 		// scoreDisplay.setBounds(labelXPos, labelYPos + 40, width, height);
@@ -416,7 +449,7 @@ public class PlayActionScreen extends JFrame
 				{
 					// Calculate the elapsed time in seconds
 					long elapsedTime = (System.currentTimeMillis() - startTime) / 1000;
-					long remainingTime = 360 - elapsedTime;
+					long remainingTime = 36 - elapsedTime;
 					
 					// Decrement the seconds and minutes
 					seconds = (int) remainingTime % 60;
@@ -431,9 +464,11 @@ public class PlayActionScreen extends JFrame
 						// //Thread.sleep(10);
 						// redTeamScore.setVisible(true);
 						
-						redTeamScore.setForeground(Color.WHITE);
-						Thread.sleep(10);
-						redTeamScore.setForeground(Color.RED);
+						// redTeamScore.setForeground(Color.WHITE);
+						// Thread.sleep(10);
+						// redTeamScore.setForeground(Color.RED);
+						
+						flashScore(redTeamScore);
 						
 					}
 					else if(cumulativeTeamScore(redTeam) < cumulativeTeamScore(greenTeam))
@@ -442,9 +477,12 @@ public class PlayActionScreen extends JFrame
 						// //Thread.sleep(10);
 						// greenTeamScore.setVisible(true);
 						
-						greenTeamScore.setForeground(Color.WHITE);
-						Thread.sleep(10);
-						greenTeamScore.setForeground(Color.GREEN);
+						// greenTeamScore.setForeground(Color.WHITE);
+						// Thread.sleep(10);
+						// greenTeamScore.setForeground(Color.GREEN);
+						
+						flashScore(greenTeamScore);
+						
 					}
 					else
 					{
@@ -475,63 +513,6 @@ public class PlayActionScreen extends JFrame
 		// Starts the game timer
 		timer.start();
 	}
-
-	// public void gameTimer()
-	// {
-		// // Creates the timer to update the display
-		// timer = new Timer(1000, new ActionListener()
-		// {
-			// @Override
-			// public void actionPerformed(ActionEvent e)
-			// {
-				// // Decrement the seconds and minutes
-				// seconds--;
-				
-				// if (seconds < 0)
-				// {
-					// seconds = 59;
-					
-					// minutes--;
-					
-					// updatePlayers();
-				// }
-				
-				// // New If-Else Below:
-				// if(cumulativeTeamScore(redTeam) > cumulativeTeamScore(greenTeam))
-				// {
-					// redTeamScore.setVisible(true);
-					// Thread.sleep(10);
-					// redTeamScore.setVisible(false);
-				// }
-				// else if(cumulativeTeamScore(redTeam) < cumulativeTeamScore(greenTeam))
-				// {
-					// greenTeamScore.setVisible(true);
-					// Thread.sleep(10);
-					// greenTeamScore.setVisible(false);
-				// }
-				// else
-				// {
-					// // redTeamScore.setVisible(true);
-					// // greenTeamScore.setVisible(true);
-				// }
-				
-				// // Checks if minutes and seconds are zero
-				// if (minutes == 0 && seconds == 0)
-				// {
-					// // Stops the timer if minutes and seconds are zero
-					// timer.stop();
-					
-					// // Stops the audio file once the timer reaches zero
-					// audioFile.playCompleted = true;
-				// }
-				
-				// // Sets the text for the game timer
-				// timeLabel.setText(String.format("%02d:%02d", minutes, seconds));
-			// }
-		// });
-		// // Starts the game timer
-		// timer.start();
-	// }
 
 	private void addPlayer(Player player, Player [] team)
 	{
