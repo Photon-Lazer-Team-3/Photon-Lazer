@@ -26,7 +26,7 @@ import java.awt.Font;
 public class PlayerEntryScreen extends JFrame implements ActionListener
 {
 	private JFrame entryFrame;
-	private JTextField [] redText = new ModifiedTextField[30];
+	private ModifiedTextField [] redText = new ModifiedTextField[30];
 	private ModifiedTextField [] greenText = new ModifiedTextField[30];
 	private boolean [] greenTextUpdate = new boolean[30];
 	private boolean [] redTextUpdate = new boolean[30];
@@ -160,6 +160,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		for (int i = 0; i < 30; i++)
 		{
 			redText[i] = new ModifiedTextField(i);
+			//lksdjfklsdfj
 			redText[i].setBounds(x, y, 140, 40);
 			redText[i].setEnabled(false);
 
