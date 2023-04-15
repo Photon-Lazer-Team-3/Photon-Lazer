@@ -1,4 +1,7 @@
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -31,12 +34,36 @@ public class ModifiedTextField extends JTextField{
                 //If the textField is not updated then check to see if the user is done updating
                 update();
             }
-        });
-    }
 
+           
+        });
+        this.addKeyListener(new KeyAdapter()
+        {
+            public void keyrelesed(KeyEvent  e)
+            {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER)
+                {
+                    newUpdate();
+                }
+            }
+        });
+
+        this.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                // TODO Auto-generated method stub
+            }
+            public void focusLost(FocusEvent e) {
+                // TODO Auto-generated method stub
+                newUpdate();
+                System.out.println("DOG");
+            }
+        });
+
+
+    }
     public int getIndex()
     {
-        return this.index;
+        return 1;
     }
 
     public boolean isUpdated()
@@ -51,6 +78,11 @@ public class ModifiedTextField extends JTextField{
         this.lastUpdate = System.currentTimeMillis();
     }
 
+    public void newUpdate()
+    {
+        this.updated = true;
+    }
+
     public void checkUpdate()
     {
         if(isUpdated())
@@ -58,7 +90,7 @@ public class ModifiedTextField extends JTextField{
         else
         {
             long currentTime = System.currentTimeMillis();
-            if((currentTime - this.lastUpdate) >= 5000)
+            if((currentTime - this.lastUpdate) >= 500000)
             {
                 this.updated = true;
             }
@@ -81,11 +113,6 @@ public class ModifiedTextField extends JTextField{
         this.checked = true;
     }
 
-    public void prnt()
-    {
-        System.out.println(checked);
-        System.out.println(updated);
-    }
-
+    
     
 }

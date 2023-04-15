@@ -290,16 +290,19 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	//This will go over everything and check for updates and do other things
 	public void update() throws NumberFormatException, SQLException
 	{
+		/* 
 		for(int i = 0; i < 30; i+=2)
 		{	
 			//Not sure if I need the update thing here or if I am going to need to replace it with something else right now
 			greenText[i].checkUpdate();
-			greenText[i].prnt();
 			if(!greenText[i].isChecked())
 			{
 				if(greenText[i].isUpdated())
 				{
-					if(db.idExist(Integer.parseInt(greenText[i].getText())))
+					//jflsdjfkl
+					if(!greenText[i].getText().equals(""))
+					{
+						if(db.idExist(Integer.parseInt(greenText[i].getText())))
 					{
 						greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
 						greenText[i].setChecked();
@@ -317,11 +320,29 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 							greenText[i+1].setChecked();
 						}
 					}
+					}
 				}
 			}
 			
 		}
-		
+		*/
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(greenText[i].isUpdated())
+			{
+				if(db.idExist(Integer.parseInt(greenText[i].getText())))
+					{
+						greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
+					}
+					else
+					{
+						if(greenText[i+1].isUpdated())
+						{
+							db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i+1].getText());
+						}
+					}
+			}
+		}
 	}
 
 	// When button is clicked allow input in text fields
