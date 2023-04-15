@@ -159,7 +159,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		for (int i = 0; i < 30; i++)
 		{
-			redText[i] = new JTextField();
+			redText[i] = new ModifiedTextField(i);
 			redText[i].setBounds(x, y, 140, 40);
 			redText[i].setEnabled(false);
 
