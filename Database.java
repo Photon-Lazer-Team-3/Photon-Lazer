@@ -3,9 +3,11 @@ import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.Properties;
 
+import javax.xml.crypto.Data;
+
 public class Database
 {
-    private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=jVzB9MWEhATQnxrW";
+    private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=1_Luv_Dr@g0@";
     Connection connection;
 
     public Database() throws Exception
@@ -69,6 +71,12 @@ public class Database
 
         stmt.close();
         result.close();
+    }
+
+    public static void main(String [] args) throws Exception
+    {
+        Database db = new Database();
+        db.insertPlayer(667, "DOG");
     }
 
     

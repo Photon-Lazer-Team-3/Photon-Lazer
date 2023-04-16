@@ -658,5 +658,9 @@ public class PlayActionScreen extends JFrame
 		}
 	}
 
-	
+	public static void main(String [] args) throws Exception
+	{
+		PlayActionScreen screen = new PlayActionScreen(new PlayerEntryScreen());
+	}
 }
+	

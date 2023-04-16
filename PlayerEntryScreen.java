@@ -37,13 +37,13 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	private JButton edit, start;
 	
 	Dimension screenSize;
-	private Database db;
+	Database db;
 	
 	public PlayerEntryScreen() throws Exception
 	{
 		// Adds title to the frame
 		entryFrame = new JFrame("Player Entry Terminal");
-		Database db = new Database();
+		
 
 		
 		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -118,6 +118,8 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		// Sets the windows background color to black
 		entryFrame.getContentPane().setBackground(Color.BLACK);
+
+		db = new Database();
 	}
 	
 	public void timerUpdate()
