@@ -28,8 +28,6 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	private JFrame entryFrame;
 	private ModifiedTextField [] redText = new ModifiedTextField[30];
 	private ModifiedTextField [] greenText = new ModifiedTextField[30];
-	private boolean [] greenTextUpdate = new boolean[30];
-	private boolean [] redTextUpdate = new boolean[30];
 	
 	private JLabel [] redLabels = new JLabel[15];
 	private JLabel [] greenLabels = new JLabel[15];
@@ -46,11 +44,6 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	{
 		// Adds title to the frame
 		entryFrame = new JFrame("Player Entry Terminal");
-		for(int i = 0; i < 30; i++)
-		{
-			redTextUpdate[i] = false;
-			greenTextUpdate[i] = false;
-		}
 		
 		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
