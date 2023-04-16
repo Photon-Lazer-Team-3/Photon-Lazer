@@ -658,45 +658,5 @@ public class PlayActionScreen extends JFrame
 		}
 	}
 
-
-	// //Testing the Play Action Screen
-	public static void main(String[] args)
-	{
-		// Hard-Coded Test Cases for Play Action Screen and Player Entry Screen
-		PlayerEntryScreen screen = new PlayerEntryScreen();
-		
-		screen.setRedText(1, "AlexPrill999");
-		screen.setRedText(3, "AndrewMurphster420");
-		screen.setRedText(5, "SirJoseph167");
-		screen.setRedText(7, "testlimitsinalllowercaseletter");		// Fits 30 lowercase letter
-		// screen.redText[9].setText("Player5");
-		// screen.redText[11].setText("Player6");
-		// screen.redText[13].setText("Player7");
-		// screen.redText[15].setText("Player8");
-		// screen.redText[17].setText("Player9");
-		// screen.redText[19].setText("Player10");
-		// screen.redText[21].setText("Player11");
-		// screen.redText[23].setText("Player12");
-		// screen.redText[25].setText("Player13");
-		// screen.redText[27].setText("Player14");
-		// screen.redText[29].setText("Player15");
-		
-		screen.setGreenText(1, "BenFletcherHonda");
-		screen.setGreenText(3, "ParkerGentHerDone69");
-		screen.setGreenText(5, "JimStrother404");
-		screen.setGreenText(7, "TESTTHELIMITSWITHALLCAPITALLET");		//Fits 30 Capital Letters
-		// screen.greenText[9].setText("Player20");
-		// screen.greenText[11].setText("Player21");
-		// screen.greenText[13].setText("Player22");
-		// screen.greenText[15].setText("Player23");
-		// screen.greenText[17].setText("Player24");
-		// screen.greenText[19].setText("Player25");
-		// screen.greenText[21].setText("Player26");
-		// screen.greenText[23].setText("Player27");
-		// screen.greenText[25].setText("Player28");
-		// screen.greenText[27].setText("Player29");
-		// screen.greenText[29].setText("Player30");
-		
-		PlayActionScreen actionScreen = new PlayActionScreen(screen);
-	}
+	
 }
