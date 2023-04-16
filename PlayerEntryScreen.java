@@ -342,6 +342,10 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	public static void main(String [] args) throws Exception
 	{
 		PlayerEntryScreen screen = new PlayerEntryScreen();
+		while(true)
+		{
+			screen.update();
+		}
 	}
 }
 
