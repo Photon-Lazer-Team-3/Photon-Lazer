@@ -149,7 +149,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			long elapsedMinutes = elapsedSeconds / 60;
 			timer.setText(String.valueOf(30 - elapsedSeconds));
 			timer.paintImmediately(timer.getVisibleRect());
-			if(elapsedSeconds == 5)
+			if(elapsedSeconds == 30)
 			{
 				this.inUse = false;
 				//this.dispose();
