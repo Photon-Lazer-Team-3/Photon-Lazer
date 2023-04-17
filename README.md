@@ -10,7 +10,7 @@
 # https://drive.google.com/file/d/12s09wd2qdH0U_Y3zCW9NhZu-NzcEid-6/view?usp=sharing
 # Open up a command prompt/terminal that points to the directory where the Photon-Lazer.jar File and python_trafficgenerator.py File are being stored.
 # Type in the following line to run our code: java -jar Photon-Lazer.jar
-# In a second (or separate) command prompt/terminal, type in "python python_trafficgenerator.py" to start the Python Traffic Generator.
+# In a second (or separate) command prompt/terminal, type in "python python_trafficgenerator.py" to start the Python Traffic Generator. You will need this second command prompt/terminal later in the steps listed below for the Player Entry Screen.
 #
 # Splash Screen Information:
 # The Splash Screen will appear for three (3) seconds, then you will be redirected to the Player Entry Screen. 
@@ -22,7 +22,9 @@
 # If a Player's ID Number exists in our database, then the Player's Code Name space will automatically be filled with their Code Name. If the Player's ID Number does not exist in our database, then you will be able to input a Code Name for this Player, and the Code Name will be saved to our database with the ID Number.
 #
 # Once you have finished editing the Players on both Teams, then please click on the "Start Game" button.
-# This will begin the thirty (30) second Count-down timer on the Player Entry Screen. During these thirty (30) seconds, please navigate to the command prompt/terminal for the Python Traffic Generator, input the Player Code Names for the Red Team Players and Green Team Players, and input the number of events for the Python Traffic Generator to generate (i.e.: 1000).
+# 
+# This will begin the thirty (30) second Count-down timer on the Player Entry Screen. 
+# During these thirty (30) seconds, please navigate to the command prompt/terminal for the Python Traffic Generator, input the Player ID Numbers for the Red Team Players and Green Team Players, and input the number of events for the Python Traffic Generator to generate (i.e.: 1000).
 #
 # Play Action Screen Information:
 # When the thirty (30) second timer on the Player Entry Screen ends, a new JFrame will open and will show the Play Action Screen. 
