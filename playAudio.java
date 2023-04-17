@@ -26,72 +26,15 @@ public class playAudio implements LineListener
 	private Clip audioClip;
 
 
-	/**
-	* Play a given audio file.
-	* @param audioFilePath Path of the audio file.
-	*/
-	// public void play(String audioFilePath)
-	// {
-		// File audioFile = new File(audioFilePath);
-		
-		// try
-		// {
-			// AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-			// AudioFormat format = audioStream.getFormat();
-			
-			// DataLine.Info info = new DataLine.Info(Clip.class, format);
-			// Clip audioClip = (Clip) AudioSystem.getLine(info);
-			
-			// audioClip.addLineListener(this);
-			// audioClip.open(audioStream);
-			
-			// audioClip.start();
-			
-			// while (!playCompleted)
-			// {
-				// // Wait for the Playback to Complete
-				// try
-				// {
-					// Thread.sleep(1000);
-				// }
-				// catch (InterruptedException ex)
-				// {
-					// ex.printStackTrace();
-				// }
-			// }
-			// audioClip.close();
-		// }
-		// catch (UnsupportedAudioFileException ex)
-		// {
-			// System.out.println("Error: The specified audio file is not supported.");
-			// ex.printStackTrace();
-		// }
-		// catch (LineUnavailableException ex)
-		// {
-			// System.out.println("Error: Audio line for playing back is unavailable.");
-			// ex.printStackTrace();
-		// }
-		// catch (IOException ex)
-		// {
-			// System.out.println("Error: Issue playing the audio file.");
-			// ex.printStackTrace();
-		// }
-	// }
-	
-	// // Listens to the START and STOP events of the audio line.
-	// @Override
-	// public void update(LineEvent event)
-	// {
-	// }
+
 	
 	public void play(String audioFilePath)
 	{
 		File audioFile = new File(audioFilePath);
 		
-		//int startedAudioFile = 0;
 		
-	// while ((!playCompleted) && (startedAudioFile == 1))
-	// {
+		
+	
 		try
 		{
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -103,11 +46,9 @@ public class playAudio implements LineListener
 			audioClip.addLineListener(this);
 			audioClip.open(audioStream);
 			
-			//if ((startedAudioFile == 0) && (!playCompleted))
-			//{
+		
 				audioClip.start();
-				//startedAudioFile += 1;
-			//}
+		
 			
 			
 		}
@@ -164,8 +105,7 @@ public class playAudio implements LineListener
 		// Maximum value of range
 		int maxValue = 8;
 		
-		//Debug Statement
-		//System.out.println("Random value in int from "+ minValue + " to " + maxValue + ":");
+		
 		
 		// Generate random int value from min to max
 		int randomInteger = (int)Math.floor(Math.random() * (maxValue - minValue + 1) + minValue);
@@ -173,15 +113,5 @@ public class playAudio implements LineListener
 		return randomInteger;
 	}
 
-	// public static void main(String[] args)
-	// {
-		// int audioFileInteger = generateRandomInteger();
-		
-		// // Debug Statement
-		// //System.out.println(audioFileInteger);
-		
-		// String audioFilePath = "Track0" + audioFileInteger + ".wav";
-		// playAudio player = new playAudio();
-		// player.play(audioFilePath);
-	// }
+
 }
