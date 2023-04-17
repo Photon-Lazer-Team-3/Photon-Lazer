@@ -25,10 +25,14 @@ public class Main
 
         
        PlayerEntryScreen screen = new PlayerEntryScreen();
-       while(true)
+       boolean something = true;
+       while(something)
        {
         screen.update();
-       } 
+        something = screen.getInUse();
+        System.out.println(something);
+       }
+       PlayActionScreen action = new PlayActionScreen(screen);
        //sdfasfsdf
        /* 
        //sdlkfjsdlkfjsdlk

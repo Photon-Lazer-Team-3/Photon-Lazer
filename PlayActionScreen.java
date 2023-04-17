@@ -34,6 +34,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayActionScreen extends JFrame
 {
@@ -129,15 +131,15 @@ public class PlayActionScreen extends JFrame
 		actionFrame.add(scrollPane);
 		
 		// Adds Players to the Team ArrayLists
-		for(int i =1; i < 30; i+=2)
+		for(int i =0; i < 30; i+=2)
 		{
 			if(!screen.getRedText(i).equals(""))
 			{
-				redTeam.add(new Player(screen.getRedText(i)));
+				redTeam.add(new Player(screen.getRedText(i), screen.getRedText(i+1)));
 			}
 			if(!screen.getGreenText(i).equals(""))
 			{
-				greenTeam.add(new Player(screen.getGreenText(i)));
+				greenTeam.add(new Player(screen.getGreenText(i), screen.getGreenText(i+1)));
 			}
 		}
 		
@@ -234,12 +236,47 @@ public class PlayActionScreen extends JFrame
 				// Receive the data in byte buffer.
 				UDPServerSocket.receive(DataPacketReceive);
 				String sentence = new String(DataPacketReceive.getData(), 0, DataPacketReceive.getLength());
-				sentence = sentence + "\n";
+				String outPut = "";
 				
+				String[] players = sentence.split("tagged");
+				
+				for(Player player : greenTeam)
+				{
+					if(player.getID() == Integer.parseInt(players[0]))
+					{
+						System.out.println(player.getcodeName());
+						outPut += player.getcodeName();
+					}
+				}
+				for(Player player : redTeam)
+				{
+					if(player.getID() == Integer.parseInt(players[0]))
+					{
+						outPut += player.getcodeName();
+					}
+				}
+				outPut += " tagged ";
+				for(Player player : greenTeam)
+				{
+					if(player.getID() == Integer.parseInt(players[1]))
+					{
+						outPut += player.getcodeName();
+					}
+				}
+				for(Player player : redTeam)
+				{
+					if(player.getID() == Integer.parseInt(players[1]))
+					{
+						outPut += player.getcodeName();
+					}
+					
+				}
+				
+
 				// Debug Statement
 				//System.out.println(sentence);
-				
-				appendText(sentence);
+			
+				appendText(outPut);
 				eventTextArea.paintImmediately(eventTextArea.getVisibleRect());
 				
 				updatePlayerScore(sentence);
@@ -253,11 +290,14 @@ public class PlayActionScreen extends JFrame
 				{
 					break;
 				}
+				
 				if (audioFile.playCompleted == true)
 				{
 					UDPServerSocket.close();
 					break;
 				}
+				
+
 				
 			}
 		}
@@ -269,38 +309,43 @@ public class PlayActionScreen extends JFrame
 		{
 			e.printStackTrace();
 		}
+		
 	}
 
 	private void updatePlayerScore(String sentence)
 	{
-		String[] words = sentence.split("\\s+");
-		String playerName = words[0];
-		
-		for (Player player : redTeam)
+		String[] players = sentence.split("tagged");
+		for(String str : players)
 		{
-			if (player.getcodeName().equals(playerName))
-			{
-				player.incrementScore(10);
-				
-				int redScore = cumulativeTeamScore(redTeam);
-				
-				redTeamScore.setText(Integer.toString(redScore));
-				return;
-			}
+			str = str.trim();
 		}
-		
-		for (Player player : greenTeam)
+
+		for(Player player : greenTeam)
 		{
-			if (player.getcodeName().equals(playerName))
+			if(player.getID() == Integer.parseInt(players[0]))
 			{
 				player.incrementScore(10);
-				
-				int greenScore = cumulativeTeamScore(greenTeam);
-				
+				int greenScore = cumulativeTeamScore(redTeam);
 				greenTeamScore.setText(Integer.toString(greenScore));
+				greenTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
 				return;
 			}
 		}
+
+		for(Player player : redTeam)
+		{
+			if(player.getID() == Integer.parseInt(players[0]))
+			{
+				player.incrementScore(10);
+				int greenScore = cumulativeTeamScore(redTeam);
+				redTeamScore.setText(Integer.toString(greenScore));
+				redTeamScore.paintImmediately(greenTeamScore.getVisibleRect());
+				return;
+			}
+		}
+
+
+		
 	}
 
 	private void flashScore(JLabel label) throws InterruptedException
@@ -345,6 +390,7 @@ public class PlayActionScreen extends JFrame
 		
 		return cumScore;
 	}
+	//asdfdjflkjsf
 	
 	// From Joseph: Do not remove this method
 	private void appendText(String text)
@@ -497,7 +543,7 @@ public class PlayActionScreen extends JFrame
 
 	private void playAudioTrack()
 	{
-		//playAudio player = new playAudio();
+		playAudio player = new playAudio();
 		int audioFileInteger = audioFile.generateRandomInteger();
 		
 		String audioFilePath = "Track0" + audioFileInteger + ".wav";

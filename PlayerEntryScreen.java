@@ -38,13 +38,16 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 	
 	Dimension screenSize;
 	Database db;
+	PlayActionScreen play;
+	
+	private boolean inUse;
 	
 	public PlayerEntryScreen() throws Exception
 	{
 		// Adds title to the frame
 		entryFrame = new JFrame("Player Entry Terminal");
 		
-
+		this.inUse = true;
 		
 		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
@@ -121,8 +124,21 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 
 		db = new Database();
 	}
+
+	public PlayerEntryScreen(PlayerEntryScreen screen) {
+        for(int i = 0; i < 30; i++)
+		{
+			this.redText[i].setText(screen.getRedText(i));
+			this.greenText[i].setText(screen.getGreenText(i));
+		}
+    }
+
+	public boolean getInUse()
+	{
+		return this.inUse;
+	}
 	
-	public void timerUpdate()
+	public void timerUpdate() throws Exception
 	{
 		long startTime = System.currentTimeMillis();
 		while(true)
@@ -134,7 +150,11 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			timer.setText(String.valueOf(30 - elapsedSeconds));
 			timer.paintImmediately(timer.getVisibleRect());
 			if(elapsedSeconds == 5)
-				new PlayActionScreen(this);
+			{
+				this.inUse = false;
+				//this.dispose();
+				break;
+			}
 		}
 	}
 	
@@ -294,7 +314,12 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		if (e.getSource() == start)
 		{
-			timerUpdate();
+			try {
+				timerUpdate();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
@@ -325,7 +350,9 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		{
 			if(greenText[i].isUpdated())
 			{
-				if(db.idExist(Integer.parseInt(greenText[i].getText())))
+				if(!greenText[i].getText().equals(""))
+				{
+					if(db.idExist(Integer.parseInt(greenText[i].getText())))
 					{
 						greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
 					}
@@ -336,6 +363,29 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 							db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i+1].getText());
 						}
 					}
+				}
+			}
+		}
+
+
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(redText[i].isUpdated())
+			{
+				if(!redText[i].getText().equals(""))
+				{
+					if(db.idExist(Integer.parseInt(redText[i].getText())))
+					{
+						redText[i+1].setText(db.getCodeName(Integer.parseInt(redText[i].getText())));
+					}
+					else
+					{
+						if(greenText[i+1].isUpdated())
+						{
+							db.insertPlayer(Integer.parseInt(redText[i].getText()), redText[i+1].getText());
+						}
+					}
+				}
 			}
 		}
 	}

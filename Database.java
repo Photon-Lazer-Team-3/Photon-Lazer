@@ -7,7 +7,7 @@ import javax.xml.crypto.Data;
 
 public class Database
 {
-    private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=1_Luv_Dr@g0@";
+    private static final String URI = "jdbc:postgresql://db.eokjwfanemzgvdmneeay.supabase.co:5432/postgres?user=postgres&password=uDpXxozjRFJmYp6W";
     Connection connection;
 
     public Database() throws Exception
@@ -76,7 +76,7 @@ public class Database
     public static void main(String [] args) throws Exception
     {
         Database db = new Database();
-        db.insertPlayer(667, "DOG");
+        db.insertPlayer(668, "DOG");
     }
 
     

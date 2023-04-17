@@ -35,9 +35,9 @@ while i < int(counter):
 		greenplayer = green2	
 
 	if random.randint(1,2) == 1:
-		message = redplayer + " tagged " + greenplayer
+		message = redplayer + "tagged" + greenplayer
 	else:
-		message = greenplayer + " tagged " + redplayer
+		message = greenplayer + "tagged" + redplayer
 
 	print(message)
 	i+=1

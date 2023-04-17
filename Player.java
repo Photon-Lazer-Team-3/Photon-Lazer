@@ -11,9 +11,10 @@ public class Player
         this.score = score;
     }
 
-    public Player(String codeName)
+    public Player(String id, String codeName)
     {
         this.codeName = codeName;
+        this.id = Integer.parseInt(id);
         this.score = 0;
     }
 
