@@ -20,45 +20,96 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class playAudio implements LineListener
 {
 	//Indicates whether the playback completes or not.
-	boolean playCompleted;
+	boolean playCompleted = false;
 	
 	// Added by Joseph Telford - 3/9/2023 6:13PM
 	private Clip audioClip;
-	
+
+
 	/**
 	* Play a given audio file.
 	* @param audioFilePath Path of the audio file.
 	*/
+	// public void play(String audioFilePath)
+	// {
+		// File audioFile = new File(audioFilePath);
+		
+		// try
+		// {
+			// AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+			// AudioFormat format = audioStream.getFormat();
+			
+			// DataLine.Info info = new DataLine.Info(Clip.class, format);
+			// Clip audioClip = (Clip) AudioSystem.getLine(info);
+			
+			// audioClip.addLineListener(this);
+			// audioClip.open(audioStream);
+			
+			// audioClip.start();
+			
+			// while (!playCompleted)
+			// {
+				// // Wait for the Playback to Complete
+				// try
+				// {
+					// Thread.sleep(1000);
+				// }
+				// catch (InterruptedException ex)
+				// {
+					// ex.printStackTrace();
+				// }
+			// }
+			// audioClip.close();
+		// }
+		// catch (UnsupportedAudioFileException ex)
+		// {
+			// System.out.println("Error: The specified audio file is not supported.");
+			// ex.printStackTrace();
+		// }
+		// catch (LineUnavailableException ex)
+		// {
+			// System.out.println("Error: Audio line for playing back is unavailable.");
+			// ex.printStackTrace();
+		// }
+		// catch (IOException ex)
+		// {
+			// System.out.println("Error: Issue playing the audio file.");
+			// ex.printStackTrace();
+		// }
+	// }
+	
+	// // Listens to the START and STOP events of the audio line.
+	// @Override
+	// public void update(LineEvent event)
+	// {
+	// }
+	
 	public void play(String audioFilePath)
 	{
 		File audioFile = new File(audioFilePath);
 		
+		//int startedAudioFile = 0;
+		
+	// while ((!playCompleted) && (startedAudioFile == 1))
+	// {
 		try
 		{
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 			AudioFormat format = audioStream.getFormat();
-			
+	
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
-			Clip audioClip = (Clip) AudioSystem.getLine(info);
-			
+			audioClip = (Clip) AudioSystem.getLine(info);
+	
 			audioClip.addLineListener(this);
 			audioClip.open(audioStream);
 			
-			audioClip.start();
+			//if ((startedAudioFile == 0) && (!playCompleted))
+			//{
+				audioClip.start();
+				//startedAudioFile += 1;
+			//}
 			
-			while (!playCompleted)
-			{
-				// Wait for the Playback to Complete
-				try
-				{
-					Thread.sleep(1000);
-				}
-				catch (InterruptedException ex)
-				{
-					ex.printStackTrace();
-				}
-			}
-			audioClip.close();
+			
 		}
 		catch (UnsupportedAudioFileException ex)
 		{
@@ -75,12 +126,33 @@ public class playAudio implements LineListener
 			System.out.println("Error: Issue playing the audio file.");
 			ex.printStackTrace();
 		}
-	}
+	// }
 	
-	// Listens to the START and STOP events of the audio line.
+	//audioClip.close();
+	
+	}
+
+
+	
+	public void stop()
+	{
+		audioClip.close();
+	}
+
 	@Override
 	public void update(LineEvent event)
 	{
+		LineEvent.Type eventType = event.getType();
+		if (eventType == LineEvent.Type.START)
+		{
+			// Audio clip has started playing
+		} 
+		else if (eventType == LineEvent.Type.STOP) // || (playCompleted == true))
+		{
+			// Audio clip has stopped playing
+			playCompleted = true;
+			audioClip.close();
+		}
 	}
 	
 	
@@ -100,17 +172,16 @@ public class playAudio implements LineListener
 		
 		return randomInteger;
 	}
-	
-	
-	public static void main(String[] args)
-	{
-		int audioFileInteger = generateRandomInteger();
+
+	// public static void main(String[] args)
+	// {
+		// int audioFileInteger = generateRandomInteger();
 		
-		// Debug Statement
-		//System.out.println(audioFileInteger);
+		// // Debug Statement
+		// //System.out.println(audioFileInteger);
 		
-		String audioFilePath = "Track0" + audioFileInteger + ".wav";
-		playAudio player = new playAudio();
-		player.play(audioFilePath);
-	}
+		// String audioFilePath = "Track0" + audioFileInteger + ".wav";
+		// playAudio player = new playAudio();
+		// player.play(audioFilePath);
+	// }
 }

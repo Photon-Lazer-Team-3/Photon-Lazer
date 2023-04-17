@@ -1,5 +1,7 @@
 target
 .vscode
 Photon-Lazer.jar
-.class
+*.class
 Photon-Lazer.jar
+/META-INF
+/org

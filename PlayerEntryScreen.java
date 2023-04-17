@@ -1,3 +1,4 @@
+
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -25,29 +26,28 @@ import java.awt.Font;
 
 public class PlayerEntryScreen extends JFrame implements ActionListener
 {
-	JFrame entryFrame;
-	JTextField [] redText = new JTextField[30];
-	JTextField [] greenText = new JTextField[30];
-	boolean [] greenTextUpdate = new boolean[30];
-	boolean [] redTextUpdate = new boolean[30];
+	private JFrame entryFrame;
+	private ModifiedTextField [] redText = new ModifiedTextField[30];
+	private ModifiedTextField [] greenText = new ModifiedTextField[30];
 	
-	JLabel [] redLabels = new JLabel[15];
-	JLabel [] greenLabels = new JLabel[15];
-	JLabel redLabelHeader, greenLabelHeader, timer;
+	private JLabel [] redLabels = new JLabel[15];
+	private JLabel [] greenLabels = new JLabel[15];
+	private JLabel redLabelHeader, greenLabelHeader, timer;
 	
-	JButton edit, start;
+	private JButton edit, start;
 	
 	Dimension screenSize;
+	Database db;
+	PlayActionScreen play;
 	
-	public PlayerEntryScreen()
+	private boolean inUse;
+	
+	public PlayerEntryScreen() throws Exception
 	{
 		// Adds title to the frame
 		entryFrame = new JFrame("Player Entry Terminal");
-		for(int i = 0; i < 30; i++)
-		{
-			redTextUpdate[i] = false;
-			greenTextUpdate[i] = false;
-		}
+		
+		this.inUse = true;
 		
 		entryFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
@@ -121,9 +121,24 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		// Sets the windows background color to black
 		entryFrame.getContentPane().setBackground(Color.BLACK);
+
+		db = new Database();
+	}
+
+	public PlayerEntryScreen(PlayerEntryScreen screen) {
+        for(int i = 0; i < 30; i++)
+		{
+			this.redText[i].setText(screen.getRedText(i));
+			this.greenText[i].setText(screen.getGreenText(i));
+		}
+    }
+
+	public boolean getInUse()
+	{
+		return this.inUse;
 	}
 	
-	public void timerUpdate()
+	public void timerUpdate() throws Exception
 	{
 		long startTime = System.currentTimeMillis();
 		while(true)
@@ -135,7 +150,11 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			timer.setText(String.valueOf(30 - elapsedSeconds));
 			timer.paintImmediately(timer.getVisibleRect());
 			if(elapsedSeconds == 30)
-				System.exit(0);
+			{
+				this.inUse = false;
+				this.dispose();
+				break;
+			}
 		}
 	}
 	
@@ -151,7 +170,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		for (int i = 0; i < 30; i++)
 		{
-			redText[i] = new JTextField();
+			redText[i] = new ModifiedTextField();
 			redText[i].setBounds(x, y, 230, 40);	// 140, 40);
 			redText[i].setEnabled(false);
 			
@@ -178,7 +197,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		for (int i = 0; i < 30; i++)
 		{
-			greenText[i] = new JTextField();
+			greenText[i] = new ModifiedTextField();
 			greenText[i].setBounds(x, y, 230, 40);			//140, 40);
 			greenText[i].setEnabled(false);
 			
@@ -295,15 +314,93 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 		
 		if (e.getSource() == start)
 		{
-			timerUpdate();
+			try {
+				timerUpdate();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
-	/*
-	//Testing the Player Entry Screen
-	public static void main(String[] args)
+	public String getGreenText(int i)
 	{
-		new PlayerEntryScreen();
+		return greenText[i].getText();
 	}
-	*/
+
+	public String getRedText(int i)
+	{
+		return redText[i].getText();
+	}
+
+	public void setRedText(int i, String text)
+	{
+		this.redText[i].setText(text);
+	}
+
+	public void setGreenText(int i, String text)
+	{
+		this.greenText[i].setText(text);
+	}
+
+
+	public void update() throws NumberFormatException, SQLException
+	{
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(greenText[i].isUpdated())
+			{
+				if(!greenText[i].getText().equals(""))
+				{
+					if(db.idExist(Integer.parseInt(greenText[i].getText())))
+					{
+						greenText[i+1].setText(db.getCodeName(Integer.parseInt(greenText[i].getText())));
+					}
+					else
+					{
+						if(greenText[i+1].isUpdated())
+						{
+							db.insertPlayer(Integer.parseInt(greenText[i].getText()), greenText[i+1].getText());
+						}
+					}
+				}
+			}
+		}
+
+
+		for(int i = 0; i < 30; i+=2)
+		{
+			if(redText[i].isUpdated())
+			{
+				if(!redText[i].getText().equals(""))
+				{
+					if(db.idExist(Integer.parseInt(redText[i].getText())))
+					{
+						redText[i+1].setText(db.getCodeName(Integer.parseInt(redText[i].getText())));
+					}
+					else
+					{
+						if(greenText[i+1].isUpdated())
+						{
+							db.insertPlayer(Integer.parseInt(redText[i].getText()), redText[i+1].getText());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	public static void main(String [] args) throws Exception
+	{
+		PlayerEntryScreen screen = new PlayerEntryScreen();
+		while(true)
+		{
+			screen.update();
+		}
+	}
 }
+
+
+
+

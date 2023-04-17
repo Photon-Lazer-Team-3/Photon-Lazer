@@ -19,12 +19,23 @@ public class Main
 		{
 			e.printStackTrace();
 		}
-        Database db = new Database();
+        //Database db = new Database();
 
 
 
         
-       PlayerEntryScreen screen = new PlayerEntryScreen(); 
+       PlayerEntryScreen screen = new PlayerEntryScreen();
+       boolean something = true;
+       while(something)
+       {
+        screen.update();
+        something = screen.getInUse();
+        System.out.println(something);
+       }
+       PlayActionScreen action = new PlayActionScreen(screen);
+       //sdfasfsdf
+       /* 
+       //sdlkfjsdlkfjsdlk
        while(true)
        {
         int i = 0;
@@ -57,5 +68,6 @@ public class Main
             i += 2;
         }
        }
+       */
     }
 }
