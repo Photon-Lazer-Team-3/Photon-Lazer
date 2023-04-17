@@ -152,7 +152,7 @@ public class PlayerEntryScreen extends JFrame implements ActionListener
 			if(elapsedSeconds == 30)
 			{
 				this.inUse = false;
-				//this.dispose();
+				this.dispose();
 				break;
 			}
 		}
