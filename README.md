@@ -8,9 +8,10 @@
 # To run our code, please download the Photon-Lazer.jar File and python_trafficgenerator.py File from our "main" branch to your Windows computer.
 # Note: If the Photon-Lazer.jar File is not located on the "main" branch, do not download one from another branch as it may not be in working condition. Instead download the Photon-Lazer.jar File from the Google Drive link below:
 # https://drive.google.com/file/d/12s09wd2qdH0U_Y3zCW9NhZu-NzcEid-6/view?usp=sharing
+# Move both the Photon-Lazer.jar File and python_trafficgenerator.py File to the same directory (or Folder) on your Windows computer.
 # Open up a command prompt/terminal that points to the directory where the Photon-Lazer.jar File and python_trafficgenerator.py File are being stored.
 # Type in the following line to run our code: java -jar Photon-Lazer.jar
-# In a second (or separate) command prompt/terminal, type in "python python_trafficgenerator.py" to start the Python Traffic Generator. You will need this second command prompt/terminal later in the steps listed below for the Player Entry Screen.
+# In a second (or separate) command prompt/terminal in the same directory, type in "python python_trafficgenerator.py" to start the Python Traffic Generator. You will need this second command prompt/terminal later in the steps listed below for the Player Entry Screen.
 #
 # Splash Screen Information:
 # The Splash Screen will appear for three (3) seconds, then you will be redirected to the Player Entry Screen. 
