@@ -2,7 +2,7 @@
 # The programming language being used for this Project is Java.
 # The version of Java being used for this Project is 17.0.2
 #
-# Note: We highly recommend using a Windows computer to run our code to avoid any issues with the GUI.
+# Note: We highly recommend using a Windows computer with a Monitor/Screen Size of 1920-by-1080 to run our code to avoid any issues with the GUI.
 # Note: Supabase does not have a shareable access link to view our Database (like Heroku); therefore, the system's user will need to be invited to view our Database. We would like to apologize for the inconvenience.
 #
 # To run our code, please download the Photon-Lazer.jar File and python_trafficgenerator.py File from our "main" branch to your Windows computer.
