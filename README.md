@@ -6,8 +6,8 @@
 # Note: Supabase does not have a shareable access link to view our Database (like Heroku); therefore, the system's user will need to be invited to view our Database. We would like to apologize for the inconvenience.
 #
 # To run our code, please download the Photon-Lazer.jar File and python_trafficgenerator.py File from our "main" branch to your Windows computer.
-#If the jar file is not located on the main branch do not download one from another branch as it may not be in working condition instead download it from the google drive link below.
-#https://drive.google.com/file/d/12s09wd2qdH0U_Y3zCW9NhZu-NzcEid-6/view?usp=sharing
+# If the jar file is not located on the main branch do not download one from another branch as it may not be in working condition instead download it from the google drive link below.
+# https://drive.google.com/file/d/12s09wd2qdH0U_Y3zCW9NhZu-NzcEid-6/view?usp=sharing
 # Open up a command prompt/terminal that points to the directory where the Photon-Lazer.jar File and python_trafficgenerator.py File are being stored.
 # Type in the following line to run our code: java -jar Photon-Lazer.jar
 # In a second (or separate) command prompt/terminal, type in "python python_trafficgenerator.py" to start the Python Traffic Generator.
